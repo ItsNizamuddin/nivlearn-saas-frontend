@@ -1,58 +1,136 @@
 @import "tailwindcss";
 @plugin "tailwind-scrollbar";
 
+/*
+ * ============================================================
+ * THEME TOKENS — single source of truth for every color.
+ * To re-theme the whole site, change the values in this block
+ * only. Components must use the Tailwind utilities generated
+ * from @theme below (bg-prime, text-text-muted, ...), never raw
+ * hex / Tailwind palette colors (gray-600, black, white, ...).
+ * ============================================================
+ */
 :root {
+  /* Base */
   --background: #ffffff;
   --foreground: #030303;
+
+  /* Brand */
+  --prime: #2AA4B7;
+  --prime1: #0099FF;
+  --sec-prime: #F4F6F8;
+  --prime-dark: #082D45;
+  --prime-yellow: #FF9E0A;
+  --prime-outline: #19809A;
+  --prime-light: #F3F4F6;
+  --light: #F0F4F9;
+  --prime-gray: #F2F2F2;
+  --textblack: #030303;
+  --bluebutton: #47BDCD;
+
+  /* Gradient stops */
+  --gradient-start: #1D8DAB;
+  --gradient-end: #073F57;
+  --aqua: #83DAE2;
+  --aqua-light: #D9F6F7;
+  --mist: #F1F4F7;
+
+  /* Surfaces & text (semantic) */
+  --surface: #ffffff;
+  --surface-muted: #f9fafb;
+  --on-dark: #ffffff;
+  --text-body: #374151;
+  --text-muted: #4b5563;
+  --border-muted: #d1d5db;
+  --divider: #4b5563;
+  --overlay: #000000;
+  --shadow-color: rgb(39 79 117 / 0.15);
+
+  /* Scrollbar */
+  --scrollbar-thumb: var(--scrollbar-thumb);
+  --scrollbar-thumb-hover: #94a3b8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Fonts (loaded in app/layout.tsx via next/font) */
+  --font-sans: var(--font-family-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-family-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-inter: var(--font-family-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-montserrat: var(--font-family-montserrat), ui-sans-serif, system-ui, sans-serif;
 
-  /* NivLearn Brand Colors */
-  --color-prime: #2AA4B7;
-  --color-primary: #2AA4B7;
-  --color-secondary: #FF9E0A;
-  --color-prime1: #0099FF;
-  --color-sec-prime: #F4F6F8;
-  --color-prime-dark: #082D45;
-  --color-prime-yellow: #FF9E0A;
-  --color-prime-outline: #19809A;
-  --color-prime-light: #F3F4F6;
-  --color-light: #F0F4F9;
-  --color-prime-gray: #F2F2F2;
-  --color-textblack: #030303;
-  --color-bluebutton: #47BDCD;
+  /* Brand colors */
+  --color-prime: var(--prime);
+  --color-primary: var(--prime);
+  --color-secondary: var(--prime-yellow);
+  --color-prime1: var(--prime1);
+  --color-sec-prime: var(--sec-prime);
+  --color-prime-dark: var(--prime-dark);
+  --color-prime-yellow: var(--prime-yellow);
+  --color-prime-outline: var(--prime-outline);
+  --color-prime-light: var(--prime-light);
+  --color-light: var(--light);
+  --color-prime-gray: var(--prime-gray);
+  --color-textblack: var(--textblack);
+  --color-bluebutton: var(--bluebutton);
 
-  /* Custom Gradients */
-  --background-image-custom-gradient: linear-gradient(to bottom, #1D8DAB, #073F57);
-  --background-image-custom-gradient-blue: linear-gradient(to bottom, #1D8DAB, #073F57);
-  --background-image-custom-blue: linear-gradient(53deg, #47BDCD 11.33%, rgba(71, 189, 205, 0.41) 68.25%, rgba(42, 164, 183, 0.00) 95.21%);
-  --background-image-custom-orange: linear-gradient(53deg, #FF9E0A 11.33%, rgba(255, 158, 10, 0.41) 68.25%, rgba(255, 158, 10, 0.00) 95.21%);
-  --background-image-custom-blue-schedule: radial-gradient(ellipse 645.41% 133.94% at 100% 0%, #83DAE2 0%, #D9F6F7 31%, #F1F4F7 65%, #83DAE2 100%);
-  --background-image-radial-gradient: radial-gradient(circle, #83DAE2, #D9F6F7, #F1F4F7);
+  /* Semantic colors */
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-on-dark: var(--on-dark);
+  --color-text-body: var(--text-body);
+  --color-text-muted: var(--text-muted);
+  --color-border-muted: var(--border-muted);
+  --color-divider: var(--divider);
+  --color-overlay: var(--overlay);
+
+  /* Shadows */
+  --shadow-card: 0 3px 23px 0 var(--shadow-color);
+
+  /* Custom gradients */
+  --background-image-custom-gradient: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+  --background-image-custom-gradient-blue: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+  --background-image-custom-blue: linear-gradient(53deg, var(--bluebutton) 11.33%, color-mix(in srgb, var(--bluebutton) 41%, transparent) 68.25%, transparent 95.21%);
+  --background-image-custom-orange: linear-gradient(53deg, var(--prime-yellow) 11.33%, color-mix(in srgb, var(--prime-yellow) 41%, transparent) 68.25%, transparent 95.21%);
+  --background-image-custom-blue-schedule: radial-gradient(ellipse 645.41% 133.94% at 100% 0%, var(--aqua) 0%, var(--aqua-light) 31%, var(--mist) 65%, var(--aqua) 100%);
+  --background-image-radial-gradient: radial-gradient(circle, var(--aqua), var(--aqua-light), var(--mist));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #082D45;
-    --foreground: #F4F6F8;
+
+/* In the base layer so Tailwind utilities on elements can still override. */
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+
+  /* Visible keyboard focus on every interactive element. */
+  :where(a, button, [role="tab"], [tabindex]):focus-visible {
+    outline: 2px solid var(--prime);
+    outline-offset: 3px;
+  }
+
+  /* Respect the OS "reduce motion" setting site-wide. */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 /* Modern sleek custom scrollbars */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -65,18 +143,18 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--scrollbar-thumb);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: var(--scrollbar-thumb-hover);
 }
 
 /* Dedicated slim scrollbar class */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -89,10 +167,10 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--scrollbar-thumb);
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: var(--scrollbar-thumb-hover);
 }
