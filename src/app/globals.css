@@ -1,0 +1,98 @@
+@import "tailwindcss";
+@plugin "tailwind-scrollbar";
+
+:root {
+  --background: #ffffff;
+  --foreground: #030303;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* NivLearn Brand Colors */
+  --color-prime: #2AA4B7;
+  --color-primary: #2AA4B7;
+  --color-secondary: #FF9E0A;
+  --color-prime1: #0099FF;
+  --color-sec-prime: #F4F6F8;
+  --color-prime-dark: #082D45;
+  --color-prime-yellow: #FF9E0A;
+  --color-prime-outline: #19809A;
+  --color-prime-light: #F3F4F6;
+  --color-light: #F0F4F9;
+  --color-prime-gray: #F2F2F2;
+  --color-textblack: #030303;
+  --color-bluebutton: #47BDCD;
+
+  /* Custom Gradients */
+  --background-image-custom-gradient: linear-gradient(to bottom, #1D8DAB, #073F57);
+  --background-image-custom-gradient-blue: linear-gradient(to bottom, #1D8DAB, #073F57);
+  --background-image-custom-blue: linear-gradient(53deg, #47BDCD 11.33%, rgba(71, 189, 205, 0.41) 68.25%, rgba(42, 164, 183, 0.00) 95.21%);
+  --background-image-custom-orange: linear-gradient(53deg, #FF9E0A 11.33%, rgba(255, 158, 10, 0.41) 68.25%, rgba(255, 158, 10, 0.00) 95.21%);
+  --background-image-custom-blue-schedule: radial-gradient(ellipse 645.41% 133.94% at 100% 0%, #83DAE2 0%, #D9F6F7 31%, #F1F4F7 65%, #83DAE2 100%);
+  --background-image-radial-gradient: radial-gradient(circle, #83DAE2, #D9F6F7, #F1F4F7);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #082D45;
+    --foreground: #F4F6F8;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Modern sleek custom scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Dedicated slim scrollbar class */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
