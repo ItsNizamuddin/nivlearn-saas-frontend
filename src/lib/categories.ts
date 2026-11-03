@@ -50,7 +50,7 @@ export async function getCategories(): Promise<Category[]> {
 
     const catRes = await fetchFromBackend('/categories', {
       queryParams: catQueryParams,
-      next: { revalidate: false, tags: ['categories'] },
+      next: { revalidate: 3600, tags: ['categories'] },
     });
 
     if (!catRes.ok) {
@@ -73,7 +73,7 @@ export async function getCategories(): Promise<Category[]> {
 
     const courseRes = await fetchFromBackend('/courses', {
       queryParams: courseQueryParams,
-      next: { revalidate: false, tags: ['courses'] },
+      next: { revalidate: 3600, tags: ['courses'] },
     });
 
     let rawCourses: RawCourse[] = [];

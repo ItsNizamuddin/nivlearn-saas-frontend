@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="w-full bg-slate-50/70 border-b border-zinc-200/60 py-20 lg:py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section-container">
         <div className="max-w-2xl space-y-6">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-zinc-900 tracking-tight leading-[1.12]">
             Learn In-Demand Skills for Tomorrow&apos;s Jobs
