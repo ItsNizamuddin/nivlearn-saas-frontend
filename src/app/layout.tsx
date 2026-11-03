@@ -4,7 +4,7 @@ import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/Navbar";
 import NavbarFallback from "@/components/Navbar/NavbarFallback";
-import Footer from "@/components/layout/Footer";
+import Footer, { FooterFallback } from "@/components/Footer";
 
 // Self-hosted at build time by next/font: no runtime request to Google,
 // variable fonts (one file covers every weight), Latin subset only,
@@ -54,7 +54,9 @@ export default function RootLayout({
           <NavBar />
         </Suspense>
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Suspense fallback={<FooterFallback />}>
+          <Footer />
+        </Suspense>
       </body>
     </html>
   );

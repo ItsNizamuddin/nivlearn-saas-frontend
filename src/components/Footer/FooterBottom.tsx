@@ -1,0 +1,68 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+interface FooterBottomProps {
+    bottomRibbon?: string;
+}
+
+export default function FooterBottom({ bottomRibbon }: FooterBottomProps) {
+    const [year, setYear] = useState(2026);
+
+    useEffect(() => {
+        setYear(new Date().getFullYear());
+    }, []);
+
+    // Dynamic Copyright from backend; static fallback is NivLearn only
+    const copyright = bottomRibbon?.trim() || `© ${year} NivLearn. All rights reserved.`;
+
+    return (
+        <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
+            {/* Dynamic Copyright from CMS */}
+            <p className="text-center md:text-left">
+                {copyright}
+            </p>
+
+            {/* Platform Attribution */}
+            <p className="text-center">
+                Powered by{' '}
+                <a
+                    href="https://skilldeck.net/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-200 hover:text-prime-yellow transition-colors font-medium"
+                >
+                    Skilldeck
+                </a>
+            </p>
+
+            {/* Policy Navigation (SSR links with nofollow) */}
+            <nav aria-label="Footer Legal and Policies" className="flex items-center gap-3 sm:gap-4">
+                <Link
+                    href="/privacy-policy"
+                    rel="nofollow"
+                    className="hover:text-prime-yellow transition-colors"
+                >
+                    Privacy Policy
+                </Link>
+                <span className="text-zinc-600" aria-hidden="true">•</span>
+                <Link
+                    href="/terms-and-conditions"
+                    rel="nofollow"
+                    className="hover:text-prime-yellow transition-colors"
+                >
+                    Terms & Conditions
+                </Link>
+                <span className="text-zinc-600" aria-hidden="true">•</span>
+                <Link
+                    href="/refund-policy"
+                    rel="nofollow"
+                    className="hover:text-prime-yellow transition-colors"
+                >
+                    Refund Policy
+                </Link>
+            </nav>
+        </div>
+    );
+}

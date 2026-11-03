@@ -8,7 +8,7 @@ import { IoMdMenu } from 'react-icons/io';
 export default function NavbarFallback() {
   return (
     <nav className="sticky top-0 z-40 bg-white border-b border-zinc-200">
-      <div className="max-w-6xl 2xl:max-w-7xl mx-auto px-4">
+      <div className="section-container">
         <div className="flex items-center justify-between h-16 py-3">
           {/* Left: Brand + Course Button + Search */}
           <div className="flex items-center gap-6 flex-1 min-w-0">
@@ -19,7 +19,7 @@ export default function NavbarFallback() {
                 width={202}
                 height={36}
                 priority
-                className="h-7 md:h-9 w-auto"
+                className="h-7 w-[157px] md:h-9 md:w-[202px] object-contain"
               />
             </div>
 

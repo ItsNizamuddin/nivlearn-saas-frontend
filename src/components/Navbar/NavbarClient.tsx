@@ -82,7 +82,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
     return (
         <>
             <nav ref={navRef} className="sticky top-0 z-40 bg-white border-b border-zinc-200">
-                <div className="max-w-6xl 2xl:max-w-7xl mx-auto px-4">
+                <div className="section-container">
                     <div className="flex items-center justify-between h-16 py-3">
                         {/* Mobile In-Navbar Active Search Field */}
                         {isMobileSearchOpen ? (
@@ -113,7 +113,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                             width={202}
                                             height={36}
                                             priority
-                                            className="h-7 md:h-9 w-auto"
+                                            className="h-7 w-[157px] md:h-9 md:w-[202px] object-contain"
                                         />
                                     </Link>
 

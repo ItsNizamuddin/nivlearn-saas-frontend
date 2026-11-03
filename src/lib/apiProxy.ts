@@ -137,7 +137,7 @@ export async function fetchFromBackend(
         // the backend's own cache expiring (x-cache: MISS) used to be treated as a
         // signal to purge our own edge cache, which just re-triggered the same MISS
         // on the next request forever. Cache invalidation is now driven exclusively
-        // via POST to the /api/revalidate webhook. See kandradigital-saas-frontent/CACHING_FIX.md.
+        // via POST to the /api/revalidate webhook.
 
         return response;
     } catch (error: unknown) {

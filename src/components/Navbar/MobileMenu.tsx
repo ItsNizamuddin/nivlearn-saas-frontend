@@ -55,7 +55,13 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3.5 border-b border-zinc-100 bg-white flex-shrink-0">
           <Link href="/" onClick={onClose}>
-            <Image src="/logo.png" width={157} height={28} alt="NivLearn" className="h-7 w-auto" />
+            <Image
+              src="/logo.png"
+              width={157}
+              height={28}
+              alt="NivLearn"
+              className="h-7 w-[157px] object-contain"
+            />
           </Link>
           <button
             onClick={onClose}
