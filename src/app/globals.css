@@ -96,3 +96,17 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Global Standard Section & Page Container
+ * Ensures uniform layout width across all pages and components:
+ * - Mobile: 100% width with standard responsive padding
+ * - From md (768px): max-w-6xl (72rem / 1152px)
+ * - From 2xl (1536px): max-w-7xl (80rem / 1280px)
+ */
+@utility section-container {
+  @apply mx-auto w-full px-4 sm:px-6 md:max-w-6xl 2xl:max-w-7xl;
+}
+
+@utility layout-container {
+  @apply mx-auto w-full px-4 sm:px-6 md:max-w-6xl 2xl:max-w-7xl;
+}

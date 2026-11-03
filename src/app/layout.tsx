@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/Navbar";
 import NavbarFallback from "@/components/Navbar/NavbarFallback";
-import Footer from "@/components/layout/Footer";
+import Footer, { FooterFallback } from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,7 +49,9 @@ export default function RootLayout({
           <NavBar />
         </Suspense>
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Suspense fallback={<FooterFallback />}>
+          <Footer />
+        </Suspense>
       </body>
     </html>
   );
