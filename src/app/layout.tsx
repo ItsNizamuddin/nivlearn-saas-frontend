@@ -1,19 +1,24 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/Navbar";
 import NavbarFallback from "@/components/Navbar/NavbarFallback";
 import Footer, { FooterFallback } from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Self-hosted at build time by next/font: no runtime request to Google,
+// variable fonts (one file covers every weight), Latin subset only,
+// and a metric-matched fallback so text swapping in causes no layout shift.
+const inter = Inter({
+  variable: "--font-family-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const montserrat = Montserrat({
+  variable: "--font-family-montserrat",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nivlearn.com";
@@ -39,12 +44,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${montserrat.variable} h-full antialiased`}
     >
       <head>
         <meta name="apple-mobile-web-app-title" content="NivLearn" />
       </head>
-      <body className="min-h-full flex flex-col bg-white text-zinc-900">
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <Suspense fallback={<NavbarFallback />}>
           <NavBar />
         </Suspense>
