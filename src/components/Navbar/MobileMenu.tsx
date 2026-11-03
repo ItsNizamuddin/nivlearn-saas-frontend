@@ -1,0 +1,234 @@
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { IoClose, IoChevronDownOutline, IoSearch } from 'react-icons/io5';
+import { MdOutlineSchool } from 'react-icons/md';
+import { HiAcademicCap, HiChevronRight } from 'react-icons/hi2';
+import { BsChatSquareTextFill } from 'react-icons/bs';
+import { BiSupport } from 'react-icons/bi';
+import { Category } from './types';
+
+interface MobileMenuProps {
+  isOpen: boolean;
+  onClose: () => void;
+  categories: Category[];
+}
+
+const NAV_ITEMS = [
+  { name: 'Enterprise', link: '/corporate' },
+  { name: 'Placement Assistance', link: '/placement-assistance' },
+  { name: 'Blog', link: '/blog' },
+  { name: 'About Us', link: '/about-us' },
+  { name: 'Contact Us', link: '/contact-us' },
+];
+
+export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuProps) {
+  const [isCoursesOpen, setIsCoursesOpen] = useState(true);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(
+    categories[0]?.slug ?? null
+  );
+
+  const toggleCategory = (slug: string) => {
+    setExpandedCategory(expandedCategory === slug ? null : slug);
+  };
+
+  return (
+    <div
+      className={`fixed inset-0 z-50 lg:hidden transition-all duration-300 ${isOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
+        }`}
+    >
+      {/* Backdrop with smooth fade */}
+      <div
+        className={`fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity duration-300 ease-in-out ${isOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      {/* Drawer with smooth slide-in from left */}
+      <div
+        className={`fixed inset-y-0 left-0 w-full max-w-[320px] sm:max-w-sm bg-white shadow-2xl flex flex-col z-10 transition-transform duration-300 ease-out transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3.5 border-b border-zinc-100 bg-white flex-shrink-0">
+          <Link href="/" onClick={onClose}>
+            <Image src="/logo.png" width={157} height={28} alt="NivLearn" className="h-7 w-auto" />
+          </Link>
+          <button
+            onClick={onClose}
+            aria-label="Close menu"
+            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100 transition-colors cursor-pointer"
+          >
+            <IoClose size={22} />
+          </button>
+        </div>
+
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-3">
+          {/* Courses & Categories Section */}
+          <div className="border border-zinc-200 rounded-xl overflow-hidden bg-white shadow-2xs">
+            <button
+              onClick={() => setIsCoursesOpen(!isCoursesOpen)}
+              className="w-full flex items-center justify-between p-3 font-semibold text-xs sm:text-sm text-prime-dark bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer"
+            >
+              <div className="flex items-center gap-2">
+                <HiAcademicCap className="text-prime text-base" />
+                <span>Explore All Courses ({categories.reduce((acc, c) => acc + (c.courses?.length || 0), 0)})</span>
+              </div>
+              <IoChevronDownOutline
+                className={`text-zinc-400 text-sm transition-transform duration-200 ${isCoursesOpen ? 'rotate-180' : ''
+                  }`}
+              />
+            </button>
+
+            {isCoursesOpen && (
+              <div className="divide-y divide-zinc-100 border-t border-zinc-200">
+                {categories.map((category) => {
+                  const isExpanded = expandedCategory === category.slug;
+                  const coursesCount = category.courses?.length || 0;
+
+                  return (
+                    <div key={category.slug} className="bg-white">
+                      {/* Category Header Button */}
+                      <button
+                        onClick={() => toggleCategory(category.slug)}
+                        className={`w-full flex items-center justify-between px-3 py-2.5 text-left text-xs font-semibold transition-colors cursor-pointer ${isExpanded
+                          ? 'bg-prime/5 text-prime'
+                          : 'text-zinc-800 hover:bg-zinc-50'
+                          }`}
+                      >
+                        <div className="flex items-center gap-2 min-w-0 pr-2">
+                          <MdOutlineSchool
+                            className={`text-base shrink-0 ${isExpanded ? 'text-prime-yellow' : 'text-zinc-400'
+                              }`}
+                          />
+                          <span className="truncate">{category.name}</span>
+                          <span className="text-[10px] text-zinc-400 font-normal shrink-0">
+                            ({coursesCount})
+                          </span>
+                        </div>
+                        <IoChevronDownOutline
+                          className={`text-xs text-zinc-400 shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-prime' : ''
+                            }`}
+                        />
+                      </button>
+
+                      {/* Course Items List inside Category */}
+                      {isExpanded && (
+                        <div className="bg-slate-50/70 px-2 py-2 space-y-1.5 border-t border-zinc-100">
+                          {category.courses && category.courses.length > 0 ? (
+                            category.courses.map((course) => {
+                              const iconUrl =
+                                course.courseCard?.courseIcon?.thumbnail ||
+                                course.courseCard?.courseIcon?.url;
+                              const duration = course.courseCard?.courseDuration;
+
+                              return (
+                                <Link
+                                  key={course.slug}
+                                  href={`/${category.slug}/${course.slug}`}
+                                  onClick={onClose}
+                                  className="flex items-start gap-2.5 p-2 rounded-lg bg-white border border-zinc-200/80 hover:border-prime/50 hover:bg-prime/5 transition-all block"
+                                >
+                                  {/* Icon */}
+                                  <div className="w-7 h-7 rounded bg-prime/5 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+                                    {iconUrl ? (
+                                      <Image
+                                        src={iconUrl}
+                                        alt={course.name}
+                                        width={28}
+                                        height={28}
+                                        className="w-full h-full object-contain p-0.5"
+                                      />
+                                    ) : (
+                                      <div className="w-2 h-2 rounded-full bg-prime-yellow" />
+                                    )}
+                                  </div>
+
+                                  {/* Title & Duration */}
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center justify-between gap-1">
+                                      <span className="text-xs font-medium text-prime-dark line-clamp-2 leading-tight">
+                                        {course.name}
+                                      </span>
+                                      <HiChevronRight className="text-zinc-400 text-xs shrink-0" />
+                                    </div>
+                                    {duration && (
+                                      <span className="text-[10px] text-zinc-500 font-normal block mt-0.5">
+                                        {duration} • Live Online
+                                      </span>
+                                    )}
+                                  </div>
+                                </Link>
+                              );
+                            })
+                          ) : (
+                            <p className="text-[11px] text-zinc-400 p-2 text-center">
+                              No courses listed in this domain yet
+                            </p>
+                          )}
+
+                          {/* View All Category Link */}
+                          <Link
+                            href={`/${category.slug}`}
+                            onClick={onClose}
+                            className="block text-center text-[11px] font-semibold text-prime hover:underline py-1"
+                          >
+                            View All {category.name} &rarr;
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Quick Nav Links */}
+          <div className="space-y-0.5 pt-1">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 px-3 pb-1">
+              Menu
+            </div>
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.link}
+                href={item.link}
+                onClick={onClose}
+                className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-prime hover:bg-slate-50 rounded-lg transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer Quick Support */}
+        <div className="p-3 border-t border-zinc-200 bg-slate-50 flex items-center justify-between text-xs flex-shrink-0">
+          <Link
+            href="https://wa.me/919513001835"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className="flex items-center gap-2 text-prime font-semibold hover:opacity-80"
+          >
+            <BsChatSquareTextFill className="text-prime-yellow text-sm" />
+            <span className="text-[11px]">Chat on WhatsApp</span>
+          </Link>
+
+          <Link
+            href="mailto:reachus@nivlearn.com"
+            onClick={onClose}
+            className="flex items-center gap-1.5 text-zinc-600 hover:text-prime"
+          >
+            <BiSupport className="text-zinc-500 text-sm" />
+            <span className="text-[11px]">Support</span>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
