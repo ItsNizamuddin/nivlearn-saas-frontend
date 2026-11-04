@@ -11,7 +11,7 @@ export default function FooterPopular({ categories = [], courses = [] }: FooterP
     if (categories.length === 0 && courses.length === 0) return null;
 
     return (
-        <section aria-label="Popular Programs and Domains" className="border-t border-white/10 pt-8">
+        <section aria-label="Popular Programs and Domains" className="border-t border-on-dark/10 pt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start">
                 {/* Top Domains (4 cols) */}
                 {categories.length > 0 && (
@@ -20,7 +20,7 @@ export default function FooterPopular({ categories = [], courses = [] }: FooterP
                             <span className="text-prime-yellow text-xs font-bold uppercase tracking-wider">
                                 Explore Domains
                             </span>
-                            <div className="flex-1 h-px bg-white/10" />
+                            <div className="flex-1 h-px bg-on-dark/10" />
                         </div>
 
                         <div className="flex flex-wrap gap-2">
@@ -28,7 +28,7 @@ export default function FooterPopular({ categories = [], courses = [] }: FooterP
                                 <Link
                                     key={i}
                                     href={`/${cat.slug}`}
-                                    className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-prime-yellow/40 text-xs text-zinc-300 hover:text-white transition-all duration-150"
+                                    className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-on-dark/5 hover:bg-on-dark/10 border border-on-dark/10 hover:border-prime-yellow/40 text-xs text-on-dark/80 hover:text-on-dark transition-all duration-150"
                                 >
                                     <span className="h-1.5 w-1.5 rounded-full bg-prime-yellow/70 group-hover:bg-prime-yellow transition-colors" />
                                     <span>{cat.name}</span>
@@ -45,7 +45,7 @@ export default function FooterPopular({ categories = [], courses = [] }: FooterP
                             <span className="text-prime-yellow text-xs font-bold uppercase tracking-wider">
                                 In-Demand Certifications & Bootcamps
                             </span>
-                            <div className="flex-1 h-px bg-white/10" />
+                            <div className="flex-1 h-px bg-on-dark/10" />
                         </div>
 
                         <div className="flex flex-wrap gap-2">
@@ -53,7 +53,7 @@ export default function FooterPopular({ categories = [], courses = [] }: FooterP
                                 <Link
                                     key={i}
                                     href={`/${course.category_slug}/${course.slug}`}
-                                    className="inline-flex items-center px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-prime/40 text-xs text-zinc-300 hover:text-white transition-all duration-150"
+                                    className="inline-flex items-center px-3 py-1.5 rounded-lg bg-on-dark/5 hover:bg-on-dark/10 border border-on-dark/10 hover:border-prime/40 text-xs text-on-dark/80 hover:text-on-dark transition-all duration-150"
                                 >
                                     <span>{course.course_name}</span>
                                 </Link>

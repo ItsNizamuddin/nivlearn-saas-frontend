@@ -3,8 +3,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { IoSearch, IoCloseCircle } from 'react-icons/io5';
-import { HiChevronRight, HiAcademicCap } from 'react-icons/hi2';
+import { Search, XCircle, ChevronRight, GraduationCap } from 'lucide-react';
 import { Category, Course } from './types';
 
 interface SearchCourse extends Course {
@@ -51,7 +50,7 @@ export default function SearchBar({
   categories = [],
   onFocus,
   onSelect,
-  className = 'w-full w-80 lg:w-60',
+  className = 'w-full w-80 lg:w-62',
   dropdownClassName,
   autoFocus = false,
 }: SearchBarProps) {
@@ -171,7 +170,7 @@ export default function SearchBar({
               />
             </svg>
           ) : (
-            <IoSearch size={16} />
+            <Search size={16} />
           )}
         </span>
 
@@ -192,7 +191,7 @@ export default function SearchBar({
             if (query.trim().length >= 1) setIsOpen(true);
           }}
           placeholder="What do you want to learn today?"
-          className="w-full py-1.5 pl-9 pr-5 border border-zinc-200 rounded-md text-xs sm:text-sm text-zinc-900 placeholder:text-zinc-400 placeholder:text-xs focus:outline-none focus:border-prime focus:ring-1 focus:ring-prime/20 bg-white transition-all"
+          className="w-full py-1.5 pl-9 pr-5 border border-border-muted/60 rounded-md text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs focus:outline-none focus:border-prime focus:ring-1 focus:ring-prime/20 bg-surface transition-all"
         />
 
         {/* Clear Button */}
@@ -200,10 +199,10 @@ export default function SearchBar({
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 cursor-pointer"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-text-muted hover:text-prime-dark cursor-pointer"
             aria-label="Clear search"
           >
-            <IoCloseCircle size={16} />
+            <XCircle size={16} />
           </button>
         )}
       </form>
@@ -211,11 +210,11 @@ export default function SearchBar({
       {/* Results Dropdown: Matches exact width of input box */}
       {isOpen && debouncedQuery.length >= 1 && (
         <div
-          className={`absolute z-50 left-0 right-0 w-full top-full mt-1.5 bg-white border border-zinc-200 rounded-lg shadow-xl overflow-hidden ${dropdownClassName || ''
+          className={`absolute z-50 left-0 right-0 w-full top-full mt-1.5 bg-surface border border-border-muted/60 rounded-lg shadow-xl overflow-hidden ${dropdownClassName || ''
             }`}
         >
           {filtered.length > 0 ? (
-            <div className="py-1 max-h-72 overflow-y-auto custom-scrollbar divide-y divide-zinc-50">
+            <div className="py-1 max-h-72 overflow-y-auto custom-scrollbar divide-y divide-border-muted/20">
               {filtered.map((course) => (
                 <Link
                   key={`${course.catslug}-${course.slug}`}
@@ -224,22 +223,22 @@ export default function SearchBar({
                     setIsOpen(false);
                     onSelect?.();
                   }}
-                  className="group flex items-start justify-between gap-2 px-3.5 py-2.5 text-xs sm:text-sm text-zinc-800 hover:bg-slate-50 hover:text-prime transition-colors cursor-pointer"
+                  className="group flex items-start justify-between gap-2 px-3.5 py-2.5 text-xs sm:text-sm text-prime-dark hover:bg-sec-prime hover:text-prime transition-colors cursor-pointer"
                 >
                   <div className="flex items-start gap-2.5 min-w-0 flex-1">
-                    <IoSearch className="text-zinc-400 text-xs shrink-0 mt-1 group-hover:text-prime transition-colors" />
+                    <Search className="text-text-muted h-3.5 w-3.5 shrink-0 mt-1 group-hover:text-prime transition-colors" />
                     <span className="font-medium leading-snug break-words">
                       <HighlightMatch text={course.name} query={debouncedQuery} />
                     </span>
                   </div>
-                  <HiChevronRight className="text-zinc-300 group-hover:text-prime text-xs shrink-0 mt-1 transition-colors" />
+                  <ChevronRight className="text-zinc-300 group-hover:text-prime h-4 w-4 shrink-0 mt-0.5 transition-colors" />
                 </Link>
               ))}
             </div>
           ) : (
             /* No Results Found State */
             <div className="p-5 text-center">
-              <HiAcademicCap className="mx-auto text-zinc-300 text-2xl mb-1.5" />
+              <GraduationCap className="mx-auto text-zinc-300 h-8 w-8 mb-1.5" />
               <p className="text-xs font-medium text-zinc-700">
                 No courses found matching &quot;{debouncedQuery}&quot;
               </p>

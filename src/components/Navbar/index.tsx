@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import React, { Suspense } from 'react';
-import { getCategories } from '@/lib/categories';
+import React from 'react';
+import { getCategories } from '@/services/catalog.service';
 import NavbarClient from './NavbarClient';
-import NavbarFallback from './NavbarFallback';
 import { Category } from './types';
 
 export * from './types';
@@ -11,8 +10,9 @@ interface NavBarProps {
     initialCategories?: Category[];
 }
 
-async function NavBarContent({ initialCategories }: NavBarProps) {
-    const categories = initialCategories ?? (await getCategories());
+export default async function NavBar(props: NavBarProps = {}) {
+    const categories = props.initialCategories ?? (await getCategories());
+
     return (
         <>
             {/* Interactive client navbar */}
@@ -41,13 +41,5 @@ async function NavBarContent({ initialCategories }: NavBarProps) {
                 </ul>
             </nav>
         </>
-    );
-}
-
-export default function NavBar(props: NavBarProps = {}) {
-    return (
-        <Suspense fallback={<NavbarFallback />}>
-            <NavBarContent {...props} />
-        </Suspense>
     );
 }

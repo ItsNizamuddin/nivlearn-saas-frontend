@@ -3,9 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BiCategory } from 'react-icons/bi';
-import { HiAcademicCap, HiChevronRight } from 'react-icons/hi2';
-import { MdOutlineSchool } from 'react-icons/md';
+import { LayoutGrid, GraduationCap, ChevronRight } from 'lucide-react';
 import { Category } from './types';
 import NavContact from './NavContact';
 
@@ -122,11 +120,11 @@ export default function CourseMenu({
         {/* Main 2-Column Layout */}
         <div className="flex flex-1 min-h-0">
           {/* Left Column: Categories List */}
-          <div className="w-72 sm:w-[300px] lg:w-[320px] flex-shrink-0 bg-slate-50/70 border-r border-zinc-200 flex flex-col h-full">
+          <div className="w-72 sm:w-[300px] lg:w-[290px] flex-shrink-0 bg-slate-50/70 border-r border-zinc-200 flex flex-col h-full">
             {/* Header */}
             <div className="px-4 py-3 border-b border-zinc-200 bg-white flex-shrink-0">
               <div className="flex items-center gap-2 text-black font-semibold text-base">
-                <BiCategory className="text-prime-yellow text-lg" />
+                <LayoutGrid className="text-prime-yellow text-lg" size={18} />
                 <span>Categories</span>
               </div>
               <p className="text-xs text-zinc-500 mt-0.5">Click to view category programs</p>
@@ -150,17 +148,13 @@ export default function CourseMenu({
                         }`}
                     >
                       <div className="flex items-center gap-3 min-w-0 pr-2">
-                        <MdOutlineSchool
-                          className={`text-lg flex-shrink-0 ${isActive ? 'text-prime-yellow' : 'text-prime-yellow/90'
-                            }`}
-                        />
                         <span className="text-sm leading-snug break-words">
                           {category.name}
                         </span>
                       </div>
-                      <HiChevronRight
-                        className={`text-sm flex-shrink-0 ${isActive ? 'text-white opacity-100' : 'text-zinc-400 opacity-60'
-                          }`}
+                      <ChevronRight
+                        size={16}
+                        className={`flex-shrink-0 ${isActive ? 'text-white opacity-100' : 'text-zinc-400 opacity-60'}`}
                       />
                     </button>
                   );
@@ -178,7 +172,7 @@ export default function CourseMenu({
               <div className="px-4 py-3 border-b border-zinc-200 bg-white flex items-center justify-between gap-4 flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-md bg-prime/10 flex items-center justify-center flex-shrink-0">
-                    <HiAcademicCap className="text-prime text-lg" />
+                    <GraduationCap className="text-prime text-lg" size={18} />
                   </div>
                   <div>
                     <h3 className="font-bold text-base sm:text-base text-prime-dark">
@@ -199,7 +193,7 @@ export default function CourseMenu({
                     className="text-xs font-semibold text-prime hover:text-prime-dark hover:underline flex items-center gap-1 flex-shrink-0"
                   >
                     <span>View All {currentCategory.name}</span>
-                    <HiChevronRight size={14} />
+                    <ChevronRight size={14} />
                   </Link>
                 )}
               </div>
@@ -244,7 +238,7 @@ export default function CourseMenu({
                               <h4 className="font-semibold text-sm text-prime-dark group-hover:text-prime transition-colors duration-150 line-clamp-2 leading-snug">
                                 {course.name}
                               </h4>
-                              <HiChevronRight
+                              <ChevronRight
                                 className="text-zinc-300 group-hover:text-prime transition-colors duration-150 flex-shrink-0 mt-0.5"
                                 size={16}
                               />
@@ -276,7 +270,7 @@ export default function CourseMenu({
                   </div>
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full text-zinc-400 py-16">
-                    <HiAcademicCap className="mx-auto mb-3 text-zinc-300" size={48} />
+                    <GraduationCap className="mx-auto mb-3 text-zinc-300" size={48} />
                     <p className="text-sm font-medium">Select a category on the left to view programs</p>
                   </div>
                 )}

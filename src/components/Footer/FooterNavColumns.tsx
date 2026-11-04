@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { MdKeyboardArrowRight } from 'react-icons/md';
-import { IoIosArrowDown } from 'react-icons/io';
-import { FiPhone, FiMail } from 'react-icons/fi';
+import { ChevronRight, ChevronDown, Phone, Mail } from 'lucide-react';
 import { FooterColumn, PopularCategory, PopularCourse } from './types';
 
 const NOFOLLOW_PATHS = new Set([
@@ -61,7 +59,7 @@ export default function FooterNavColumns({
                 {programsLinks.length > 0 && (
                     <nav aria-label="Programs" className="space-y-3.5">
                         <div className="space-y-1.5">
-                            <h3 className="text-white text-xs font-bold tracking-wider uppercase">
+                            <h3 className="text-on-dark text-xs font-bold tracking-wider uppercase">
                                 Programs
                             </h3>
                             <div className="h-0.5 w-6 rounded-full bg-prime-yellow" />
@@ -71,9 +69,9 @@ export default function FooterNavColumns({
                                 <li key={i}>
                                     <Link
                                         href={link.url}
-                                        className="group inline-flex items-center gap-1.5 text-zinc-300 hover:text-prime-yellow text-xs transition-colors"
+                                        className="group inline-flex items-center gap-1.5 text-on-dark/80 hover:text-prime-yellow text-xs transition-colors"
                                     >
-                                        <MdKeyboardArrowRight className="text-zinc-500 group-hover:text-prime-yellow transition-transform group-hover:translate-x-0.5 shrink-0" />
+                                        <ChevronRight size={14} className="text-on-dark/40 group-hover:text-prime-yellow transition-transform group-hover:translate-x-0.5 shrink-0" />
                                         <span className="leading-snug">{link.label}</span>
                                     </Link>
                                 </li>
@@ -85,7 +83,7 @@ export default function FooterNavColumns({
                 {legalLinks.length > 0 && (
                     <nav aria-label="Legal" className="space-y-3.5 pt-2">
                         <div className="space-y-1.5">
-                            <h3 className="text-white text-xs font-bold tracking-wider uppercase">
+                            <h3 className="text-on-dark text-xs font-bold tracking-wider uppercase">
                                 Legal
                             </h3>
                             <div className="h-0.5 w-6 rounded-full bg-prime-yellow" />
@@ -96,9 +94,9 @@ export default function FooterNavColumns({
                                     <Link
                                         href={link.url}
                                         rel="nofollow"
-                                        className="group inline-flex items-center gap-1.5 text-zinc-300 hover:text-prime-yellow text-xs transition-colors"
+                                        className="group inline-flex items-center gap-1.5 text-on-dark/80 hover:text-prime-yellow text-xs transition-colors"
                                     >
-                                        <MdKeyboardArrowRight className="text-zinc-500 group-hover:text-prime-yellow transition-transform group-hover:translate-x-0.5 shrink-0" />
+                                        <ChevronRight size={14} className="text-on-dark/40 group-hover:text-prime-yellow transition-transform group-hover:translate-x-0.5 shrink-0" />
                                         <span className="leading-snug">{link.label}</span>
                                     </Link>
                                 </li>
@@ -112,7 +110,7 @@ export default function FooterNavColumns({
             <div className="hidden lg:block lg:col-span-3 space-y-4">
                 <nav aria-label="Popular Courses" className="space-y-3.5">
                     <div className="space-y-1.5">
-                        <h3 className="text-white text-xs font-bold tracking-wider uppercase">
+                        <h3 className="text-on-dark text-xs font-bold tracking-wider uppercase">
                             Popular Courses
                         </h3>
                         <div className="h-0.5 w-6 rounded-full bg-prime-yellow" />
@@ -122,9 +120,9 @@ export default function FooterNavColumns({
                             <li key={i}>
                                 <Link
                                     href={link.url}
-                                    className="group inline-flex items-center gap-1.5 text-zinc-300 hover:text-prime-yellow text-xs transition-colors"
+                                    className="group inline-flex items-center gap-1.5 text-on-dark/80 hover:text-prime-yellow text-xs transition-colors"
                                 >
-                                    <MdKeyboardArrowRight className="text-zinc-500 group-hover:text-prime-yellow transition-transform group-hover:translate-x-0.5 shrink-0" />
+                                    <ChevronRight size={14} className="text-on-dark/40 group-hover:text-prime-yellow transition-transform group-hover:translate-x-0.5 shrink-0" />
                                     <span className="leading-snug">{link.label}</span>
                                 </Link>
                             </li>
@@ -138,7 +136,7 @@ export default function FooterNavColumns({
                 {companyLinks.length > 0 && (
                     <nav aria-label="Company" className="space-y-3.5">
                         <div className="space-y-1.5">
-                            <h3 className="text-white text-xs font-bold tracking-wider uppercase">
+                            <h3 className="text-on-dark text-xs font-bold tracking-wider uppercase">
                                 Company
                             </h3>
                             <div className="h-0.5 w-6 rounded-full bg-prime-yellow" />
@@ -149,9 +147,9 @@ export default function FooterNavColumns({
                                     <Link
                                         href={link.url}
                                         rel={isNofollow(link.url) ? 'nofollow' : undefined}
-                                        className="group inline-flex items-center gap-1 text-zinc-300 hover:text-prime-yellow text-xs transition-colors"
+                                        className="group inline-flex items-center gap-1 text-on-dark/80 hover:text-prime-yellow text-xs transition-colors"
                                     >
-                                        <MdKeyboardArrowRight className="text-zinc-500 group-hover:text-prime-yellow transition-transform group-hover:translate-x-0.5 shrink-0" />
+                                        <ChevronRight size={14} className="text-on-dark/40 group-hover:text-prime-yellow transition-transform group-hover:translate-x-0.5 shrink-0" />
                                         <span className="leading-snug">{link.label}</span>
                                     </Link>
                                 </li>
@@ -160,10 +158,10 @@ export default function FooterNavColumns({
                     </nav>
                 )}
 
-                {/* Dedicated Admissions & Help Card (Fills column to right boundary) */}
-                <div className="rounded-xl border border-white/10 bg-white/5 p-4 space-y-3 backdrop-blur-sm">
+                {/* Dedicated Admissions & Help Card */}
+                <div className="rounded-xl border border-on-dark/10 bg-on-dark/5 p-4 space-y-3 backdrop-blur-sm">
                     <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-white uppercase tracking-wider">
+                        <span className="text-xs font-bold text-on-dark uppercase tracking-wider">
                             Admissions Support
                         </span>
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 font-medium">
@@ -175,10 +173,10 @@ export default function FooterNavColumns({
                         {phone && (
                             <a
                                 href={`tel:${phone.replace(/\s+/g, '')}`}
-                                className="flex items-center gap-2.5 text-white hover:text-prime-yellow transition-colors font-medium group"
+                                className="flex items-center gap-2.5 text-on-dark hover:text-prime-yellow transition-colors font-medium group"
                             >
-                                <span className="p-1.5 rounded-md bg-white/10 text-prime-yellow group-hover:bg-prime-yellow/20 transition-colors shrink-0">
-                                    <FiPhone size={13} />
+                                <span className="p-1.5 rounded-md bg-on-dark/10 text-prime-yellow group-hover:bg-prime-yellow/20 transition-colors shrink-0">
+                                    <Phone size={13} />
                                 </span>
                                 <span>{phone}</span>
                             </a>
@@ -186,38 +184,38 @@ export default function FooterNavColumns({
                         {email && (
                             <a
                                 href={`mailto:${email}`}
-                                className="flex items-center gap-2.5 text-zinc-300 hover:text-white transition-colors truncate group"
+                                className="flex items-center gap-2.5 text-on-dark/80 hover:text-on-dark transition-colors truncate group"
                             >
-                                <span className="p-1.5 rounded-md bg-white/10 text-prime-yellow group-hover:bg-prime-yellow/20 transition-colors shrink-0">
-                                    <FiMail size={13} />
+                                <span className="p-1.5 rounded-md bg-on-dark/10 text-prime-yellow group-hover:bg-prime-yellow/20 transition-colors shrink-0">
+                                    <Mail size={13} />
                                 </span>
                                 <span className="truncate">{email}</span>
                             </a>
                         )}
                     </div>
 
-                    <p className="text-[11px] text-zinc-400 leading-tight pt-1.5 border-t border-white/10">
+                    <p className="text-[11px] text-on-dark/60 leading-tight pt-1.5 border-t border-on-dark/10">
                         Mon – Sat: 9:00 AM – 7:30 PM IST
                     </p>
                 </div>
             </div>
 
-            {/* Mobile / Tablet Accordion (Semantic HTML5 <details> - 100% crawlable by Googlebot without JS) */}
+            {/* Mobile / Tablet Accordion (Semantic HTML5 <details>) */}
             <div className="lg:hidden col-span-1 md:col-span-2 space-y-2 pt-2">
                 {programsLinks.length > 0 && (
-                    <details className="group rounded-xl border border-white/10 bg-white/5 overflow-hidden open:bg-white/8 transition-colors">
-                        <summary className="w-full flex items-center justify-between p-4 cursor-pointer select-none text-xs sm:text-sm font-semibold tracking-wide uppercase text-white list-none [&::-webkit-details-marker]:hidden">
+                    <details className="group rounded-xl border border-on-dark/10 bg-on-dark/5 overflow-hidden open:bg-on-dark/10 transition-colors">
+                        <summary className="w-full flex items-center justify-between p-4 cursor-pointer select-none text-xs sm:text-sm font-semibold tracking-wide uppercase text-on-dark list-none [&::-webkit-details-marker]:hidden">
                             <span>Programs</span>
-                            <IoIosArrowDown size={16} className="text-zinc-400 transition-transform duration-200 group-open:rotate-180" />
+                            <ChevronDown size={16} className="text-on-dark/60 transition-transform duration-200 group-open:rotate-180" />
                         </summary>
-                        <div className="px-4 pb-4 pt-1 border-t border-white/5 space-y-2.5">
+                        <div className="px-4 pb-4 pt-1 border-t border-on-dark/10 space-y-2.5">
                             {programsLinks.map((link, i) => (
                                 <Link
                                     key={i}
                                     href={link.url}
-                                    className="flex items-center gap-2 text-xs text-zinc-300 hover:text-prime-yellow transition-colors py-1"
+                                    className="flex items-center gap-2 text-xs text-on-dark/80 hover:text-prime-yellow transition-colors py-1"
                                 >
-                                    <MdKeyboardArrowRight className="text-zinc-500" />
+                                    <ChevronRight size={14} className="text-on-dark/40" />
                                     <span>{link.label}</span>
                                 </Link>
                             ))}
@@ -226,19 +224,19 @@ export default function FooterNavColumns({
                 )}
 
                 {featuredCourses.length > 0 && (
-                    <details className="group rounded-xl border border-white/10 bg-white/5 overflow-hidden open:bg-white/8 transition-colors">
-                        <summary className="w-full flex items-center justify-between p-4 cursor-pointer select-none text-xs sm:text-sm font-semibold tracking-wide uppercase text-white list-none [&::-webkit-details-marker]:hidden">
+                    <details className="group rounded-xl border border-on-dark/10 bg-on-dark/5 overflow-hidden open:bg-on-dark/10 transition-colors">
+                        <summary className="w-full flex items-center justify-between p-4 cursor-pointer select-none text-xs sm:text-sm font-semibold tracking-wide uppercase text-on-dark list-none [&::-webkit-details-marker]:hidden">
                             <span>Popular Courses</span>
-                            <IoIosArrowDown size={16} className="text-zinc-400 transition-transform duration-200 group-open:rotate-180" />
+                            <ChevronDown size={16} className="text-on-dark/60 transition-transform duration-200 group-open:rotate-180" />
                         </summary>
-                        <div className="px-4 pb-4 pt-1 border-t border-white/5 space-y-2.5">
+                        <div className="px-4 pb-4 pt-1 border-t border-on-dark/10 space-y-2.5">
                             {featuredCourses.map((link, i) => (
                                 <Link
                                     key={i}
                                     href={link.url}
-                                    className="flex items-center gap-2 text-xs text-zinc-300 hover:text-prime-yellow transition-colors py-1"
+                                    className="flex items-center gap-2 text-xs text-on-dark/80 hover:text-prime-yellow transition-colors py-1"
                                 >
-                                    <MdKeyboardArrowRight className="text-zinc-500" />
+                                    <ChevronRight size={14} className="text-on-dark/40" />
                                     <span>{link.label}</span>
                                 </Link>
                             ))}
@@ -247,20 +245,20 @@ export default function FooterNavColumns({
                 )}
 
                 {companyLinks.length > 0 && (
-                    <details className="group rounded-xl border border-white/10 bg-white/5 overflow-hidden open:bg-white/8 transition-colors">
-                        <summary className="w-full flex items-center justify-between p-4 cursor-pointer select-none text-xs sm:text-sm font-semibold tracking-wide uppercase text-white list-none [&::-webkit-details-marker]:hidden">
+                    <details className="group rounded-xl border border-on-dark/10 bg-on-dark/5 overflow-hidden open:bg-on-dark/10 transition-colors">
+                        <summary className="w-full flex items-center justify-between p-4 cursor-pointer select-none text-xs sm:text-sm font-semibold tracking-wide uppercase text-on-dark list-none [&::-webkit-details-marker]:hidden">
                             <span>Company</span>
-                            <IoIosArrowDown size={16} className="text-zinc-400 transition-transform duration-200 group-open:rotate-180" />
+                            <ChevronDown size={16} className="text-on-dark/60 transition-transform duration-200 group-open:rotate-180" />
                         </summary>
-                        <div className="px-4 pb-4 pt-1 border-t border-white/5 space-y-2.5">
+                        <div className="px-4 pb-4 pt-1 border-t border-on-dark/10 space-y-2.5">
                             {companyLinks.map((link, i) => (
                                 <Link
                                     key={i}
                                     href={link.url}
                                     rel={isNofollow(link.url) ? 'nofollow' : undefined}
-                                    className="flex items-center gap-2 text-xs text-zinc-300 hover:text-prime-yellow transition-colors py-1"
+                                    className="flex items-center gap-2 text-xs text-on-dark/80 hover:text-prime-yellow transition-colors py-1"
                                 >
-                                    <MdKeyboardArrowRight className="text-zinc-500" />
+                                    <ChevronRight size={14} className="text-on-dark/40" />
                                     <span>{link.label}</span>
                                 </Link>
                             ))}
@@ -269,20 +267,20 @@ export default function FooterNavColumns({
                 )}
 
                 {legalLinks.length > 0 && (
-                    <details className="group rounded-xl border border-white/10 bg-white/5 overflow-hidden open:bg-white/8 transition-colors">
-                        <summary className="w-full flex items-center justify-between p-4 cursor-pointer select-none text-xs sm:text-sm font-semibold tracking-wide uppercase text-white list-none [&::-webkit-details-marker]:hidden">
+                    <details className="group rounded-xl border border-on-dark/10 bg-on-dark/5 overflow-hidden open:bg-on-dark/10 transition-colors">
+                        <summary className="w-full flex items-center justify-between p-4 cursor-pointer select-none text-xs sm:text-sm font-semibold tracking-wide uppercase text-on-dark list-none [&::-webkit-details-marker]:hidden">
                             <span>Legal</span>
-                            <IoIosArrowDown size={16} className="text-zinc-400 transition-transform duration-200 group-open:rotate-180" />
+                            <ChevronDown size={16} className="text-on-dark/60 transition-transform duration-200 group-open:rotate-180" />
                         </summary>
-                        <div className="px-4 pb-4 pt-1 border-t border-white/5 space-y-2.5">
+                        <div className="px-4 pb-4 pt-1 border-t border-on-dark/10 space-y-2.5">
                             {legalLinks.map((link, i) => (
                                 <Link
                                     key={i}
                                     href={link.url}
                                     rel="nofollow"
-                                    className="flex items-center gap-2 text-xs text-zinc-300 hover:text-prime-yellow transition-colors py-1"
+                                    className="flex items-center gap-2 text-xs text-on-dark/80 hover:text-prime-yellow transition-colors py-1"
                                 >
-                                    <MdKeyboardArrowRight className="text-zinc-500" />
+                                    <ChevronRight size={14} className="text-on-dark/40" />
                                     <span>{link.label}</span>
                                 </Link>
                             ))}
@@ -292,9 +290,9 @@ export default function FooterNavColumns({
 
                 {/* Mobile Admissions Card */}
                 {(phone || email) && (
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 space-y-3">
+                    <div className="rounded-xl border border-on-dark/10 bg-on-dark/5 p-4 space-y-3">
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-white uppercase tracking-wider">
+                            <span className="text-xs font-bold text-on-dark uppercase tracking-wider">
                                 Admissions Support
                             </span>
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 font-medium">
@@ -305,18 +303,18 @@ export default function FooterNavColumns({
                             {phone && (
                                 <a
                                     href={`tel:${phone.replace(/\s+/g, '')}`}
-                                    className="flex items-center gap-2 text-white font-medium hover:text-prime-yellow"
+                                    className="flex items-center gap-2 text-on-dark font-medium hover:text-prime-yellow"
                                 >
-                                    <FiPhone size={13} className="text-prime-yellow" />
+                                    <Phone size={13} className="text-prime-yellow" />
                                     <span>{phone}</span>
                                 </a>
                             )}
                             {email && (
                                 <a
                                     href={`mailto:${email}`}
-                                    className="flex items-center gap-2 text-zinc-300 hover:text-white truncate"
+                                    className="flex items-center gap-2 text-on-dark/80 hover:text-on-dark truncate"
                                 >
-                                    <FiMail size={13} className="text-prime-yellow shrink-0" />
+                                    <Mail size={13} className="text-prime-yellow shrink-0" />
                                     <span className="truncate">{email}</span>
                                 </a>
                             )}

@@ -3,11 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { IoClose, IoChevronDownOutline, IoSearch } from 'react-icons/io5';
-import { MdOutlineSchool } from 'react-icons/md';
-import { HiAcademicCap, HiChevronRight } from 'react-icons/hi2';
-import { BsChatSquareTextFill } from 'react-icons/bs';
-import { BiSupport } from 'react-icons/bi';
+import { X, ChevronDown, GraduationCap, ChevronRight, MessageSquare, Headphones } from 'lucide-react';
 import { Category } from './types';
 
 interface MobileMenuProps {
@@ -68,7 +64,7 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
             aria-label="Close menu"
             className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100 transition-colors cursor-pointer"
           >
-            <IoClose size={22} />
+            <X size={22} />
           </button>
         </div>
 
@@ -81,12 +77,12 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
               className="w-full flex items-center justify-between p-3 font-semibold text-xs sm:text-sm text-prime-dark bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer"
             >
               <div className="flex items-center gap-2">
-                <HiAcademicCap className="text-prime text-base" />
+                <GraduationCap className="text-prime text-base" size={18} />
                 <span>Explore All Courses ({categories.reduce((acc, c) => acc + (c.courses?.length || 0), 0)})</span>
               </div>
-              <IoChevronDownOutline
-                className={`text-zinc-400 text-sm transition-transform duration-200 ${isCoursesOpen ? 'rotate-180' : ''
-                  }`}
+              <ChevronDown
+                size={18}
+                className={`text-zinc-400 transition-transform duration-200 ${isCoursesOpen ? 'rotate-180' : ''}`}
               />
             </button>
 
@@ -107,18 +103,18 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
                           }`}
                       >
                         <div className="flex items-center gap-2 min-w-0 pr-2">
-                          <MdOutlineSchool
-                            className={`text-base shrink-0 ${isExpanded ? 'text-prime-yellow' : 'text-zinc-400'
-                              }`}
+                          <GraduationCap
+                            size={16}
+                            className={`shrink-0 ${isExpanded ? 'text-prime-yellow' : 'text-zinc-400'}`}
                           />
                           <span className="truncate">{category.name}</span>
                           <span className="text-[10px] text-zinc-400 font-normal shrink-0">
                             ({coursesCount})
                           </span>
                         </div>
-                        <IoChevronDownOutline
-                          className={`text-xs text-zinc-400 shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-prime' : ''
-                            }`}
+                        <ChevronDown
+                          size={14}
+                          className={`text-zinc-400 shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-prime' : ''}`}
                         />
                       </button>
 
@@ -160,7 +156,7 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
                                       <span className="text-xs font-medium text-prime-dark line-clamp-2 leading-tight">
                                         {course.name}
                                       </span>
-                                      <HiChevronRight className="text-zinc-400 text-xs shrink-0" />
+                                      <ChevronRight className="text-zinc-400 size-3 shrink-0" />
                                     </div>
                                     {duration && (
                                       <span className="text-[10px] text-zinc-500 font-normal block mt-0.5">
@@ -221,7 +217,7 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
             onClick={onClose}
             className="flex items-center gap-2 text-prime font-semibold hover:opacity-80"
           >
-            <BsChatSquareTextFill className="text-prime-yellow text-sm" />
+            <MessageSquare size={15} className="text-prime-yellow" />
             <span className="text-[11px]">Chat on WhatsApp</span>
           </Link>
 
@@ -230,7 +226,7 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
             onClick={onClose}
             className="flex items-center gap-1.5 text-zinc-600 hover:text-prime"
           >
-            <BiSupport className="text-zinc-500 text-sm" />
+            <Headphones size={15} className="text-zinc-500" />
             <span className="text-[11px]">Support</span>
           </Link>
         </div>

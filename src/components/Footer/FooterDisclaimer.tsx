@@ -16,7 +16,7 @@ export default function FooterDisclaimer({ disclaimer }: FooterDisclaimerProps) 
         " The curriculum, course outlines, and educational materials provided on this platform are designed strictly for professional upskilling and career development. Course durations, mentor allocation, and hands-on laboratory modules may be updated periodically to adhere to current industry standards. Enrollees are encouraged to review terms of service, prerequisite qualifications, and schedule formats prior to registration. For comprehensive policy guidelines, review our Cancellation & Refund Policy.";
 
     return (
-        <section aria-label="Legal Disclaimer" className="border-t border-white/10 pt-6 text-[11px] sm:text-xs text-zinc-400 leading-relaxed">
+        <section aria-label="Legal Disclaimer" className="border-t border-on-dark/10 pt-6 text-[11px] sm:text-xs text-on-dark/60 leading-relaxed">
             <p>
                 <span>{baseText}</span>
                 {isExpanded && <span className="inline animate-in fade-in duration-200">{expandedText}</span>}
@@ -31,4 +31,3 @@ export default function FooterDisclaimer({ disclaimer }: FooterDisclaimerProps) 
         </section>
     );
 }
-

@@ -1,6 +1,3 @@
-import type { IconType } from 'react-icons';
-import { AiOutlineYoutube } from 'react-icons/ai';
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import type { StaticImageData } from 'next/image';
 
 import chatIcon from '../../../public/contactus/getintouch/chat.webp';
@@ -55,14 +52,13 @@ export const DIRECT_CONTACT = {
 export interface SocialLink {
   name: string;
   href: string;
-  icon: IconType;
 }
 
 export const SOCIAL_LINKS: readonly SocialLink[] = [
-  { name: 'Facebook', href: 'https://www.facebook.com/', icon: FaFacebookF }, // DUMMY
-  { name: 'Instagram', href: 'https://www.instagram.com/', icon: FaInstagram }, // DUMMY
-  { name: 'YouTube', href: 'https://www.youtube.com/', icon: AiOutlineYoutube }, // DUMMY
-  { name: 'LinkedIn', href: 'https://www.linkedin.com/', icon: FaLinkedinIn }, // DUMMY
+  { name: 'Facebook', href: 'https://www.facebook.com/' }, // DUMMY
+  { name: 'Instagram', href: 'https://www.instagram.com/' }, // DUMMY
+  { name: 'YouTube', href: 'https://www.youtube.com/' }, // DUMMY
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/' }, // DUMMY
 ];
 
 /* ------------------------------ Country numbers ----------------------------- */

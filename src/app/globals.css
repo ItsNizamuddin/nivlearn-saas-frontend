@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./sprits.css";
 @plugin "tailwind-scrollbar";
 
 /*
