@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import BrandLogo from '@/components/ui/BrandLogo';
+import { buttonClass } from '@/components/ui/button';
 import { Menu, ChevronDown, Search, LayoutGrid } from 'lucide-react';
 
 import { Category } from './types';
@@ -105,14 +106,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                 {/* Left: Brand + Course Button + Search */}
                                 <div className="flex items-center gap-6 flex-1 min-w-0">
                                     <Link href="/" className="flex-shrink-0" onClick={() => setActiveMenu(null)}>
-                                        <Image
-                                            src="/logo.png"
-                                            alt="NivLearn"
-                                            width={202}
-                                            height={36}
-                                            priority
-                                            className="h-7 w-[157px] md:h-9 md:w-[202px] object-contain"
-                                        />
+                                        <BrandLogo className="h-7 md:h-9" preload />
                                     </Link>
 
                                     <div className="hidden lg:flex items-center gap-3">
@@ -154,14 +148,6 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                         Enterprise
                                     </Link>
 
-                                    <Link
-                                        href="/placement-assistance"
-                                        onClick={() => setActiveMenu(null)}
-                                        className="text-sm font-medium font-montserrat text-prime-dark hover:text-prime-yellow transition-colors"
-                                    >
-                                        Placement Assistance
-                                    </Link>
-
                                     <button
                                         type="button"
                                         onMouseEnter={() => handleMouseEnter('resources')}
@@ -177,6 +163,14 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                                 }`}
                                         />
                                     </button>
+
+                                    <Link
+                                        href="/contact-us"
+                                        onClick={() => setActiveMenu(null)}
+                                        className={buttonClass('primary', 'md', 'font-montserrat')}
+                                    >
+                                        Contact Us
+                                    </Link>
                                 </div>
 
                                 {/* Mobile Icons: Search Icon + Hamburger Menu */}

@@ -2,24 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ResourceLink } from './types';
+import { COMPANY_LINKS, RESOURCE_LINKS } from './navLinks';
 import NavContact from './NavContact';
-
-const RESOURCE_LINKS: ResourceLink[] = [
-  { name: 'Blog', link: '/blog', descp: 'Stay ahead with expert articles and insights' },
-  { name: 'Become an Instructor', link: '/become-an-instructor', descp: 'Lead engaging live sessions worldwide' },
-  { name: 'Trainers', link: '/trainers', descp: 'Learn from top-certified industry mentors' },
-  { name: 'Accreditations', link: '/accreditations', descp: 'Earn globally recognized certifications' },
-  { name: 'Hire From Us', link: '/hire-from-us', descp: 'Access job-ready, pre-vetted tech talent' },
-  { name: 'Guest Author', link: '/become-a-guest-author', descp: 'Share insights with our learner community' },
-];
-
-const POPULAR_PROGRAMS = [
-  { name: 'Full Stack Web Development', link: '/courses' },
-  { name: 'MERN Stack Bootcamp', link: '/courses' },
-  { name: 'Cloud & DevOps Engineering', link: '/courses' },
-  { name: 'Data Science & AI', link: '/courses' },
-];
 
 interface ResourcesMenuProps {
   onClose: () => void;
@@ -65,25 +49,21 @@ export default function ResourcesMenu({ onClose, onMouseEnter, onMouseLeave }: R
             </div>
           </div>
 
-          {/* Popular Programs */}
+          {/* Company */}
           <div className="w-64 sm:w-72 flex-shrink-0 overflow-y-auto">
             <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-4 flex-shrink-0">
-              Featured Bootcamps
+              Company
             </h4>
-            <div className="space-y-2">
-              {POPULAR_PROGRAMS.map((item) => (
+            <div className="space-y-1">
+              {COMPANY_LINKS.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.link}
                   href={item.link}
                   onClick={onClose}
-                  className="block p-3 rounded-lg border border-zinc-100 hover:border-prime/40 hover:bg-prime/5 transition-all"
+                  className="flex items-center justify-between rounded-lg px-3 py-2.5 text-xs font-semibold text-prime-dark hover:bg-prime/5 hover:text-prime transition-colors"
                 >
-                  <span className="font-semibold text-xs text-prime-dark block">
-                    {item.name}
-                  </span>
-                  <span className="text-[10px] text-prime font-medium mt-0.5 block">
-                    Explore curriculum &rarr;
-                  </span>
+                  {item.name}
+                  <span aria-hidden>&rarr;</span>
                 </Link>
               ))}
             </div>

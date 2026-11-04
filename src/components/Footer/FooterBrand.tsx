@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import BrandLogo from '@/components/ui/BrandLogo';
 import { CreditCard, ShieldCheck } from 'lucide-react';
 import { SocialLink } from './types';
 
@@ -59,14 +59,7 @@ export default function FooterBrand({ description, socialLinks = [] }: FooterBra
         <div className="space-y-6">
             {/* Logo */}
             <Link href="/" className="inline-block group focus:outline-hidden" aria-label="NivLearn Home">
-                <Image
-                    src="/logo-with-tagline.png"
-                    alt="NivLearn - A New Way to Learn"
-                    width={202}
-                    height={46}
-                    priority={false}
-                    className="h-10 w-[176px] sm:h-11 sm:w-[193px] object-contain transition-opacity group-hover:opacity-90"
-                />
+                <BrandLogo variant="full" className="h-24 sm:h-28 transition-opacity group-hover:opacity-90" />
             </Link>
 
             {/* Dynamic Value Proposition */}
