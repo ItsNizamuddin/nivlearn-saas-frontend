@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Container from '@/components/ui/Container';
+import Container from '@/components/layout/Container';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { WHY_CHOOSE_US, WHY_CHOOSE_US_POINTS } from './data';
 
@@ -29,7 +29,7 @@ export default function WhyChooseUs() {
             {WHY_CHOOSE_US_POINTS.map((point) => (
               <li
                 key={point.title}
-                className="rounded-2xl border border-prime/15 bg-surface p-6 transition-shadow duration-200 hover:shadow-card"
+                className="rounded-2xl border border-prime/15 bg-surface p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-prime/25 hover:shadow-card"
               >
                 <span className="flex size-14 items-center justify-center rounded-xl bg-prime/10">
                   <Image src={point.icon} alt="" width={32} height={32} />

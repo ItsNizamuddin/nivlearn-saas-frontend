@@ -1,11 +1,17 @@
 import Link from 'next/link';
-import Container from '@/components/ui/Container';
+import Container from '@/components/layout/Container';
 import SectionHeading from '@/components/ui/SectionHeading';
+import { buttonClass } from '@/components/ui/button';
 import { CORE_VALUES, CORE_VALUES_INTRO, CORE_VALUES_SPRITE_URL, type CoreValue } from './data';
 
 function ValueCard({ title, description, sprite }: CoreValue) {
   return (
-    <li className="flex h-full flex-col rounded-2xl border border-prime/15 bg-surface p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-card md:p-8">
+    <li className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-prime/15 bg-surface p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-prime/25 hover:shadow-card md:p-8">
+      {/* Brand accent line, grows in on hover */}
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-brand-orange transition-transform duration-300 group-hover:scale-x-100"
+      />
       <span className="flex size-16 items-center justify-center rounded-2xl bg-prime-yellow/10">
         <span
           aria-hidden
@@ -30,7 +36,7 @@ export default function CoreValues() {
           <SectionHeading eyebrow={CORE_VALUES_INTRO.eyebrow} title={CORE_VALUES_INTRO.title} />
           <Link
             href="/contact-us"
-            className="inline-flex min-h-11 shrink-0 items-center justify-center self-start rounded-lg bg-prime-yellow px-6 text-sm font-semibold text-prime-dark transition-colors duration-200 hover:bg-prime-yellow/90 sm:self-auto"
+            className={buttonClass('accent', 'md', 'shrink-0 self-start sm:self-auto')}
           >
             Get in touch with us
           </Link>

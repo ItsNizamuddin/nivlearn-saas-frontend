@@ -27,7 +27,14 @@ export default function SectionHeading({
   return (
     <div className={cn(align === 'center' && 'mx-auto text-center', 'max-w-3xl', className)}>
       {eyebrow && (
-        <p className="mb-3 text-xs font-semibold tracking-[0.2em] text-prime-yellow uppercase sm:text-sm">
+        <p
+          className={cn(
+            'mb-4 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase sm:text-sm',
+            // Orange text fails contrast on white, so light sections use blue text + an orange bar.
+            dark ? 'text-prime-yellow' : 'text-prime',
+          )}
+        >
+          <span aria-hidden className="h-0.5 w-6 rounded-full bg-brand-orange" />
           {eyebrow}
         </p>
       )}
@@ -43,7 +50,7 @@ export default function SectionHeading({
       {description && (
         <p
           className={cn(
-            'mt-4 text-base leading-relaxed sm:text-lg',
+            'mt-4 text-base leading-relaxed text-pretty sm:text-lg',
             dark ? 'text-on-dark/80' : 'text-text-muted',
           )}
         >
