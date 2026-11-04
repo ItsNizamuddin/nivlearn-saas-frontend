@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import Container from '@/components/layout/Container';
 import Glow from '@/components/ui/Glow';
 import SectionHeading from '@/components/ui/SectionHeading';
-import { getCategories } from '@/lib/categories';
+import { getCategories } from '@/services/catalog.service';
 import ContactForm from './ContactForm';
 import ContactNumbers from './ContactNumbers';
 import DirectContact from './DirectContact';
@@ -17,7 +17,7 @@ async function ContactFormWithCourses() {
 
 export default function ContactUs() {
   return (
-    <section className="relative overflow-hidden bg-linear-to-b from-light to-surface py-16 md:py-24">
+    <section className="relative overflow-hidden bg-linear-to-b from-light to-surface py-8 md:py-10">
       <Glow />
       <Container className="relative">
         <SectionHeading
@@ -28,10 +28,10 @@ export default function ContactUs() {
           description={CONTACT_INTRO.description}
         />
 
-        <div className="mt-12 grid gap-6 md:mt-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-8">
+        <div className="mt-5 grid gap-4 md:mt-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-6">
           <DirectContact />
 
-          <div className="rounded-2xl border border-prime/15 bg-surface p-6 shadow-card sm:p-8 xl:p-10">
+          <div className="rounded-lg border border-prime/15 bg-surface md:p-2 shadow-card">
             {/* Form is usable immediately; the course list streams in. */}
             <Suspense fallback={<ContactForm />}>
               <ContactFormWithCourses />

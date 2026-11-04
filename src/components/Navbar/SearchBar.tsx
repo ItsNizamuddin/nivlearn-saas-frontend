@@ -3,8 +3,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { IoSearch, IoCloseCircle } from 'react-icons/io5';
-import { HiChevronRight, HiAcademicCap } from 'react-icons/hi2';
+import { Search, XCircle, ChevronRight, GraduationCap } from 'lucide-react';
 import { Category, Course } from './types';
 
 interface SearchCourse extends Course {
@@ -171,7 +170,7 @@ export default function SearchBar({
               />
             </svg>
           ) : (
-            <IoSearch size={16} />
+            <Search size={16} />
           )}
         </span>
 
@@ -203,7 +202,7 @@ export default function SearchBar({
             className="absolute right-2.5 top-1/2 -translate-y-1/2 text-text-muted hover:text-prime-dark cursor-pointer"
             aria-label="Clear search"
           >
-            <IoCloseCircle size={16} />
+            <XCircle size={16} />
           </button>
         )}
       </form>
@@ -227,19 +226,19 @@ export default function SearchBar({
                   className="group flex items-start justify-between gap-2 px-3.5 py-2.5 text-xs sm:text-sm text-prime-dark hover:bg-sec-prime hover:text-prime transition-colors cursor-pointer"
                 >
                   <div className="flex items-start gap-2.5 min-w-0 flex-1">
-                    <IoSearch className="text-text-muted text-xs shrink-0 mt-1 group-hover:text-prime transition-colors" />
+                    <Search className="text-text-muted h-3.5 w-3.5 shrink-0 mt-1 group-hover:text-prime transition-colors" />
                     <span className="font-medium leading-snug break-words">
                       <HighlightMatch text={course.name} query={debouncedQuery} />
                     </span>
                   </div>
-                  <HiChevronRight className="text-zinc-300 group-hover:text-prime text-xs shrink-0 mt-1 transition-colors" />
+                  <ChevronRight className="text-zinc-300 group-hover:text-prime h-4 w-4 shrink-0 mt-0.5 transition-colors" />
                 </Link>
               ))}
             </div>
           ) : (
             /* No Results Found State */
             <div className="p-5 text-center">
-              <HiAcademicCap className="mx-auto text-zinc-300 text-2xl mb-1.5" />
+              <GraduationCap className="mx-auto text-zinc-300 h-8 w-8 mb-1.5" />
               <p className="text-xs font-medium text-zinc-700">
                 No courses found matching &quot;{debouncedQuery}&quot;
               </p>

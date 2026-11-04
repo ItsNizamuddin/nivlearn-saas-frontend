@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
+import "./sprits.css";
 import NavBar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { LeadModalProvider } from "@/context/LeadModalContext";
+import GeoLocationInitializer from "@/context/GeoLocationInitializer";
+import { LeadModal } from "@/components/forms";
+import { getCategories, getCourseOptions } from "@/services/catalog.service";
 
-// Self-hosted at build time by next/font: no runtime request to Google,
-// variable fonts (one file covers every weight), Latin subset only,
-// and a metric-matched fallback so text swapping in causes no layout shift.
 const inter = Inter({
   variable: "--font-family-inter",
   subsets: ["latin"],
@@ -34,11 +36,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [categories, courseOptions] = await Promise.all([
+    getCategories(),
+    getCourseOptions(),
+  ]);
+
   return (
     <html
       lang="en"
@@ -48,9 +55,13 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="NivLearn" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
-        <NavBar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <LeadModalProvider courses={courseOptions}>
+          <GeoLocationInitializer />
+          <NavBar initialCategories={categories} />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <LeadModal courses={courseOptions} />
+        </LeadModalProvider>
       </body>
     </html>
   );

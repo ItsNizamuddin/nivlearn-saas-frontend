@@ -3,9 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { IoMdClose, IoMdMenu, IoIosArrowDown } from 'react-icons/io';
-import { IoSearch } from 'react-icons/io5';
-import { CgMenuGridO } from 'react-icons/cg';
+import { Menu, ChevronDown, Search, LayoutGrid } from 'lucide-react';
 
 import { Category } from './types';
 import SearchBar from './SearchBar';
@@ -81,7 +79,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
 
     return (
         <>
-            <nav ref={navRef} className="sticky top-0 z-40 bg-surface border-b border-border-muted/60">
+            <nav ref={navRef} className="w-full z-40 bg-surface border-b border-border-muted/60">
                 <div className="section-container">
                     <div className="flex items-center justify-between h-16 py-3">
                         {/* Mobile In-Navbar Active Search Field */}
@@ -129,9 +127,9 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                                 : 'bg-prime-dark hover:bg-prime-dark/90 text-on-dark'
                                                 }`}
                                         >
-                                            <CgMenuGridO size={20} color="currentColor" />
+                                            <LayoutGrid size={18} />
                                             <span className="font-montserrat text-sm font-medium">Courses</span>
-                                            <IoIosArrowDown
+                                            <ChevronDown
                                                 size={14}
                                                 className={`transition-transform duration-200 ${activeMenu === 'courses' ? 'rotate-180' : ''
                                                     }`}
@@ -173,7 +171,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                             }`}
                                     >
                                         <span>Resources</span>
-                                        <IoIosArrowDown
+                                        <ChevronDown
                                             size={14}
                                             className={`transition-transform duration-200 ${activeMenu === 'resources' ? 'rotate-180' : ''
                                                 }`}
@@ -192,7 +190,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                         aria-label="Search courses"
                                         className="p-2 rounded-lg text-prime-dark hover:bg-sec-prime cursor-pointer"
                                     >
-                                        <IoSearch size={20} />
+                                        <Search size={20} />
                                     </button>
 
                                     <button
@@ -201,7 +199,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                         aria-label="Open menu"
                                         className="p-2 rounded-lg text-prime-dark hover:bg-sec-prime cursor-pointer"
                                     >
-                                        <IoMdMenu size={24} />
+                                        <Menu size={22} />
                                     </button>
                                 </div>
                             </>

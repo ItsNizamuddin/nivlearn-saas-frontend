@@ -1,7 +1,7 @@
 'use client';
 
 import { useId, useState, type ReactNode } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface AccordionEntry {
@@ -53,7 +53,7 @@ export default function Accordion({ items, defaultOpenIndex = 0, className }: Ac
                     isOpen ? 'rotate-180 bg-prime text-on-dark' : 'bg-prime/10 text-prime',
                   )}
                 >
-                  <FaChevronDown aria-hidden />
+                  <ChevronDown className="size-4" aria-hidden />
                 </span>
               </button>
             </h3>

@@ -1,5 +1,5 @@
-import type { IconType } from 'react-icons';
-import { FaBookOpen, FaChalkboardTeacher, FaGlobe, FaMapMarkerAlt, FaUsers } from 'react-icons/fa';
+import type { LucideIcon } from 'lucide-react';
+import { BookOpen, Presentation, Globe, MapPin, Users } from 'lucide-react';
 import type { StaticImageData } from 'next/image';
 
 import mission1 from '../../../public/aboutus/mission1.webp';
@@ -25,17 +25,17 @@ export const BANNER = {
 } as const;
 
 export interface Stat {
-  icon: IconType;
+  icon: LucideIcon;
   value: string;
   label: string;
 }
 
 export const STATS: readonly Stat[] = [
-  { icon: FaChalkboardTeacher, value: '10+', label: 'Industry Experts' },
-  { icon: FaUsers, value: '100K+', label: 'Learners' },
-  { icon: FaBookOpen, value: '60+', label: 'In-Demand Courses' },
-  { icon: FaMapMarkerAlt, value: '90+', label: 'Cities Covered' },
-  { icon: FaGlobe, value: '55+', label: 'Countries Covered' },
+  { icon: Presentation, value: '10+', label: 'Industry Experts' },
+  { icon: Users, value: '100K+', label: 'Learners' },
+  { icon: BookOpen, value: '60+', label: 'In-Demand Courses' },
+  { icon: MapPin, value: '90+', label: 'Cities Covered' },
+  { icon: Globe, value: '55+', label: 'Countries Covered' },
 ];
 
 /* --------------------------------- Mission --------------------------------- */

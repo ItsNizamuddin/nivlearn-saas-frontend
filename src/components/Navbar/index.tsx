@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { getCategories } from '@/lib/categories';
+import { getCategories } from '@/services/catalog.service';
 import NavbarClient from './NavbarClient';
 import { Category } from './types';
 
