@@ -28,7 +28,7 @@ export default function Marquee({
 }: MarqueeProps) {
   const vertical = direction === 'y';
   const track = cn(
-    'flex shrink-0 gap-6',
+    'flex shrink-0 gap-6 will-change-transform',
     vertical ? 'flex-col animate-marquee-y' : 'animate-marquee-x',
     reverse && '[animation-direction:reverse]',
   );

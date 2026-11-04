@@ -6,6 +6,7 @@ import Image from 'next/image';
 import BrandLogo from '@/components/ui/BrandLogo';
 import { X, ChevronDown, GraduationCap, ChevronRight, MessageSquare, Headphones } from 'lucide-react';
 import { Category } from './types';
+import { COMPANY_LINKS, RESOURCE_LINKS } from './navLinks';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -13,12 +14,10 @@ interface MobileMenuProps {
   categories: Category[];
 }
 
-const NAV_ITEMS = [
-  { name: 'Enterprise', link: '/corporate' },
-  { name: 'Placement Assistance', link: '/placement-assistance' },
-  { name: 'Blog', link: '/blog' },
-  { name: 'About Us', link: '/about-us' },
-  { name: 'Contact Us', link: '/contact-us' },
+// Resources includes Corporate Training (the desktop "Enterprise" link), so no separate Menu group.
+const NAV_GROUPS = [
+  { title: 'Resources', links: RESOURCE_LINKS },
+  { title: 'Company', links: COMPANY_LINKS },
 ];
 
 export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuProps) {
@@ -186,21 +185,23 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
           </div>
 
           {/* Quick Nav Links */}
-          <div className="space-y-0.5 pt-1">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 px-3 pb-1">
-              Menu
-            </div>
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.link}
-                href={item.link}
-                onClick={onClose}
-                className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-prime hover:bg-slate-50 rounded-lg transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
+          {NAV_GROUPS.map((group) => (
+            <nav key={group.title} aria-label={group.title} className="space-y-0.5 pt-1">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 px-3 pb-1">
+                {group.title}
+              </div>
+              {group.links.map((item) => (
+                <Link
+                  key={item.link}
+                  href={item.link}
+                  onClick={onClose}
+                  className="block px-3 py-2 text-xs font-medium text-zinc-700 hover:text-prime hover:bg-slate-50 rounded-lg transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          ))}
         </div>
 
         {/* Footer Quick Support */}

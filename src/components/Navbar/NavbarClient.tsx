@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import BrandLogo from '@/components/ui/BrandLogo';
+import { buttonClass } from '@/components/ui/button';
 import { Menu, ChevronDown, Search, LayoutGrid } from 'lucide-react';
 
 import { Category } from './types';
@@ -147,14 +148,6 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                         Enterprise
                                     </Link>
 
-                                    <Link
-                                        href="/placement-assistance"
-                                        onClick={() => setActiveMenu(null)}
-                                        className="text-sm font-medium font-montserrat text-prime-dark hover:text-prime-yellow transition-colors"
-                                    >
-                                        Placement Assistance
-                                    </Link>
-
                                     <button
                                         type="button"
                                         onMouseEnter={() => handleMouseEnter('resources')}
@@ -170,6 +163,14 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                                 }`}
                                         />
                                     </button>
+
+                                    <Link
+                                        href="/contact-us"
+                                        onClick={() => setActiveMenu(null)}
+                                        className={buttonClass('primary', 'md', 'font-montserrat')}
+                                    >
+                                        Contact Us
+                                    </Link>
                                 </div>
 
                                 {/* Mobile Icons: Search Icon + Hamburger Menu */}

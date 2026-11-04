@@ -5,16 +5,21 @@ import { cn } from '@/lib/utils';
  * One logo cut from a sprite sheet.
  * `scale` resizes it: the outer box takes the scaled size, the inner sprite is
  * drawn at native size and scaled from the top-left so the cut-out stays exact.
+ * `fit` (px) instead scales the logo to fit inside a fit×fit box, keeping its
+ * aspect ratio — use it when a strip mixes square and wide logos.
  */
 export default function SpriteLogo({
   logo,
-  scale = 1,
+  scale: fixedScale = 1,
+  fit,
   className,
 }: {
   logo: SpriteLogoData;
   scale?: number;
+  fit?: number;
   className?: string;
 }) {
+  const scale = fit ? Math.min(fit / logo.width, fit / logo.height) : fixedScale;
   return (
     <span
       aria-hidden

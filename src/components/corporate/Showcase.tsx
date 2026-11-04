@@ -51,7 +51,7 @@ export function Certifications() {
           <Marquee key={i} reverse={i === 1} duration={35} fadeFrom="from-prime-dark" label={i === 0 ? 'Certification logos' : undefined}>
             {row.map((logo, j) => (
               <span key={j} className="flex size-24 shrink-0 items-center justify-center rounded-xl bg-surface">
-                <SpriteLogo logo={logo} scale={0.75} />
+                <SpriteLogo logo={logo} fit={76} />
               </span>
             ))}
           </Marquee>

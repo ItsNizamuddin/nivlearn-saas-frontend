@@ -210,13 +210,20 @@
   @apply mx-auto w-full px-4 sm:px-6 md:max-w-6xl 2xl:max-w-7xl;
 }
 
-/* Marquee: content is rendered twice, so moving it -50% loops seamlessly. */
+/*
+ * Marquee: the content is rendered in two identical tracks side by side. Each
+ * track moves by its own full length (-100%), so when the first copy has left
+ * the view the second sits exactly where the first started: a seamless loop.
+ * translate3d keeps it on the GPU compositor for smooth motion.
+ */
 @keyframes marquee-x {
-  to { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-100%, 0, 0); }
 }
 
 @keyframes marquee-y {
-  to { transform: translateY(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -100%, 0); }
 }
 
 /*

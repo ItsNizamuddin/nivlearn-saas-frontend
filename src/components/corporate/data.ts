@@ -283,11 +283,12 @@ export const CERTIFICATIONS = {
 export const GLOBAL = {
   eyebrow: 'Featured',
   title: 'Find out why Global Corporates love NivLearn',
+  // PLACEHOLDER: replace with real client trainings (and verify any client names) before launch.
   items: [
-    { image: global1, title: 'TCS CSM Training', subtitle: 'For 200+ Employees', rating: '5.0' },
-    { image: global2, title: 'TCS CSM Training', subtitle: 'For 200+ Employees', rating: '5.0' },
-    { image: global3, title: 'TCS CSM Training', subtitle: 'For 200+ Employees', rating: '5.0' },
-    { image: global4, title: 'TCS CSM Training', subtitle: 'For 200+ Employees', rating: '5.0' },
+    { image: global1, title: 'Certified ScrumMaster® Training', subtitle: 'IT Services · 200+ employees', rating: '5.0' },
+    { image: global2, title: 'PMP® Exam Prep Program', subtitle: 'Banking & Finance · 120+ managers', rating: '4.9' },
+    { image: global3, title: 'Live Virtual SAFe® Training', subtitle: 'Telecom · 5 global teams', rating: '4.9' },
+    { image: global4, title: 'Agile Leadership Workshop', subtitle: 'Healthcare · 60+ leaders', rating: '5.0' },
   ],
 } as const;
 
