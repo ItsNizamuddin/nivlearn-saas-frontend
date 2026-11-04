@@ -33,7 +33,8 @@ export default function Accordion({ items, defaultOpenIndex = 0, className }: Ac
           <div
             key={item.id}
             className={cn(
-              'overflow-hidden rounded-xl border bg-surface transition-[border-color,box-shadow] duration-300',
+              // Focus ring lives on the card: the button's own outline would be clipped by overflow-hidden.
+              'overflow-hidden rounded-xl border bg-surface transition-[border-color,box-shadow] duration-300 has-focus-visible:ring-2 has-focus-visible:ring-prime has-focus-visible:ring-offset-2',
               isOpen ? 'border-prime/30 shadow-card' : 'border-border-muted/70 hover:border-prime/30',
             )}
           >
@@ -44,7 +45,7 @@ export default function Accordion({ items, defaultOpenIndex = 0, className }: Ac
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(isOpen ? null : i)}
-                className="flex min-h-14 w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left"
+                className="flex min-h-14 w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left focus-visible:outline-none"
               >
                 <span className="text-base font-semibold text-prime-dark">{item.title}</span>
                 <span

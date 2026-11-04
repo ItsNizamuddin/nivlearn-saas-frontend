@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import Container from '@/components/layout/Container';
+import BrandBackdrop from '@/components/ui/BrandBackdrop';
 import Glow from '@/components/ui/Glow';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { getCategories } from '@/services/catalog.service';
@@ -19,6 +20,7 @@ export default function ContactUs() {
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-light to-surface py-8 md:py-10">
       <Glow />
+      <BrandBackdrop className="hidden md:block" />
       <Container className="relative">
         <SectionHeading
           as="h1"

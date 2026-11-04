@@ -8,6 +8,7 @@ import { LeadModalProvider } from "@/context/LeadModalContext";
 import GeoLocationInitializer from "@/context/GeoLocationInitializer";
 import { LeadModal } from "@/components/forms";
 import { getCategories, getCourseOptions } from "@/services/catalog.service";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-family-inter",
@@ -21,10 +22,8 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nivlearn.com";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
     template: "%s | NivLearn",
     default: "NivLearn",

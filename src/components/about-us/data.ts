@@ -1,4 +1,3 @@
-import type { LucideIcon } from 'lucide-react';
 import { BookOpen, Presentation, Globe, MapPin, Users } from 'lucide-react';
 import type { StaticImageData } from 'next/image';
 
@@ -24,11 +23,8 @@ export const BANNER = {
     "A leading provider of professional course trainings designed to empower individuals and organizations with the knowledge and skills needed to thrive in today's dynamic business landscape. With a focus on excellence and practical application, we are committed to delivering high-quality training programs that drive professional growth and success.",
 } as const;
 
-export interface Stat {
-  icon: LucideIcon;
-  value: string;
-  label: string;
-}
+export type { Stat } from '@/components/ui/StatCard';
+import type { Stat } from '@/components/ui/StatCard';
 
 export const STATS: readonly Stat[] = [
   { icon: Presentation, value: '10+', label: 'Industry Experts' },
