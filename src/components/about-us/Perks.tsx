@@ -1,12 +1,12 @@
 import Accordion from '@/components/ui/Accordion';
-import Container from '@/components/ui/Container';
+import Container from '@/components/layout/Container';
 import SectionHeading from '@/components/ui/SectionHeading';
 import PerksVideo from './PerksVideo';
 import { PERKS_FAQ, PERKS_INTRO } from './data';
 
 export default function Perks() {
   return (
-    <section className="bg-prime-yellow/5 py-16 md:py-24">
+    <section className="bg-light py-16 md:py-24">
       <Container className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <PerksVideo />
         <div>

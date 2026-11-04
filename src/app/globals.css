@@ -13,41 +13,51 @@
 :root {
   /* Base */
   --background: #ffffff;
-  --foreground: #030303;
+  --foreground: #0B1A33;
 
-  /* Brand */
-  --prime: #2AA4B7;
-  --prime1: #0099FF;
-  --sec-prime: #F4F6F8;
-  --prime-dark: #082D45;
-  --prime-yellow: #FF9E0A;
-  --prime-outline: #19809A;
-  --prime-light: #F3F4F6;
-  --light: #F0F4F9;
-  --prime-gray: #F2F2F2;
-  --textblack: #030303;
-  --bluebutton: #47BDCD;
+  /* Brand — from the NivLearn logo
+   * Blue  #005CCF · Blue gradient   #01B1FC → #002972
+   * Orange #FE8702 · Orange gradient #FBC907 → #FF3006
+   * Contrast notes: orange is NOT readable as small text on white (≈2.5:1) —
+   * use it for buttons (with --prime-dark text), dark backgrounds and accents.
+   * On --prime-dark backgrounds use --prime1 (sky), not --prime, for blue text.
+   */
+  --prime: #005CCF;          /* primary blue: links, active states, icons */
+  --prime-outline: #004AA8;  /* primary blue, hover/pressed */
+  --prime-dark: #002972;     /* deep navy: headings, dark sections */
+  --prime1: #01B1FC;         /* sky blue: highlights on dark backgrounds */
+  --prime-yellow: #FE8702;   /* brand orange: CTAs, accents */
+  --bluebutton: #01B1FC;
+  --sec-prime: #F4F7FB;
+  --prime-light: #F3F6FA;
+  --light: #EEF5FF;
+  --prime-gray: #F2F4F7;
+  --textblack: #0B1A33;
 
   /* Gradient stops */
-  --gradient-start: #1D8DAB;
-  --gradient-end: #073F57;
-  --aqua: #83DAE2;
-  --aqua-light: #D9F6F7;
-  --mist: #F1F4F7;
+  --brand-orange-start: #FBC907;
+  --brand-orange-end: #FF3006;
+  --gradient-start: #01B1FC;
+  --gradient-end: #002972;
+  --aqua: #7FD8FE;
+  --aqua-light: #D6F2FF;
+  --mist: #F1F6FC;
 
   /* Surfaces & text (semantic) */
   --surface: #ffffff;
-  --surface-muted: #f9fafb;
+  --surface-muted: #F7F9FC;
   --on-dark: #ffffff;
-  --text-body: #374151;
-  --text-muted: #4b5563;
-  --border-muted: #d1d5db;
-  --divider: #4b5563;
+  --text-body: #1E293B;
+  --text-muted: #475569;
+  --border-muted: #D5DCE6;
+  --divider: #475569;
   --overlay: #000000;
-  --shadow-color: rgb(39 79 117 / 0.15);
+  --danger: #dc2626;
+  --success: #16a34a;
+  --shadow-color: rgb(0 41 114 / 0.12);
 
   /* Scrollbar */
-  --scrollbar-thumb: var(--scrollbar-thumb);
+  --scrollbar-thumb: #cbd5e1;
   --scrollbar-thumb-hover: #94a3b8;
 }
 
@@ -84,9 +94,15 @@
   --color-border-muted: var(--border-muted);
   --color-divider: var(--divider);
   --color-overlay: var(--overlay);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
 
   /* Shadows */
   --shadow-card: 0 3px 23px 0 var(--shadow-color);
+
+  /* Brand gradients (logo) — bg-brand-orange / bg-brand-blue */
+  --background-image-brand-orange: linear-gradient(135deg, var(--brand-orange-start), var(--brand-orange-end));
+  --background-image-brand-blue: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
 
   /* Custom gradients */
   --background-image-custom-gradient: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
