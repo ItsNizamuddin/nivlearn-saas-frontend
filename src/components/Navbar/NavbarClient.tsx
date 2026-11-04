@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import BrandLogo from '@/components/ui/BrandLogo';
 import { Menu, ChevronDown, Search, LayoutGrid } from 'lucide-react';
 
 import { Category } from './types';
@@ -105,14 +105,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                 {/* Left: Brand + Course Button + Search */}
                                 <div className="flex items-center gap-6 flex-1 min-w-0">
                                     <Link href="/" className="flex-shrink-0" onClick={() => setActiveMenu(null)}>
-                                        <Image
-                                            src="/logo.png"
-                                            alt="NivLearn"
-                                            width={202}
-                                            height={36}
-                                            priority
-                                            className="h-7 w-[157px] md:h-9 md:w-[202px] object-contain"
-                                        />
+                                        <BrandLogo className="h-7 md:h-9" preload />
                                     </Link>
 
                                     <div className="hidden lg:flex items-center gap-3">
