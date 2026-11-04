@@ -49,8 +49,8 @@ export default function Accordion({ items, defaultOpenIndex = 0, className }: Ac
                 <span className="text-base font-semibold text-prime-dark">{item.title}</span>
                 <span
                   className={cn(
-                    'flex size-8 shrink-0 items-center justify-center rounded-full bg-prime-yellow/10 text-sm text-prime-yellow transition-transform duration-300',
-                    isOpen && 'rotate-180',
+                    'flex size-8 shrink-0 items-center justify-center rounded-full text-sm transition-all duration-300',
+                    isOpen ? 'rotate-180 bg-prime text-on-dark' : 'bg-prime/10 text-prime',
                   )}
                 >
                   <FaChevronDown aria-hidden />

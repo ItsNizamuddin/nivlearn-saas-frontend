@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import Container from '@/components/ui/Container';
+import Container from '@/components/layout/Container';
+import GradientText from '@/components/ui/GradientText';
+import Glow from '@/components/ui/Glow';
 import { useAutoCarousel } from '@/hooks/useAutoCarousel';
 import { cn } from '@/lib/utils';
 import { MISSION_IMAGES, MISSION_IMAGES_PER_PAGE, MISSION_SLIDES } from './data';
@@ -20,13 +22,14 @@ export default function Mission() {
 
   return (
     <section
-      className="bg-prime-dark py-16 md:py-24"
+      className="relative overflow-hidden bg-prime-dark py-16 md:py-24"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <Container className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <Glow />
+      <Container className="relative grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         {/* Image gallery (tablet and up) */}
         <div className="hidden overflow-hidden rounded-2xl md:block" aria-hidden>
           <div
@@ -55,7 +58,8 @@ export default function Mission() {
 
         {/* Content */}
         <div className="text-on-dark">
-          <p className="mb-3 text-xs font-semibold tracking-[0.2em] text-prime-yellow uppercase sm:text-sm">
+          <p className="mb-4 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-prime-yellow uppercase sm:text-sm">
+            <span aria-hidden className="h-0.5 w-6 rounded-full bg-brand-orange" />
             Our Training Approach
           </p>
 
@@ -73,7 +77,7 @@ export default function Mission() {
                 className={cn(
                   'min-h-11 cursor-pointer rounded-full px-5 text-sm font-semibold transition-colors duration-200',
                   i === index
-                    ? 'bg-prime text-on-dark'
+                    ? 'bg-prime text-on-dark shadow-lg shadow-prime/30'
                     : 'border border-on-dark/20 text-on-dark/80 hover:border-on-dark/40 hover:text-on-dark',
                 )}
               >
@@ -98,7 +102,9 @@ export default function Mission() {
                 )}
               >
                 <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-                  <span className="text-prime-yellow">NivLearn</span> <span className="text-prime">{slide.title}</span>
+                  <GradientText tone="orange">NivLearn</GradientText>{' '}
+                  {/* sky blue: --prime is too dark to read on navy */}
+                  <span className="text-prime1">{slide.title}</span>
                 </h2>
                 <p className="mt-5 text-base leading-relaxed text-on-dark/85">{slide.description}</p>
               </div>
@@ -112,7 +118,7 @@ export default function Mission() {
                 key={slide.title}
                 className={cn(
                   'h-1 rounded-full transition-all duration-300',
-                  i === index ? 'w-12 bg-prime-yellow' : 'w-6 bg-on-dark/25',
+                  i === index ? 'w-12 bg-brand-orange' : 'w-6 bg-on-dark/25',
                 )}
               />
             ))}
