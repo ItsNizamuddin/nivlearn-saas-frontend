@@ -81,7 +81,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
 
     return (
         <>
-            <nav ref={navRef} className="sticky top-0 z-40 bg-white border-b border-zinc-200">
+            <nav ref={navRef} className="sticky top-0 z-40 bg-surface border-b border-border-muted/60">
                 <div className="section-container">
                     <div className="flex items-center justify-between h-16 py-3">
                         {/* Mobile In-Navbar Active Search Field */}
@@ -96,7 +96,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                 <button
                                     type="button"
                                     onClick={() => setIsMobileSearchOpen(false)}
-                                    className="px-2 py-1.5 text-xs font-semibold text-zinc-600 hover:text-zinc-900 cursor-pointer shrink-0"
+                                    className="px-2 py-1.5 text-xs font-semibold text-text-muted hover:text-prime-dark cursor-pointer shrink-0"
                                 >
                                     Cancel
                                 </button>
@@ -125,11 +125,11 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                             onMouseLeave={handleMouseLeave}
                                             onClick={() => setActiveMenu(activeMenu === 'courses' ? null : 'courses')}
                                             className={`rounded-md px-3 py-1.5 flex items-center gap-2 cursor-pointer transition-colors ${activeMenu === 'courses'
-                                                ? 'bg-prime text-white shadow-xs'
-                                                : 'bg-prime-dark hover:bg-prime-dark/90 text-white'
+                                                ? 'bg-prime text-on-dark shadow-xs'
+                                                : 'bg-prime-dark hover:bg-prime-dark/90 text-on-dark'
                                                 }`}
                                         >
-                                            <CgMenuGridO size={20} color="white" />
+                                            <CgMenuGridO size={20} color="currentColor" />
                                             <span className="font-montserrat text-sm font-medium">Courses</span>
                                             <IoIosArrowDown
                                                 size={14}
@@ -151,7 +151,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                     <Link
                                         href="/corporate"
                                         onClick={() => setActiveMenu(null)}
-                                        className="text-sm font-medium font-montserrat text-zinc-800 hover:text-prime-yellow transition-colors"
+                                        className="text-sm font-medium font-montserrat text-prime-dark hover:text-prime-yellow transition-colors"
                                     >
                                         Enterprise
                                     </Link>
@@ -159,7 +159,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                     <Link
                                         href="/placement-assistance"
                                         onClick={() => setActiveMenu(null)}
-                                        className="text-sm font-medium font-montserrat text-zinc-800 hover:text-prime-yellow transition-colors"
+                                        className="text-sm font-medium font-montserrat text-prime-dark hover:text-prime-yellow transition-colors"
                                     >
                                         Placement Assistance
                                     </Link>
@@ -169,7 +169,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                         onMouseEnter={() => handleMouseEnter('resources')}
                                         onMouseLeave={handleMouseLeave}
                                         onClick={() => setActiveMenu(activeMenu === 'resources' ? null : 'resources')}
-                                        className={`flex items-center gap-1 text-sm font-medium font-montserrat cursor-pointer transition-colors py-1 ${activeMenu === 'resources' ? 'text-prime-yellow' : 'text-zinc-800 hover:text-prime-yellow'
+                                        className={`flex items-center gap-1 text-sm font-medium font-montserrat cursor-pointer transition-colors py-1 ${activeMenu === 'resources' ? 'text-prime-yellow' : 'text-prime-dark hover:text-prime-yellow'
                                             }`}
                                     >
                                         <span>Resources</span>
@@ -190,7 +190,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                             setIsMobileSearchOpen(true);
                                         }}
                                         aria-label="Search courses"
-                                        className="p-2 rounded-lg text-zinc-700 hover:bg-zinc-100 cursor-pointer"
+                                        className="p-2 rounded-lg text-prime-dark hover:bg-sec-prime cursor-pointer"
                                     >
                                         <IoSearch size={20} />
                                     </button>
@@ -199,7 +199,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                                         type="button"
                                         onClick={() => setIsMobileOpen(true)}
                                         aria-label="Open menu"
-                                        className="p-2 rounded-lg text-zinc-700 hover:bg-zinc-100 cursor-pointer"
+                                        className="p-2 rounded-lg text-prime-dark hover:bg-sec-prime cursor-pointer"
                                     >
                                         <IoMdMenu size={24} />
                                     </button>

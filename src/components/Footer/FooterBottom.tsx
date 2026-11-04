@@ -18,7 +18,7 @@ export default function FooterBottom({ bottomRibbon }: FooterBottomProps) {
     const copyright = bottomRibbon?.trim() || `© ${year} NivLearn. All rights reserved.`;
 
     return (
-        <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-400">
+        <div className="border-t border-on-dark/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-on-dark/60">
             {/* Dynamic Copyright from CMS */}
             <p className="text-center md:text-left">
                 {copyright}
@@ -31,7 +31,7 @@ export default function FooterBottom({ bottomRibbon }: FooterBottomProps) {
                     href="https://skilldeck.net/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-zinc-200 hover:text-prime-yellow transition-colors font-medium"
+                    className="text-on-dark/90 hover:text-prime-yellow transition-colors font-medium"
                 >
                     Skilldeck
                 </a>
@@ -46,7 +46,7 @@ export default function FooterBottom({ bottomRibbon }: FooterBottomProps) {
                 >
                     Privacy Policy
                 </Link>
-                <span className="text-zinc-600" aria-hidden="true">•</span>
+                <span className="text-on-dark/30" aria-hidden="true">•</span>
                 <Link
                     href="/terms-and-conditions"
                     rel="nofollow"
@@ -54,7 +54,7 @@ export default function FooterBottom({ bottomRibbon }: FooterBottomProps) {
                 >
                     Terms & Conditions
                 </Link>
-                <span className="text-zinc-600" aria-hidden="true">•</span>
+                <span className="text-on-dark/30" aria-hidden="true">•</span>
                 <Link
                     href="/refund-policy"
                     rel="nofollow"

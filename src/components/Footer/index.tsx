@@ -1,9 +1,6 @@
 import { fetchFromBackend } from '@/lib/apiProxy';
 import FooterClient from './FooterClient';
-import FooterFallback from './FooterFallback';
 import { FooterData } from './types';
-
-export { FooterFallback };
 
 /**
  * Server-Side Data Fetcher with ISR & Tag Revalidation

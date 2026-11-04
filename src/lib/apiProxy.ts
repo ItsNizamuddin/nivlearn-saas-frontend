@@ -67,7 +67,7 @@ export async function fetchFromBackend(
     endpoint: string,
     options?: FetchOptions
 ): Promise<Response> {
-    const { request, queryParams, method = 'GET', body, next, cache } = options || {};
+    const { request, queryParams, method = 'GET', body, next, cache, headers: customHeaders } = options || {};
 
     let backendUrl = `${env.API_BASE_URL}/content${endpoint}`;
     if (queryParams && queryParams.toString()) {
@@ -77,6 +77,7 @@ export async function fetchFromBackend(
     const headers: Record<string, string> = {
         'x-api-key': env.API_KEY,
         'Content-Type': 'application/json',
+        ...(customHeaders || {}),
     };
 
     /**
@@ -99,8 +100,8 @@ export async function fetchFromBackend(
     }
 
     const isDev = process.env.NODE_ENV === 'development';
-    const finalCache = isDev ? 'no-store' : (cache || (next ? undefined : 'force-cache'));
-    const finalNext = isDev ? undefined : next;
+    const finalNext = next;
+    const finalCache = cache || (next ? undefined : (isDev ? 'no-store' : 'force-cache'));
 
     try {
         let response = await fetch(backendUrl, {
@@ -141,8 +142,7 @@ export async function fetchFromBackend(
 
         return response;
     } catch (error: unknown) {
-
-
+        console.error(`[apiProxy] Network error fetching ${endpoint}:`, error);
         throw error;
     }
 }

@@ -30,7 +30,7 @@ export default function FooterClient({ data }: FooterClientProps) {
         <footer
             role="contentinfo"
             aria-label="Site Footer"
-            className="relative bg-prime-dark text-white font-sans mt-16 lg:mt-24 pt-14 lg:pt-16 border-t border-white/10"
+            className="relative bg-prime-dark text-on-dark font-sans mt-16 lg:mt-24 pt-14 lg:pt-16 border-t border-on-dark/10"
         >
             {/* Main Content Container */}
             <div className="section-container pb-12 space-y-12">

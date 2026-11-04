@@ -39,14 +39,14 @@ export default function FooterBrand({ description, socialLinks = [] }: FooterBra
             </Link>
 
             {/* Dynamic Value Proposition */}
-            <p className="text-zinc-300 text-xs sm:text-sm leading-relaxed max-w-sm">
+            <p className="text-on-dark/80 text-xs sm:text-sm leading-relaxed max-w-sm">
                 {text}
             </p>
 
             {/* Dynamic Social Links (Rendered only if CMS configured) */}
             {socialLinks.length > 0 && (
                 <div className="space-y-2.5">
-                    <span className="block text-white text-xs font-semibold tracking-wider uppercase">
+                    <span className="block text-on-dark text-xs font-semibold tracking-wider uppercase">
                         Connect With Us
                     </span>
                     <div className="flex items-center gap-2">
@@ -59,7 +59,7 @@ export default function FooterBrand({ description, socialLinks = [] }: FooterBra
                                     target="_blank"
                                     rel="nofollow noopener noreferrer"
                                     aria-label={soc.label || soc.name || 'Social Link'}
-                                    className="h-8 w-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 hover:text-white hover:bg-prime hover:border-prime transition-all hover:scale-105 shadow-xs"
+                                    className="h-8 w-8 rounded-lg bg-on-dark/5 border border-on-dark/10 flex items-center justify-center text-on-dark/80 hover:text-on-dark hover:bg-prime hover:border-prime transition-all hover:scale-105 shadow-xs"
                                 >
                                     {IconComponent ? (
                                         <IconComponent className="text-xs" />
@@ -74,20 +74,20 @@ export default function FooterBrand({ description, socialLinks = [] }: FooterBra
             )}
 
             {/* Payment & Security Badges */}
-            <div className="space-y-2.5 pt-1 border-t border-white/10">
-                <span className="block text-zinc-400 text-[11px] font-semibold tracking-wider uppercase">
+            <div className="space-y-2.5 pt-1 border-t border-on-dark/10">
+                <span className="block text-on-dark/60 text-[11px] font-semibold tracking-wider uppercase">
                     Secure Payment Partners
                 </span>
                 <div className="flex flex-wrap items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs text-zinc-200" title="Google Pay">
-                        <FaGooglePay className="text-lg text-white" />
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-on-dark/5 border border-on-dark/10 text-xs text-on-dark/80" title="Google Pay">
+                        <FaGooglePay className="text-lg text-on-dark" />
                         <span className="text-[11px] font-medium">GPay</span>
                     </span>
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs text-zinc-200" title="Credit / Debit Cards">
-                        <FaCreditCard className="text-xs text-white" />
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-on-dark/5 border border-on-dark/10 text-xs text-on-dark/80" title="Credit / Debit Cards">
+                        <FaCreditCard className="text-xs text-on-dark" />
                         <span className="text-[11px] font-medium">Cards</span>
                     </span>
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs text-zinc-200" title="PayPal">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-on-dark/5 border border-on-dark/10 text-xs text-on-dark/80" title="PayPal">
                         <FaPaypal className="text-xs text-[#0079C1]" />
                         <span className="text-[11px] font-medium">PayPal</span>
                     </span>

@@ -1,10 +1,8 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/Navbar";
-import NavbarFallback from "@/components/Navbar/NavbarFallback";
-import Footer, { FooterFallback } from "@/components/Footer";
+import Footer from "@/components/Footer";
 
 // Self-hosted at build time by next/font: no runtime request to Google,
 // variable fonts (one file covers every weight), Latin subset only,
@@ -50,13 +48,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="NivLearn" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
-        <Suspense fallback={<NavbarFallback />}>
-          <NavBar />
-        </Suspense>
+        <NavBar />
         <main className="flex-1">{children}</main>
-        <Suspense fallback={<FooterFallback />}>
-          <Footer />
-        </Suspense>
+        <Footer />
       </body>
     </html>
   );

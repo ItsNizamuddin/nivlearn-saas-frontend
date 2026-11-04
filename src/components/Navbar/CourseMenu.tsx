@@ -122,7 +122,7 @@ export default function CourseMenu({
         {/* Main 2-Column Layout */}
         <div className="flex flex-1 min-h-0">
           {/* Left Column: Categories List */}
-          <div className="w-72 sm:w-[300px] lg:w-[320px] flex-shrink-0 bg-slate-50/70 border-r border-zinc-200 flex flex-col h-full">
+          <div className="w-72 sm:w-[300px] lg:w-[290px] flex-shrink-0 bg-slate-50/70 border-r border-zinc-200 flex flex-col h-full">
             {/* Header */}
             <div className="px-4 py-3 border-b border-zinc-200 bg-white flex-shrink-0">
               <div className="flex items-center gap-2 text-black font-semibold text-base">
@@ -150,10 +150,10 @@ export default function CourseMenu({
                         }`}
                     >
                       <div className="flex items-center gap-3 min-w-0 pr-2">
-                        <MdOutlineSchool
+                        {/* <MdOutlineSchool
                           className={`text-lg flex-shrink-0 ${isActive ? 'text-prime-yellow' : 'text-prime-yellow/90'
                             }`}
-                        />
+                        /> */}
                         <span className="text-sm leading-snug break-words">
                           {category.name}
                         </span>
