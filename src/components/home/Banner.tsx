@@ -3,10 +3,10 @@
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { Play, Star, CheckCircle2, Download } from 'lucide-react';
-import rating from '../../../../public/home/enrolled.webp';
-import underline from '../../../../public/home/underline.webp';
-import video from '../../../../public/home/banvideo.webp';
-import pattern from '../../../../public/home/pattern.webp';
+import rating from '../../../public/home/enrolled.webp';
+import underline from '../../../public/home/underline.webp';
+import video from '../../../public/home/banvideo.webp';
+import pattern from '../../../public/home/pattern.webp';
 import Link from 'next/link';
 import { useLeadModal } from '@/context/LeadModalContext';
 
@@ -119,7 +119,7 @@ export default function Banner() {
             {/* Dark curved shape on desktop */}
             <div className="bg-prime-dark/90 rounded-br-[150px] w-8/12 h-full absolute top-0 left-0 lg:block hidden -z-10 shadow-lg" />
 
-            <div className="section-container relative z-10 py-10 lg:py-16">
+            <div className="section-container relative z-10 pt-10 lg:py-16">
                 <div className="lg:grid lg:grid-cols-12 gap-8 items-center">
 
                     {/* Left Column: Headline, Copy & CTAs (7 cols) */}
@@ -148,7 +148,7 @@ export default function Banner() {
                             <button
                                 type="button"
                                 onClick={triggerForm}
-                                className="bg-prime-yellow hover:bg-prime-yellow/90 text-prime-dark font-bold px-5 py-3 rounded-xl shadow-md transition-all text-xs sm:text-sm flex items-center gap-2 active:scale-95"
+                                className="bg-prime-yellow hover:bg-prime-yellow/90 text-white font-bold px-5 py-3 rounded-xl shadow-md transition-all text-xs sm:text-sm flex items-center gap-2 active:scale-95"
                             >
                                 <span>Download Company Profile</span>
                                 <Download size={16} />
@@ -172,7 +172,7 @@ export default function Banner() {
                                 <Star size={14} className="fill-prime-yellow text-prime-yellow" />
                             </div>
                             <Image src={rating} alt="enrolled students" className="lg:hidden h-6 w-auto" priority />
-                            <span className="text-prime-dark lg:text-white text-xs sm:text-sm font-semibold">
+                            <span className="text-whiteprime-dark lg:text-white text-xs sm:text-sm font-semibold">
                                 Trusted by over 4,32,000+ Learners Globally
                             </span>
                         </div>
@@ -200,7 +200,7 @@ export default function Banner() {
                     </div>
 
                     {/* Right Column: Cards & Video Banner (5 cols) */}
-                    <div className="lg:col-span-5 flex flex-col items-center mt-10 lg:mt-0">
+                    <div className="lg:col-span-5 hidden lg:flex flex-col items-center mt-10 lg:mt-0">
 
                         {/* Dynamic Alumni Promotion Card Carousel */}
                         <div className="hidden lg:flex flex-col gap-4 w-full max-w-md">

@@ -1,5 +1,16 @@
 import type { Metadata } from 'next';
-import Banner from '@/components/page-comp/home-page/Banner';
+import Banner from '@/components/home/Banner';
+import CoursesSection from '@/components/home/CoursesSection';
+import CTA from '@/components/home/CTA';
+import AboutUsSec from '@/components/home/AboutUsSec';
+import OurBestFeatures from '@/components/home/OurBestFeatures';
+import TopExperiences from '@/components/home/TopExperiences';
+import WhoWeAre from '@/components/home/WhoWeAre';
+import TestsSection from '@/components/home/TestsSection';
+import Corporate from '@/components/home/Corporate';
+import ExpertServices from '@/components/home/ExpertServices';
+import TestimonialSections from '@/components/home/TestimonialSections';
+import { getCategories } from '@/services/catalog.service';
 
 export const metadata: Metadata = {
   title: 'Learn In-Demand Tech Skills & Industry Certifications',
@@ -34,10 +45,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const categories = await getCategories();
+
   return (
     <>
       <Banner />
+      <CoursesSection categories={categories} />
+      <CTA />
+      <AboutUsSec />
+      <OurBestFeatures />
+      <TopExperiences />
+      <WhoWeAre />
+      <TestsSection />
+      {/* <Corporate />
+      <ExpertServices />
+      <TestimonialSections searchParams={searchParams} /> */}
     </>
   );
 }

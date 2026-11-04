@@ -18,6 +18,7 @@ interface RawCourseIcon {
 }
 
 interface RawCourseCard {
+  courseThumbnail?: RawCourseIcon;
   courseIcon?: RawCourseIcon;
   courseTag?: string;
   courseType?: string;
@@ -111,6 +112,13 @@ export async function getCategories(): Promise<Category[]> {
 
           if (rawCard) {
             sanitizedCard = {
+              courseThumbnail: rawCard.courseThumbnail?.url || rawCard.courseThumbnail?.thumbnail
+                ? {
+                    url: typeof rawCard.courseThumbnail.url === 'string' ? rawCard.courseThumbnail.url : undefined,
+                    thumbnail: typeof rawCard.courseThumbnail.thumbnail === 'string' ? rawCard.courseThumbnail.thumbnail : undefined,
+                    alt: typeof rawCard.courseThumbnail.alt === 'string' ? rawCard.courseThumbnail.alt : undefined,
+                  }
+                : undefined,
               courseIcon: rawCard.courseIcon?.url || rawCard.courseIcon?.thumbnail
                 ? {
                     url: typeof rawCard.courseIcon.url === 'string' ? rawCard.courseIcon.url : undefined,
@@ -126,10 +134,40 @@ export async function getCategories(): Promise<Category[]> {
             };
           }
 
+          const thumb =
+            typeof c.thumbnail === 'string'
+              ? c.thumbnail
+              : sanitizedCard?.courseThumbnail?.url ||
+                sanitizedCard?.courseThumbnail?.thumbnail ||
+                sanitizedCard?.courseIcon?.thumbnail ||
+                sanitizedCard?.courseIcon?.url;
+          const dur =
+            typeof c.duration === 'string'
+              ? c.duration
+              : sanitizedCard?.courseDuration;
+          const enr =
+            typeof c.enrolled === 'string'
+              ? c.enrolled
+              : sanitizedCard?.totalEnrolled;
+          const tag =
+            typeof c.tag === 'string'
+              ? c.tag
+              : sanitizedCard?.courseTag;
+          const type =
+            typeof c.type === 'string'
+              ? c.type
+              : sanitizedCard?.courseType;
+
           return {
             name: (c.course_name || c.course_title || c.name || '') as string,
             slug: (c.slug || '') as string,
+            catslug: cat.slug,
             order: typeof c.order === 'number' ? c.order : 0,
+            thumbnail: thumb,
+            duration: dur,
+            enrolled: enr,
+            tag,
+            type,
             courseCard: sanitizedCard,
           };
         })
@@ -139,10 +177,11 @@ export async function getCategories(): Promise<Category[]> {
       return {
         name: cat.name || '',
         slug: cat.slug || '',
+        order: typeof cat.order === 'number' ? cat.order : 0,
         images: Array.isArray(cat.images) ? cat.images : [],
         courses: matchingCourses,
       };
-    });
+    }).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
     return categoriesWithCourses;
   } catch (error) {

@@ -19,6 +19,7 @@ interface SearchableSelectProps {
     onOpen?: () => void;
     icon?: ReactNode;
     label?: string;
+    searchable?: boolean;
 }
 
 export default function SearchableSelect({
@@ -30,24 +31,27 @@ export default function SearchableSelect({
     loading = false,
     onOpen,
     label,
-    icon
+    icon,
+    searchable
 }: SearchableSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const containerRef = useRef<HTMLDivElement>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
 
+    const isSearchable = searchable ?? (options.length > 5);
+
     const selectedOption = useMemo(() =>
         options.find(opt => opt.value === value),
         [options, value]);
 
     const filteredOptions = useMemo(() => {
-        if (!searchTerm) return options;
+        if (!isSearchable || !searchTerm) return options;
         const lowerTerm = searchTerm.toLowerCase();
         return options.filter(opt =>
             opt.label.toLowerCase().includes(lowerTerm)
         );
-    }, [options, searchTerm]);
+    }, [options, searchTerm, isSearchable]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -64,7 +68,7 @@ export default function SearchableSelect({
     }, []);
 
     useEffect(() => {
-        if (!isOpen) return;
+        if (!isOpen || !isSearchable) return;
 
         onOpen?.();
         const timeoutId = window.setTimeout(() => {
@@ -72,7 +76,7 @@ export default function SearchableSelect({
         }, 100);
 
         return () => window.clearTimeout(timeoutId);
-    }, [isOpen, onOpen]);
+    }, [isOpen, onOpen, isSearchable]);
 
     const handleSelect = (val: string) => {
         onChange(val);
@@ -93,7 +97,7 @@ export default function SearchableSelect({
                     setIsOpen(true);
                 }}
                 className={`
-                    relative w-full cursor-pointer rounded-md bg-surface py-2 text-xs  ${icon ? 'pl-9' : 'pl-3'} pr-8 text-left border
+                    relative w-full cursor-pointer rounded-md bg-surface py-2 text-xs ${icon ? 'pl-9' : 'pl-3'} pr-8 text-left border
                     focus:outline-none focus:ring-2 focus:ring-prime/10 focus:border-prime
                     transition-all duration-200
                     ${isOpen ? 'ring-2 ring-prime/10 border-prime' : (value ? 'border-border-muted text-foreground' : 'border-border-muted text-text-muted hover:border-prime/50')}
@@ -116,29 +120,31 @@ export default function SearchableSelect({
 
             {isOpen && (
                 <div className="absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-md bg-surface border border-border-muted shadow-xl animate-in fade-in zoom-in-95 duration-100 flex flex-col">
-                    {/* Search bar inside dropdown */}
-                    <div className="p-2 border-b border-border-muted/50 bg-surface-muted sticky top-0">
-                        <div className="relative">
-                            <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-text-muted" />
-                            <input
-                                ref={searchInputRef}
-                                type="text"
-                                className="w-full rounded-md bg-surface pl-8 pr-7 py-1.5 text-xs border border-border-muted text-foreground placeholder:text-text-muted placeholder:text-xs focus:border-prime focus:outline-none focus:ring-2 focus:ring-prime/20 transition-all"
-                                placeholder={`Search ${label || 'courses'}...`}
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                            {searchTerm && (
-                                <button
-                                    type="button"
-                                    onClick={() => setSearchTerm("")}
-                                    className="absolute right-2 top-2 text-text-muted hover:text-foreground p-0.5 cursor-pointer"
-                                >
-                                    <X className="h-3 w-3" />
-                                </button>
-                            )}
+                    {/* Search bar inside dropdown (when searchable) */}
+                    {isSearchable && (
+                        <div className="p-2 border-b border-border-muted/50 bg-surface-muted sticky top-0">
+                            <div className="relative">
+                                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-text-muted" />
+                                <input
+                                    ref={searchInputRef}
+                                    type="text"
+                                    className="w-full rounded-md bg-surface pl-8 pr-7 py-1.5 text-xs border border-border-muted text-foreground placeholder:text-text-muted placeholder:text-xs focus:border-prime focus:outline-none focus:ring-2 focus:ring-prime/20 transition-all"
+                                    placeholder={`Search ${label || 'options'}...`}
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                {searchTerm && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setSearchTerm("")}
+                                        className="absolute right-2 top-2 text-text-muted hover:text-foreground p-0.5 cursor-pointer"
+                                    >
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                )}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Options list */}
                     <div className="overflow-y-auto max-h-48 py-1 divide-y divide-border-muted/20">

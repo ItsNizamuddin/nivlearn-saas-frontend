@@ -199,9 +199,27 @@
  * - From 2xl (1536px): max-w-7xl (80rem / 1280px)
  */
 @utility section-container {
-  @apply mx-auto w-full px-4 sm:px-6 md:max-w-6xl 2xl:max-w-7xl;
+  @apply mx-auto w-full px-4 md:max-w-6xl 2xl:max-w-7xl;
 }
 
 @utility layout-container {
-  @apply mx-auto w-full px-4 sm:px-6 md:max-w-6xl 2xl:max-w-7xl;
+  @apply mx-auto w-full px-4 md:max-w-6xl 2xl:max-w-7xl;
+}
+
+
+/* Continuous Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }

@@ -144,3 +144,424 @@
     background: url("/sprites/HomeBannerSpritesLogos.webp") -187px -10px;
     mix-blend-mode: multiply;
   }
+
+  /* Course Logos Sprites */
+.courseMain {
+  width: 230px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -10px -10px;
+}
+
+.course1 {
+  width: 100px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -503px -250px;
+}
+
+.course2 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -503px -130px;
+}
+
+.course3 {
+  width: 100px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -503px -370px;
+}
+
+.course4 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -10px -250px;
+}
+
+.course5 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -131px -250px;
+}
+
+.course6 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -252px -250px;
+}
+
+.course7 {
+  width: 89px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -10px -490px;
+}
+
+.course8 {
+  width: 88px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -119px -490px;
+}
+
+.course9 {
+  width: 88px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -227px -490px;
+}
+
+.course10 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -382px -10px;
+}
+
+.course11 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -382px -130px;
+}
+
+.course12 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -382px -250px;
+}
+
+.course13 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -10px -370px;
+}
+
+.course14 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -131px -370px;
+}
+
+.course15 {
+  width: 102px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -260px -10px;
+}
+
+.course16 {
+  width: 102px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -260px -130px;
+}
+
+.course17 {
+  width: 199px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -10px -130px;
+}
+
+.course18 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -252px -370px;
+}
+
+.course19 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -373px -370px;
+}
+
+.course20 {
+  width: 101px;
+  height: 100px;
+  background: url("/sprites/courselogosprite.webp") -503px -10px;
+}
+
+/* Coporate Company Logos verticle */
+
+.bg-CorpVertical__2_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -10px -10px;
+}
+
+.bg-CorpVertical__3_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -135px -10px;
+}
+
+.bg-CorpVertical__4_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -10px -82px;
+}
+
+.bg-CorpVertical__5_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -135px -82px;
+}
+
+.bg-CorpVertical__6_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -10px -154px;
+}
+
+.bg-CorpVertical__7_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -135px -154px;
+}
+
+.bg-CorpVertical__8_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -260px -10px;
+}
+
+.bg-CorpVertical__9_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -260px -82px;
+}
+
+.bg-CorpVertical__10_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -260px -154px;
+}
+
+.bg-CorpVertical__11_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -10px -226px;
+}
+
+.bg-CorpVertical__12_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -135px -226px;
+}
+
+.bg-CorpVertical__13_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -260px -226px;
+}
+
+.bg-CorpVertical__14_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -10px -298px;
+}
+
+.bg-CorpVertical__15_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -135px -298px;
+}
+
+.bg-CorpVertical__16_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -260px -298px;
+}
+
+.bg-CorpVertical__17_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -385px -10px;
+}
+
+.bg-CorpVertical__18_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -385px -82px;
+}
+
+.bg-CorpVertical__19_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -385px -154px;
+}
+
+.bg-CorpVertical__20_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -385px -226px;
+}
+
+.bg-CorpVertical__21_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -385px -298px;
+}
+
+.bg-CorpVertical__22_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -10px -370px;
+}
+
+.bg-CorpVertical__23_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -135px -370px;
+}
+
+.bg-CorpVertical__24_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -260px -370px;
+}
+
+.bg-CorpVertical__25_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -385px -370px;
+}
+
+.bg-CorpVertical__26_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -510px -10px;
+}
+
+.bg-CorpVertical__27_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -510px -82px;
+}
+
+.bg-CorpVertical__28_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -510px -154px;
+}
+
+.bg-CorpVertical__29_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -510px -226px;
+}
+
+.bg-CorpVertical {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -510px -298px;
+}
+
+.bg-CorpVertical__1_ {
+  width: 105px;
+  height: 52px;
+  background: url("/sprites/CorpVerticalSprites.webp") -510px -370px;
+}
+
+/* 
+*
+* Home Page Sprites
+*
+*/
+
+.bg-accelerate1 {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background: url(/sprites/home.webp) no-repeat -10px -214px;
+}
+
+.bg-accelerate2 {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background: url(/sprites/home.webp) no-repeat -80px -214px;
+}
+
+.bg-accelerate3 {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background: url(/sprites/home.webp) no-repeat -150px -214px;
+}
+
+.bg-accelerate4 {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background: url(/sprites/home.webp) no-repeat -220px -214px;
+}
+
+.bg-bannerpeople {
+  width: 160px;
+  height: 44px;
+  background: url(/sprites/home.webp) -10px -10px;
+}
+
+.bg-features1 {
+  width: 51px;
+  height: 50px;
+  background: url(/sprites/home.webp) -10px -74px;
+}
+
+.bg-features2 {
+  width: 51px;
+  height: 50px;
+  background: url(/sprites/home.webp) -81px -74px;
+}
+
+.bg-features3 {
+  width: 51px;
+  height: 50px;
+  background: url(/sprites/home.webp) -190px -10px;
+}
+
+.bg-features4 {
+  width: 51px;
+  height: 50px;
+  background: url(/sprites/home.webp) -10px -144px;
+}
+
+.bg-features5 {
+  width: 51px;
+  height: 50px;
+  background: url(/sprites/home.webp) -81px -144px;
+}
+
+.bg-features6 {
+  width: 51px;
+  height: 50px;
+  background: url(/sprites/home.webp) -152px -144px;
+}
+
+.bg-features7 {
+  width: 51px;
+  height: 50px;
+  background: url(/sprites/home.webp) -261px -10px;
+}
+
+.bg-features8 {
+  width: 51px;
+  height: 50px;
+  background: url(/sprites/home.webp) -261px -80px;
+}
+
+.bg-whoweare1 {
+  width: 34px;
+  height: 34px;
+  background: url(/sprites/home.webp) -261px -150px;
+}
+
+.bg-whoweare2 {
+  width: 34px;
+  height: 34px;
+  background: url(/sprites/home.webp) -190px -80px;
+}
+
+.bg-whoweare3 {
+  width: 34px;
+  height: 34px;
+  background: url(/sprites/home.webp) -332px -10px;
+}
+
+.bg-whoweare4 {
+  width: 34px;
+  height: 34px;
+  background: url(/sprites/home.webp) -332px -64px;
+}
