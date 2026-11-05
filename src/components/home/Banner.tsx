@@ -1,12 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Play, Star, CheckCircle2, Download } from 'lucide-react';
-import rating from '../../../../public/home/enrolled.webp';
-import underline from '../../../../public/home/underline.webp';
-import video from '../../../../public/home/banvideo.webp';
-import pattern from '../../../../public/home/pattern.webp';
+import rating from '../../../public/home/enrolled.webp';
+import underline from '../../../public/home/underline.webp';
+import pattern from '../../../public/home/pattern.webp';
 import Link from 'next/link';
 import { useLeadModal } from '@/context/LeadModalContext';
 
@@ -70,9 +69,6 @@ export default function Banner() {
         });
     }
 
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const animationRef = useRef<number | null>(null);
-
     // Auto-rotate alumni cards
     useEffect(() => {
         const interval = setInterval(() => {
@@ -86,40 +82,12 @@ export default function Banner() {
         return () => clearInterval(interval);
     }, []);
 
-    // Seamless ticker for hiring partner logos
-    useEffect(() => {
-        const scrollContainer = scrollRef.current;
-        if (!scrollContainer || logos.length === 0) return;
-
-        const scrollWidth = scrollContainer.scrollWidth / 2;
-        let scrollLeft = 0;
-
-        const autoScroll = () => {
-            if (scrollContainer) {
-                scrollLeft += 1;
-                if (scrollLeft >= scrollWidth) {
-                    scrollLeft = 0;
-                }
-                scrollContainer.scrollLeft = scrollLeft;
-            }
-            animationRef.current = requestAnimationFrame(autoScroll);
-        };
-
-        animationRef.current = requestAnimationFrame(autoScroll);
-
-        return () => {
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-            }
-        };
-    }, []);
-
     return (
         <section className="relative overflow-hidden w-full  ">
             {/* Dark curved shape on desktop */}
             <div className="bg-prime-dark/90 rounded-br-[150px] w-8/12 h-full absolute top-0 left-0 lg:block hidden -z-10 shadow-lg" />
 
-            <div className="section-container relative z-10 py-10 lg:py-16">
+            <div className="section-container relative z-10 pt-10 lg:py-16">
                 <div className="lg:grid lg:grid-cols-12 gap-8 items-center">
 
                     {/* Left Column: Headline, Copy & CTAs (7 cols) */}
@@ -133,8 +101,8 @@ export default function Banner() {
                                 <Image
                                     src={underline}
                                     alt="accent"
+                                    sizes="(max-width: 640px) 192px, 256px"
                                     className="w-48 sm:w-64 h-auto group-hover:animate-pulse"
-                                    priority
                                 />
                             </div>
                         </div>
@@ -148,7 +116,7 @@ export default function Banner() {
                             <button
                                 type="button"
                                 onClick={triggerForm}
-                                className="bg-prime-yellow hover:bg-prime-yellow/90 text-prime-dark font-bold px-5 py-3 rounded-xl shadow-md transition-all text-xs sm:text-sm flex items-center gap-2 active:scale-95"
+                                className="bg-prime-yellow hover:bg-prime-yellow/90 text-white font-bold px-5 py-3 rounded-xl shadow-md transition-all text-xs sm:text-sm flex items-center gap-2 active:scale-95"
                             >
                                 <span>Download Company Profile</span>
                                 <Download size={16} />
@@ -171,22 +139,19 @@ export default function Banner() {
                                 <Star size={14} className="fill-prime-yellow text-prime-yellow" />
                                 <Star size={14} className="fill-prime-yellow text-prime-yellow" />
                             </div>
-                            <Image src={rating} alt="enrolled students" className="lg:hidden h-6 w-auto" priority />
-                            <span className="text-prime-dark lg:text-white text-xs sm:text-sm font-semibold">
+                            <Image src={rating} alt="enrolled students" sizes="120px" className="lg:hidden h-6 w-auto" />
+                            <span className="text-whiteprime-dark lg:text-white text-xs sm:text-sm font-semibold">
                                 Trusted by over 4,32,000+ Learners Globally
                             </span>
                         </div>
 
-                        {/* Hiring Partners Ticker */}
-                        <div className="bg-slate-100 lg:bg-white/10 backdrop-blur-xs rounded-2xl p-4 flex items-center gap-4 max-w-xl mx-auto lg:mx-0">
-                            <span className="text-xs font-bold text-prime-dark lg:text-white uppercase tracking-wider shrink-0">
+                        {/* Hiring Partners Ticker (Pure CSS GPU-accelerated marquee) */}
+                        <div className="bg-slate-100 lg:bg-white/10 backdrop-blur-xs rounded-2xl p-4 flex items-center gap-4 max-w-xl mx-auto lg:mx-0 overflow-hidden">
+                            <span className="text-xs font-bold text-prime-dark lg:text-white uppercase tracking-wider shrink-0 z-10">
                                 Trusted by:
                             </span>
-                            <div
-                                ref={scrollRef}
-                                className="flex gap-x-10 overflow-hidden whitespace-nowrap w-full py-1"
-                            >
-                                <div className="flex items-center gap-x-10 shrink-0">
+                            <div className="relative overflow-hidden w-full py-1">
+                                <div className="animate-marquee flex items-center gap-x-10">
                                     {logos.concat(logos).map((logo, index) => (
                                         <span
                                             key={index}
@@ -200,7 +165,7 @@ export default function Banner() {
                     </div>
 
                     {/* Right Column: Cards & Video Banner (5 cols) */}
-                    <div className="lg:col-span-5 flex flex-col items-center mt-10 lg:mt-0">
+                    <div className="lg:col-span-5 hidden lg:flex flex-col items-center mt-10 lg:mt-0">
 
                         {/* Dynamic Alumni Promotion Card Carousel */}
                         <div className="hidden lg:flex flex-col gap-4 w-full max-w-md">
@@ -238,17 +203,17 @@ export default function Banner() {
                                 src={pattern}
                                 alt="decor"
                                 className="absolute -z-10 -bottom-6 -right-6 w-32 h-auto opacity-70 hidden sm:block"
-                                priority
                             />
 
                             <div className="border-3 border-prime rounded-2xl overflow-hidden shadow-xl bg-slate-900 relative">
                                 {!isPlaying ? (
-                                    <div className="relative group cursor-pointer" onClick={handlePlayClick}>
+                                    <div className="relative aspect-video w-full group cursor-pointer" onClick={handlePlayClick}>
                                         <Image
-                                            src={video}
+                                            src="https://img.youtube.com/vi/iMIEMMvVx70/maxresdefault.jpg"
                                             alt="NivLearn Overview Video"
-                                            className="w-full h-auto object-cover group-hover:scale-102 transition-transform duration-300"
-                                            priority
+                                            fill
+                                            className="object-cover group-hover:scale-102 transition-transform duration-300"
+                                            sizes="(max-width: 768px) 100vw, 448px"
                                         />
                                         <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/30 transition-colors flex items-center justify-center">
                                             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/90 group-hover:bg-white text-prime flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
@@ -261,7 +226,7 @@ export default function Banner() {
                                         <iframe
                                             width="100%"
                                             height="100%"
-                                            src="https://www.youtube.com/embed/UJezI5wmt6I?autoplay=1"
+                                            src="https://www.youtube.com/embed/iMIEMMvVx70?autoplay=1"
                                             title="NivLearn Video"
                                             className="w-full h-full"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

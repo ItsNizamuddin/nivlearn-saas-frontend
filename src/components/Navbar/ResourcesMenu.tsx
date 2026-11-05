@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { COMPANY_LINKS, RESOURCE_LINKS } from './navLinks';
 import NavContact from './NavContact';
@@ -12,21 +12,57 @@ interface ResourcesMenuProps {
 }
 
 export default function ResourcesMenu({ onClose, onMouseEnter, onMouseLeave }: ResourcesMenuProps) {
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = 'hidden';
+    if (scrollBarWidth > 0) {
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
+    }
+
+    const handleWheel = (e: WheelEvent) => {
+      const target = e.target as HTMLElement | null;
+      const scrollable = target?.closest('.custom-scrollbar') as HTMLElement | null;
+
+      if (!scrollable) {
+        e.preventDefault();
+        return;
+      }
+
+      const { scrollTop, scrollHeight, clientHeight } = scrollable;
+      const isAtTop = scrollTop <= 0 && e.deltaY < 0;
+      const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 1 && e.deltaY > 0;
+
+      if (isAtTop || isAtBottom) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
   return (
     <div
-      className="fixed inset-0 top-16 z-40 bg-black/25 backdrop-blur-[1px] flex justify-center pt-2 px-4 cursor-default"
+      className="fixed inset-0 top-16 z-40 bg-black/25 backdrop-blur-[1px] flex justify-center pt-2 px-4 cursor-default overscroll-contain"
       onClick={onClose}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-xl shadow-2xl border border-zinc-200/90 w-full max-w-5xl mx-auto overflow-hidden flex flex-col h-[480px] cursor-auto"
+        className="bg-white rounded-xl shadow-2xl border border-zinc-200/90 w-full max-w-5xl mx-auto overflow-hidden flex flex-col h-[480px] cursor-auto overscroll-contain"
       >
         {/* Main Content Area */}
         <div className="flex flex-1 min-h-0 p-6 gap-6">
           {/* Main Resources */}
-          <div className="flex-1 border-r border-zinc-100 pr-6 overflow-y-auto custom-scrollbar">
+          <div className="flex-1 border-r border-zinc-100 pr-6 overflow-y-auto overscroll-contain custom-scrollbar">
             <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-4 flex-shrink-0">
               Resources &amp; Community
             </h4>
