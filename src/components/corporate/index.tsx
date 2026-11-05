@@ -3,6 +3,7 @@ import Banner from './Banner';
 import Benefits from './Benefits';
 import Courses from './Courses';
 import EnquiryCta from './EnquiryCta';
+import RecentBlogs from '@/components/blog/RecentBlogs';
 import { Certifications, GlobalShowcase, WhyUs } from './Showcase';
 import Stats from './Stats';
 import Stories from './Stories';
@@ -25,6 +26,7 @@ export default function Corporate() {
       <WhyUs />
       <Certifications />
       <GlobalShowcase />
+      <RecentBlogs />
       <EnquiryCta />
     </>
   );

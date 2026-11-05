@@ -84,10 +84,10 @@ export default function CTA({
                     {/* 3D Pop-Out Illustration */}
                     <div className="absolute -right-1 sm:right-6 lg:right-10 bottom-0 pointer-events-none select-none z-20">
                         <Image
-                            src="/CourseCat/cta1.webp"
-                            alt="Exclusive Offers"
-                            width={281}
-                            height={303}
+                            src="/CourseCat/cta-learner.webp"
+                            alt="Smiling learner waving with a laptop"
+                            width={470}
+                            height={640}
                             sizes="(max-width: 640px) 134px, (max-width: 1024px) 200px, 281px"
                             className="object-contain w-auto h-36 sm:h-48 md:h-52 lg:h-56 xl:h-64 drop-shadow-md translate-y-1"
                         />

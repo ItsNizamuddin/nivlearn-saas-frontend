@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import type { CourseOptionItem } from '@/components/forms/types';
+import type { CourseOptionItem, LeadFormExtraField } from '@/components/forms/types';
 
 export interface LeadModalConfig {
     formTitle?: string | ReactNode;
@@ -32,6 +32,9 @@ export interface LeadModalConfig {
     };
 
     courses?: CourseOptionItem[];
+    /** Page-specific questions (sent as customFields). */
+    extraFields?: LeadFormExtraField[];
+    submitButtonText?: string;
     onSuccess?: () => void;
     source?: string;
     courseSlug?: string;

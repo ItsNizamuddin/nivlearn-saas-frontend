@@ -130,10 +130,8 @@ export const TRANSFORM = {
 /* --------------------------------- Courses -------------------------------- */
 
 export const COURSES = {
-  eyebrow: 'How we are helping companies',
   title: 'Future-proof your teams with our in-demand courses',
-  /** How many courses to show in the grid. */
-  limit: 8,
+  subtitle: 'Live, instructor-led programs your teams can start this quarter, with enquiry and batch details for every course.',
 } as const;
 
 /* ---------------------------------- Stats --------------------------------- */

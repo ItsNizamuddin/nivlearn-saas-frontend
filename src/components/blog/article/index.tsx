@@ -6,7 +6,6 @@ import BrandBackdrop from '@/components/ui/BrandBackdrop';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
-import EnquiryForm from '@/components/ui/form/EnquiryForm';
 import { SITE_URL } from '@/lib/site';
 import AuthorAvatar from '../AuthorAvatar';
 import BlogExplorer from '../BlogExplorer';
@@ -16,6 +15,7 @@ import { ALL_CATEGORIES, type BlogCategory, type BlogList, type BlogPost, type B
 import NewsletterCard from './NewsletterCard';
 import RecentPosts from './RecentPosts';
 import ShareLinks from './ShareLinks';
+import InlineLeadForm from '@/components/forms/InlineLeadForm';
 
 function MetaItem({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
   return (
@@ -130,7 +130,7 @@ export default function BlogArticle({ post, recent, categories, related }: BlogA
               <p className="mt-2 text-text-muted">{LEVEL_UP.description}</p>
               <p className="mt-3 text-sm font-semibold text-prime">{LEVEL_UP.prompt}</p>
               <div className="mt-6">
-                <EnquiryForm formId="blog" />
+                <InlineLeadForm form="advisor" submitButtonText="Get Free Guidance" />
               </div>
             </section>
           </div>

@@ -37,6 +37,7 @@ export default function LeadForm({
     layout = 'standard',
     coursePlaceholder,
     courses,
+    extraFields = [],
     onSuccess
 }: LeadFormProps) {
     const [loading, setLoading] = useState(false);
@@ -64,6 +65,15 @@ export default function LeadForm({
         pagePath: '',
         ...defaultValues
     });
+
+    const initialExtra = () =>
+        Object.fromEntries(extraFields.map((f) => [f.name, f.defaultValue ?? ''])) as Record<string, string>;
+    const [extraValues, setExtraValues] = useState<Record<string, string>>(initialExtra);
+    const handleExtraChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        if (errorMessage) setErrorMessage(null);
+        setExtraValues((prev) => ({ ...prev, [name]: value }));
+    };
 
     const hasTurnstileKey = Boolean((process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '').trim());
     const [turnstileToken, setTurnstileToken] = useState<string>(hasTurnstileKey ? '' : 'dev-bypass');
@@ -154,6 +164,7 @@ export default function LeadForm({
                 city: geo?.city,
                 clientIp: geo?.query,
                 customFields: {
+                    ...extraValues,
                     hearAboutUs: formData.hearAboutUs,
                     subject: formData.subject,
                     companyName: formData.companyName,
@@ -194,6 +205,7 @@ export default function LeadForm({
                 pagePath: typeof window !== 'undefined' ? window.location.pathname : '',
                 ...defaultValues
             });
+            setExtraValues(initialExtra());
             if (onSuccess) onSuccess();
             if (hasTurnstileKey) setTurnstileToken('');
         } catch (error: unknown) {
@@ -351,6 +363,23 @@ export default function LeadForm({
                         )}
                     </div>
                 )}
+
+                {/* Page-specific questions */}
+                {extraFields.map((field) => (
+                    <FloatingField
+                        key={field.name}
+                        label={field.label}
+                        name={field.name}
+                        type={field.type ?? 'text'}
+                        required={field.required}
+                        value={extraValues[field.name] ?? ''}
+                        onChange={handleExtraChange}
+                        placeholder={field.placeholder}
+                        options={field.options}
+                        rows={2}
+                        minHeight={isCompact ? 65 : 85}
+                    />
+                ))}
 
                 {/* Message */}
                 {config.showMessage !== false && (

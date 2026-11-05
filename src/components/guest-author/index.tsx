@@ -1,4 +1,4 @@
-import { ChevronDown, CircleCheck, FileText, Mail } from 'lucide-react';
+import { CircleCheck, FileText, Mail } from 'lucide-react';
 import FeatureCard from '@/components/ui/FeatureCard';
 import Glow from '@/components/ui/Glow';
 import PageHero from '@/components/ui/PageHero';
@@ -6,6 +6,7 @@ import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { buttonClass } from '@/components/ui/button';
 import { BENEFITS, CLOSING, GUIDELINES, HERO, HOW_TO_SUBMIT, NEXT_STEPS, SUBMIT_EMAIL, TOPICS } from './data';
+import LeadCta from '@/components/forms/LeadCta';
 
 const SUBMIT_ID = 'submit';
 
@@ -49,9 +50,9 @@ export default function GuestAuthor() {
           </>
         }
         actions={
-          <a href={`#${SUBMIT_ID}`} className={buttonClass('accent', 'lg')}>
-            {HERO.actionLabel} <ChevronDown aria-hidden className="size-4" />
-          </a>
+          <LeadCta form="guestAuthor" className={buttonClass('accent', 'lg')}>
+            {HERO.actionLabel}
+          </LeadCta>
         }
       />
 
@@ -131,8 +132,11 @@ export default function GuestAuthor() {
             <p className="mt-4 text-on-dark/80">{CLOSING.description}</p>
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <span className="font-semibold text-on-dark">{CLOSING.prompt}</span>
-              <a href={`mailto:${SUBMIT_EMAIL}`} className={buttonClass('accent', 'lg')}>
-                <Mail aria-hidden className="size-5 shrink-0" /> {SUBMIT_EMAIL}
+              <LeadCta form="guestAuthor" className={buttonClass('accent', 'lg')}>
+                Pitch Your Article
+              </LeadCta>
+              <a href={`mailto:${SUBMIT_EMAIL}`} className="inline-flex items-center gap-2 text-sm font-medium text-on-dark/80 underline-offset-4 hover:text-on-dark hover:underline">
+                <Mail aria-hidden className="size-4 shrink-0" /> {SUBMIT_EMAIL}
               </a>
             </div>
           </div>

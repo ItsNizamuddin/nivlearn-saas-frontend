@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import CtaBanner from '@/components/ui/CtaBanner';
 import FeatureCard from '@/components/ui/FeatureCard';
 import PageHero from '@/components/ui/PageHero';
@@ -7,8 +6,9 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import TrustedBy from '@/components/ui/TrustedBy';
 import { buttonClass } from '@/components/ui/button';
 import { StatGrid } from '@/components/ui/StatCard';
-import ctaImage from '../../../public/CourseCat/cta1.webp';
+import ctaImage from '../../../public/CourseCat/cta-learner.webp';
 import { BENEFITS, HERO, WHY } from './data';
+import LeadCta from '@/components/forms/LeadCta';
 
 export default function BecomeAnInstructor() {
   return (
@@ -20,9 +20,9 @@ export default function BecomeAnInstructor() {
         image={HERO.image}
         imageAlt="NivLearn instructor"
         actions={
-          <Link href="/contact-us" className={buttonClass('accent', 'lg')}>
+          <LeadCta form="instructor" className={buttonClass('accent', 'lg')}>
             {HERO.actionLabel}
-          </Link>
+          </LeadCta>
         }
       />
 
@@ -43,7 +43,7 @@ export default function BecomeAnInstructor() {
           title="Get exclusive offers!"
           description="Kickstart Your Career in Agile & Project Management Today!"
           actionLabel="Avail Now!"
-          href="/contact-us"
+          form="advisor"
           image={ctaImage}
         />
       </Section>

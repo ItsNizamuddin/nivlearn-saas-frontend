@@ -1,14 +1,14 @@
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
-import EnquiryForm from '@/components/ui/form/EnquiryForm';
 import FeatureCard from '@/components/ui/FeatureCard';
 import PageHero from '@/components/ui/PageHero';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { buttonClass } from '@/components/ui/button';
 import { FORM, FREE_PLATFORM, HERO, HIRE_FORM_ID, JOB_ROLES, TALENT, WHY_HIRE } from './data';
+import LeadCta from '@/components/forms/LeadCta';
+import InlineLeadForm from '@/components/forms/InlineLeadForm';
 
-const toForm = `#${HIRE_FORM_ID}`;
 
 export default function HireFromUs() {
   return (
@@ -20,9 +20,9 @@ export default function HireFromUs() {
         image={HERO.image}
         imageAlt="Smiling young professional holding a laptop"
         actions={
-          <a href={toForm} className={buttonClass('accent', 'lg')}>
+          <LeadCta form="hire" className={buttonClass('accent', 'lg')}>
             {HERO.actionLabel}
-          </a>
+          </LeadCta>
         }
       />
 
@@ -60,9 +60,9 @@ export default function HireFromUs() {
           ))}
         </ul>
         <div className="mt-10 flex justify-center">
-          <a href={toForm} className={buttonClass('accent', 'lg')}>
+          <LeadCta form="hire" className={buttonClass('accent', 'lg')}>
             Start Hiring <ChevronRight aria-hidden className="size-4" />
-          </a>
+          </LeadCta>
         </div>
 
         <div className="mt-12 flex flex-col items-center gap-6 rounded-2xl bg-prime-dark p-6 shadow-card sm:flex-row sm:p-8">
@@ -74,7 +74,7 @@ export default function HireFromUs() {
       <Section id={HIRE_FORM_ID}>
         <div className="grid gap-10 rounded-2xl border border-prime/10 bg-surface p-6 shadow-card sm:p-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
           <SectionHeading eyebrow={FORM.eyebrow} title={FORM.title} description={FORM.description} />
-          <EnquiryForm formId="hire" submitLabel="Start Hiring" />
+          <InlineLeadForm form="hire" />
         </div>
       </Section>
     </>

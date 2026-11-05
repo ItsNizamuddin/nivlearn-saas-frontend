@@ -34,6 +34,21 @@ export interface LeadFormDefaultValues {
     [key: string]: string | undefined;
 }
 
+/**
+ * Page-specific question added to the lead form. Answers are sent in
+ * `customFields` under its `name`, so no backend change is needed.
+ */
+export interface LeadFormExtraField {
+    name: string;
+    label: string;
+    type?: 'text' | 'number' | 'select' | 'textarea';
+    required?: boolean;
+    placeholder?: string;
+    options?: Array<{ label: string; value: string }>;
+    /** Pre-filled value. */
+    defaultValue?: string;
+}
+
 export interface LeadFormFieldIcons {
     fullName?: ReactNode;
     phone?: ReactNode;
@@ -53,6 +68,8 @@ export interface LeadFormProps {
     fieldIcons?: LeadFormFieldIcons;
     submitButtonText?: string;
     courses?: CourseOptionItem[];
+    /** Extra page-specific questions, rendered before the message box. */
+    extraFields?: LeadFormExtraField[];
     onSuccess?: () => void;
 }
 
