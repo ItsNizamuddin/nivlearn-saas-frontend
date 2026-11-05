@@ -25,7 +25,7 @@ export default function Stories() {
         items={STORIES.items.map((s) => ({
           id: idOf(s.category),
           label: s.category,
-          icon: <Image src={s.icon} alt="" width={24} height={24} className="rounded" />,
+          icon: <s.icon aria-hidden className="size-5" />,
         }))}
       />
 
@@ -38,7 +38,9 @@ export default function Stories() {
         <div className="space-y-6 lg:col-span-2">
           <div className="rounded-2xl bg-surface p-6 shadow-sm">
             <h3 className="flex items-center gap-3 text-lg font-bold text-prime-dark">
-              <Image src={story.icon} alt="" width={40} height={40} className="rounded-lg" />
+              <span aria-hidden className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-prime/10 text-prime">
+                <story.icon className="size-5" />
+              </span>
               {story.category}
             </h3>
             <p className="mt-3 leading-relaxed text-text-muted">{story.description}</p>

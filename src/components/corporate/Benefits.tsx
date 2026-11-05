@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { BENEFITS } from './data';
@@ -12,7 +11,9 @@ export default function Benefits() {
       <ul className="space-y-3">
         {BENEFITS.items.map((b) => (
           <li key={b.title} className="flex items-center gap-4 rounded-2xl border border-prime/10 bg-surface-muted p-4">
-            <Image src={b.icon} alt="" className="size-12 shrink-0" />
+            <span aria-hidden className="flex size-12 shrink-0 items-center justify-center rounded-full border border-dashed border-prime/40 bg-prime/10 text-prime">
+              <b.icon className="size-6" />
+            </span>
             <div>
               <p className="font-semibold text-prime-dark">{b.title}</p>
               <p className="text-sm text-text-muted">{b.subtitle}</p>

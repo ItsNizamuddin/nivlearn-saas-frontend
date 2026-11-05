@@ -18,7 +18,7 @@ export default function Transform() {
         src={TRANSFORM.image}
         alt=""
         sizes="(min-width: 1024px) 35vw, 80vw"
-        className="mx-auto h-auto w-full max-w-sm lg:max-w-none"
+        className="mx-auto h-auto w-full max-w-md rounded-2xl shadow-card lg:max-w-none"
       />
       <div>
         <SectionHeading eyebrow={TRANSFORM.eyebrow} title={TRANSFORM.title} />
@@ -31,7 +31,7 @@ export default function Transform() {
           items={TRANSFORM.tabs.map((t) => ({
             id: t.id,
             label: t.label,
-            icon: <Image src={t.icon} alt="" width={20} height={20} />,
+            icon: <t.icon aria-hidden className="size-5" />,
           }))}
         />
         <div

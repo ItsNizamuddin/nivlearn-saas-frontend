@@ -18,7 +18,7 @@ export default function HireFromUs() {
         title={HERO.title}
         description={HERO.description}
         image={HERO.image}
-        imageAlt="Hiring illustration"
+        imageAlt="Smiling young professional holding a laptop"
         actions={
           <a href={toForm} className={buttonClass('accent', 'lg')}>
             {HERO.actionLabel}
@@ -43,8 +43,8 @@ export default function HireFromUs() {
               key={role.title}
               className="flex items-center gap-4 rounded-2xl border border-prime/10 bg-surface p-4 shadow-sm transition-all duration-200 hover:border-prime/25 hover:shadow-card"
             >
-              <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-light">
-                <Image src={role.icon} alt="" width={40} height={40} />
+              <span className="relative size-14 shrink-0 overflow-hidden rounded-xl bg-light">
+                <Image src={role.icon} alt="" fill sizes="56px" className="object-cover" />
               </span>
               <span className="font-semibold text-prime-dark">{role.title}</span>
             </li>

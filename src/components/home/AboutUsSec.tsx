@@ -136,31 +136,28 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
                 </div>
 
                 {/* 3. Main Content Split: Visual Narrative (Left) vs Interactive Accordion (Right) */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start lg:items-stretch">
                     {/* Left Column: Visual Artwork & Brand Story (5 cols) */}
                     <div className="lg:col-span-5 flex flex-col gap-6">
-                        {/* Illustration Card with Floating Badge */}
-                        <div className="relative bg-surface rounded-md border border-border-muted p-6 sm:p-8 hidden md:flex items-center justify-center overflow-hidden shadow-xs">
-                            <div className="absolute top-0 right-0 w-44 h-44 bg-prime/5 rounded-full blur-2xl pointer-events-none" />
-                            <div className="absolute bottom-0 left-0 w-44 h-44 bg-prime-yellow/10 rounded-full blur-2xl pointer-events-none" />
-
-                            <div className="relative z-10 w-full max-w-[260px] aspect-square flex items-center justify-center">
+                        {/* Illustration with Floating Badge (no card frame) */}
+                        <div className="relative hidden md:flex lg:flex-1 items-center justify-center">
+                            <div className="relative w-full max-w-[400px]">
                                 <Image
-                                    src="/home/about.webp"
-                                    alt="NivLearn Global Credentials"
-                                    width={340}
-                                    height={314}
-                                    sizes="(max-width: 1024px) 260px, 340px"
-                                    className="object-contain w-full h-auto drop-shadow-sm"
+                                    src="/home/about-advisor.webp"
+                                    alt="NivLearn certified professional"
+                                    width={400}
+                                    height={400}
+                                    sizes="400px"
+                                    className="w-full h-auto drop-shadow-xl"
                                 />
-                            </div>
 
-                            {/* Floating Micro Badge */}
-                            <div className="absolute bottom-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-surface/95 backdrop-blur-xs border border-border-muted shadow-xs">
-                                <Sparkles className="w-3.5 h-3.5 text-prime-yellow" />
-                                <span className="text-[11px] font-bold text-prime-dark">
-                                    100% Verified Outcomes
-                                </span>
+                                {/* Floating Micro Badge */}
+                                <div className="absolute -bottom-3 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-surface/95 backdrop-blur-xs border border-border-muted shadow-md">
+                                    <Sparkles className="w-3.5 h-3.5 text-prime-yellow" />
+                                    <span className="text-[11px] font-bold text-prime-dark">
+                                        100% Verified Outcomes
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
@@ -173,9 +170,8 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
                                 NivLearn Global delivers accredited certification programs recognized worldwide. Through partnerships with accreditation pioneers including PMI and Scrum Alliance, we provide high-caliber instruction that translates directly to real-world promotions.
                             </p>
                             <div
-                                className={`grid transition-all duration-300 ease-in-out ${
-                                    isReadMore ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                                }`}
+                                className={`grid transition-all duration-300 ease-in-out ${isReadMore ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                                    }`}
                             >
                                 <div className="overflow-hidden">
                                     <p className="mt-2 text-text-muted text-xs sm:text-sm leading-relaxed">
@@ -256,19 +252,17 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
 
                                         <div className="shrink-0 text-text-muted ml-2">
                                             <ChevronDown
-                                                className={`w-5 h-5 transition-transform duration-300 ease-in-out ${
-                                                    isOpen ? 'rotate-180 text-prime' : 'rotate-0 text-text-muted'
-                                                }`}
+                                                className={`w-5 h-5 transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180 text-prime' : 'rotate-0 text-text-muted'
+                                                    }`}
                                             />
                                         </div>
                                     </button>
 
                                     <div
-                                        className={`grid transition-all duration-300 ease-in-out ${
-                                            isOpen
-                                                ? 'grid-rows-[1fr] opacity-100'
-                                                : 'grid-rows-[0fr] opacity-0'
-                                        }`}
+                                        className={`grid transition-all duration-300 ease-in-out ${isOpen
+                                            ? 'grid-rows-[1fr] opacity-100'
+                                            : 'grid-rows-[0fr] opacity-0'
+                                            }`}
                                     >
                                         <div className="overflow-hidden">
                                             <div className="px-4 sm:px-5 pb-5 pt-2 text-xs sm:text-sm text-text-muted border-t border-border-muted/30 leading-relaxed">

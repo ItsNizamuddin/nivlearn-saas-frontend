@@ -1,11 +1,11 @@
-import Image from 'next/image';
+import { WhatsAppIcon } from '@/components/ui/BrandIcons';
 import Glow from '@/components/ui/Glow';
 import { DIRECT_CONTACT, SOCIAL_LINKS, type ContactChannel } from './data';
 
-function ChannelIcon({ icon }: { icon: ContactChannel['icon'] }) {
+function ChannelIcon({ icon: Icon }: { icon: ContactChannel['icon'] }) {
   return (
-    <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-on-dark/10">
-      <Image src={icon} alt="" className="size-8" />
+    <span aria-hidden className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-on-dark/10 text-prime-yellow">
+      <Icon className="size-6" />
     </span>
   );
 }
@@ -58,7 +58,7 @@ const ROW = 'flex items-center gap-4 rounded-xl px-3 py-3 transition-colors dura
 const LINK_ROW = `${ROW} hover:bg-on-dark/5`;
 
 export default function DirectContact() {
-  const { title, chat, whatsappLogo, emails, address } = DIRECT_CONTACT;
+  const { title, chat, emails, address } = DIRECT_CONTACT;
 
   return (
     <aside className="relative h-full overflow-hidden rounded-lg bg-prime-dark shadow-card">
@@ -75,7 +75,9 @@ export default function DirectContact() {
               <span className="flex-1">
                 <ChannelText title={chat.title} detail={chat.detail} />
               </span>
-              <Image src={whatsappLogo} alt="WhatsApp" className="h-8 w-auto" />
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-prime-yellow text-prime-dark">
+                <WhatsAppIcon className="size-5" />
+              </span>
             </a>
           </li>
 

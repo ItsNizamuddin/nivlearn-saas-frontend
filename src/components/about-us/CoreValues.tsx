@@ -2,9 +2,9 @@ import Link from 'next/link';
 import Container from '@/components/layout/Container';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { buttonClass } from '@/components/ui/button';
-import { CORE_VALUES, CORE_VALUES_INTRO, CORE_VALUES_SPRITE_URL, type CoreValue } from './data';
+import { CORE_VALUES, CORE_VALUES_INTRO, type CoreValue } from './data';
 
-function ValueCard({ title, description, sprite }: CoreValue) {
+function ValueCard({ title, description, icon: Icon }: CoreValue) {
   return (
     <li className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-prime/15 bg-surface p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-prime/25 hover:shadow-card md:p-8">
       {/* Brand accent line, grows in on hover */}
@@ -12,15 +12,8 @@ function ValueCard({ title, description, sprite }: CoreValue) {
         aria-hidden
         className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-brand-orange transition-transform duration-300 group-hover:scale-x-100"
       />
-      <span className="flex size-16 items-center justify-center rounded-2xl bg-prime-yellow/10">
-        <span
-          aria-hidden
-          style={{
-            width: sprite.width,
-            height: sprite.height,
-            background: `url(${CORE_VALUES_SPRITE_URL}) -${sprite.x}px -${sprite.y}px`,
-          }}
-        />
+      <span aria-hidden className="flex size-16 items-center justify-center rounded-2xl bg-prime-yellow/10 text-prime-yellow">
+        <Icon className="size-8" />
       </span>
       <h3 className="mt-6 text-xl font-bold text-prime-dark">{title}</h3>
       <p className="mt-3 text-base leading-relaxed text-text-muted">{description}</p>
