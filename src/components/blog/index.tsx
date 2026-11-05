@@ -4,7 +4,7 @@ import Section from '@/components/ui/Section';
 import BlogExplorer from './BlogExplorer';
 import { BLOG_HERO } from './data';
 import type { BlogCategory, BlogList } from './types';
-import ctaImage from '../../../public/CourseCat/cta1.webp';
+import ctaImage from '../../../public/CourseCat/cta-learner.webp';
 
 /** /blog — hero, category explorer and a closing CTA. */
 export default function BlogHome({ categories, initial }: { categories: BlogCategory[]; initial: BlogList }) {
@@ -21,7 +21,7 @@ export default function BlogHome({ categories, initial }: { categories: BlogCate
           title="Not sure which course is right for you?"
           description="Talk to our learning advisors and get a personalised recommendation."
           actionLabel="Talk to an Advisor"
-          href="/contact-us"
+          form="advisor"
           image={ctaImage}
         />
       </Section>

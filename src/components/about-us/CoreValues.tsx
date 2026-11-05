@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import LeadCta from '@/components/forms/LeadCta';
 import Container from '@/components/layout/Container';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { buttonClass } from '@/components/ui/button';
@@ -27,12 +27,9 @@ export default function CoreValues() {
       <Container>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading eyebrow={CORE_VALUES_INTRO.eyebrow} title={CORE_VALUES_INTRO.title} />
-          <Link
-            href="/contact-us"
-            className={buttonClass('accent', 'md', 'shrink-0 self-start sm:self-auto')}
-          >
+          <LeadCta form="advisor" className={buttonClass('accent', 'md', 'shrink-0 self-start sm:self-auto')}>
             Get in touch with us
-          </Link>
+          </LeadCta>
         </div>
 
         <ul className="mt-10 grid gap-6 md:mt-12 md:grid-cols-3">

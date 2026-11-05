@@ -69,9 +69,10 @@ export function GlobalShowcase() {
   return (
     <Section tone="muted">
       <SectionHeading align="center" eyebrow={GLOBAL.eyebrow} title={GLOBAL.title} />
-      <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Phones: swipeable row (4 tall cards stacked was ~1900px); grid from sm up. */}
+      <ul className="-mx-4 mt-12 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden">
         {GLOBAL.items.map((item, i) => (
-          <li key={i} className="group relative overflow-hidden rounded-2xl shadow-sm">
+          <li key={i} className="group relative w-[78%] shrink-0 snap-start overflow-hidden rounded-2xl shadow-sm sm:w-auto">
             <Image
               src={item.image}
               alt=""

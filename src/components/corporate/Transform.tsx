@@ -13,14 +13,15 @@ export default function Transform() {
   const tab = TRANSFORM.tabs.find((t) => t.id === active)!;
 
   return (
-    <Section containerClassName="grid items-center gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
+    <Section containerClassName="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
       <Image
         src={TRANSFORM.image}
         alt=""
         sizes="(min-width: 1024px) 35vw, 80vw"
         className="mx-auto h-auto w-full max-w-md rounded-2xl shadow-card lg:max-w-none"
       />
-      <div>
+      {/* min-w-0: lets the tab row scroll instead of widening the grid column on phones */}
+      <div className="min-w-0">
         <SectionHeading eyebrow={TRANSFORM.eyebrow} title={TRANSFORM.title} />
         <TabList
           className="mt-8"

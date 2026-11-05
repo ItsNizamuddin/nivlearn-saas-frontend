@@ -22,8 +22,8 @@ export default function GrievancePage() {
           </li>
           <li className="flex items-center gap-3">
             <CircleCheck aria-hidden className="size-5 shrink-0 text-prime" />
-            Email us:{' '}
-            <a href={`mailto:${GRIEVANCE_OFFICER.email}`} className="font-medium text-prime hover:underline">
+            <span className="whitespace-nowrap">Email us:</span>{' '}
+            <a href={`mailto:${GRIEVANCE_OFFICER.email}`} className="min-w-0 font-medium break-all text-prime hover:underline">
               {GRIEVANCE_OFFICER.email}
             </a>
           </li>

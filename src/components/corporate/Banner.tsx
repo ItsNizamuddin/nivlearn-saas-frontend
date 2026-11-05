@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { buttonClass } from '@/components/ui/button';
-import { BANNER, COURSES_ID, ENQUIRY_ID, OVERVIEW } from './data';
+import { BANNER, COURSES_ID, OVERVIEW } from './data';
+import LeadCta from '@/components/forms/LeadCta';
 
 export default function Banner() {
   return (
@@ -15,9 +15,9 @@ export default function Banner() {
             <a href={`#${COURSES_ID}`} className={buttonClass('accent', 'lg')}>
               {BANNER.primaryAction}
             </a>
-            <Link href={`#${ENQUIRY_ID}`} className={buttonClass('outline', 'lg')}>
+            <LeadCta form="corporate" className={buttonClass('outline', 'lg')}>
               {BANNER.secondaryAction}
-            </Link>
+            </LeadCta>
           </div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
             {BANNER.highlights.map((h) => (

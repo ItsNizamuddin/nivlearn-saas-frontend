@@ -1,9 +1,24 @@
 # Image replacement plan (NevoLearn → NivLearn)
 
-Every image below was carried over from the NevoLearn project. Generate a new one and save it
-**at the same path and file name** (as `.webp`), then the code needs no change.
+Images carried over from the NevoLearn project must be replaced. Save each new image **at the
+same path and file name** (as `.webp`) and the code needs no change.
 
 Export at **2× the listed size** (sharp on retina), WebP quality ~80.
+
+**Status:** ✅ Replaced · ⏳ Pending · 🚫 Needs official file / permission (do not generate)
+
+Last updated: 2026-11-05
+
+## Summary
+
+| Group | ✅ Replaced | ⏳ Pending | 🚫 Official file needed |
+|---|---|---|---|
+| A. Photos & illustrations | 37 | 1 | – |
+| B. Small icons (→ Lucide) | 37 | 1 sprite | – |
+| C. CSS / SVG decorations | 0 | 5 | – |
+| D. Third-party logos | – | – | 5 |
+
+---
 
 ## Shared style (paste before every photo prompt)
 
@@ -25,115 +40,119 @@ remove the background (remove.bg / Photoshop) and export WebP with alpha.
 
 ---
 
-## A. Generate: photos and illustrations (35 images)
+## ⏳ Pending — to generate (1)
 
-### Home page — `components/page-comp/home-page/Banner.tsx`
-
-| # | File | Size (export) | Prompt |
-|---|---|---|---|
-| 1 | `public/home/banvideo.webp` | | | ✅ Done: user-generated image. |
-| 2 | `public/home/enrolled.webp` | | | ✅ Done: user-generated image. |
-
-### About Us — `components/about-us/data.ts`
-
-| # | File | Size (export) | Prompt |
-|---|---|---|---|
-| 3 | `public/aboutus/banvideo.webp` | 1090×646 (5:3) | Video poster for the "perks" section. A small group of learners in a modern classroom watching an instructor present on a large screen, candid, one learner smiling at camera side. (Must differ from #1.) |
-| 4 | `public/aboutus/mission1.webp` | 554×902 (portrait 3:5) | "Professional Training". Instructor standing beside a whiteboard addressing a seated group of professionals in a glass-walled training room, vertical composition. |
-| 5 | `public/aboutus/mission2.webp` | 554×902 | "Corporate Excellence". Confident business team walking together through a modern office lobby, vertical composition, motion and energy. |
-| 6 | `public/aboutus/mission3.webp` | 554×902 | "Skill Development". Young professional at a desk working through an online course on a laptop, notes and sticky notes around, focused, vertical composition. |
-| 7 | `public/aboutus/mission4.webp` | 554×902 | "Leadership Programs". Senior leader mentoring two younger colleagues around a standing table, thoughtful discussion, vertical composition. |
-| 8 | `public/aboutus/mission5.webp` | 554×902 | "Technical Training". Software trainer explaining code on a large wall screen to learners with laptops (code blurred, no readable text), vertical composition. |
-| 9 | `public/aboutus/mission6.webp` | 554×902 | "Soft Skills". Woman presenting ideas to colleagues in a workshop, sticky notes on a glass wall, engaged audience, vertical composition. |
-| 10 | `public/aboutus/whychooseus.webp` | 1512×1008 (3:2) | Friendly corporate trainer presenting at a flip chart in a bright training room with a laptop on the table, looking toward learners off-frame. |
-
-### Accreditations — `components/accreditations/data.ts`
-
-| # | File | Size (export) | Prompt |
-|---|---|---|---|
-| 11 | `public/accredation/accredations.webp` | 3840×648 (very wide banner, text goes on top) | Close-up of a hand signing an official certificate with a fountain pen on a desk, deep navy colour grade, dark and moody so white text is readable over it, subject on the right third. |
-| 12 | `public/accredation/certificateimg.webp` | 750×582 | *Illustration style.* A proud professional standing beside a large framed certificate with a rosette seal, simple line-art figure. |
-
-### Corporate — `components/corporate/data.ts`
-
-| # | File | Size (export) | Prompt |
-|---|---|---|---|
-| 13 | `public/corporate/banner.webp` | | | ✅ Done: user-generated image. |
-| 14 | `public/corporate/transform.webp` | | | ✅ Done: user-generated dashboard. |
-| 15 | `public/corporate/perform.webp` | | | ✅ Done: Unsplash stock photo. |
-| 16 | `public/corporate/CTA.webp` | | | ✅ Done: user-generated image. |
-| 17 | `public/corporate/Story/img.webp` | | | ✅ Done: Unsplash stock photo. |
-| 18 | `public/corporate/why.webp` | | | ✅ Done: Unsplash stock photo. |
-| 19 | `public/corporate/g/img1.webp` | | | ✅ Done: Unsplash stock photo. |
-| 20 | `public/corporate/g/img2.webp` | | | ✅ Done: Unsplash stock photo. |
-| 21 | `public/corporate/g/img3.webp` | | | ✅ Done: Unsplash stock photo. |
-| 22 | `public/corporate/g/img4.webp` | | | ✅ Done: Unsplash stock photo. |
-
-### Hire From Us — `components/hire-from-us/data.ts`
-
-| # | File | Size (export) | Prompt |
-|---|---|---|---|
-| 23 | `public/hire.webp` | | | ✅ Done: replaced with user-supplied photo (checkerboard removed, transparent). |
-| 24 | `public/hirefromus/image.webp` | | | ✅ Done: Unsplash stock photo. |
-| 25 | `public/hirefromus/image1.webp` | | | ✅ Done: Unsplash stock photo. |
-| 26 | `public/hirefromus/image2.webp` | | | ✅ Done: Unsplash stock photo. |
-| 27 | `public/hirefromus/image3.webp` | | | ✅ Done: Unsplash stock photo. |
-| 28 | `public/hirefromus/image4.webp` | | | ✅ Done: Unsplash stock photo. |
-| 29 | `public/hirefromus/image5.webp` | | | ✅ Done: Unsplash stock photo. |
-| 30 | `public/hirefromus/image6.webp` | | | ✅ Done: Unsplash stock photo. |
-| 31 | `public/hirefromus/image7.webp` | | | ✅ Done: Unsplash stock photo. |
-| 32 | `public/hirefromus/speak.webp` | 562×396 | *Illustration style.* An orange and navy megaphone with sound lines and a blank ribbon banner coming out of it (add "Free of Cost" text in code, not in the image). |
-
-### Shared CTAs / forms
-
-| # | File | Size (export) | Used in | Prompt |
+| # | File | Used in | Size (export) | Prompt |
 |---|---|---|---|---|
-| 33 | `public/CourseCat/cta1.webp` | 562×606, **transparent** | Become an Instructor, Blog, legal pages CTA | Happy young woman sitting cross-legged with a laptop on her lap, waving, casual grey top and jeans, full body, pure white background. |
-| 34 | ~~`public/home/testsection/womanimg.webp`~~ | | Become an Instructor hero | ✅ Done: replaced by `public/become-an-instructor/hero.webp` (user-supplied photo). |
-| 35 | `public/Forms/popup.webp` | 1000×1000 | Lead form popup (`components/forms/LeadModal.tsx`) | *Illustration style.* A friendly learning advisor at a desk with a computer and headset, chat bubbles floating, plant on the side. |
+| 36 | `public/sprites/home.webp` — 5 avatar faces only | Home page (sprite in `app/sprits.css`) | 5 × 96×96 | Five tight circular headshots of smiling young Indian professionals (3 men, 2 women), plain light backgrounds. Can reuse the faces from `public/home/enrolled.webp`. |
 
 ---
 
-## B. ✅ Done: replaced with Lucide icons in code (image files deleted)
+## ✅ Replaced (37)
 
-These are small single-colour icons. AI icons look inconsistent; we already use `lucide-react`,
-so swap them in code (themeable via CSS variables, no image files).
+### Home
 
-| File(s) | Suggested Lucide icon |
+| File | Replaced with |
 |---|---|
-| `aboutus/aboutus_sprites.webp` (5 icons) | `Users`, `CalendarCheck`, `BadgeCheck`, `BookOpenCheck`, `Handshake` |
-| `aboutus/whychooseus/expertise` / `customization` / `decision-making` / `technical-support` | `GraduationCap`, `SlidersHorizontal`, `Split`, `Headset` |
-| `contactus/getintouch/addressIcon` / `chat` / `corporate` / `support` | `MapPin`, `MessagesSquare`, `Building2`, `MessageCircleQuestion` |
-| `contactus/getintouch/whatsapplogo` | use existing `WhatsAppIcon` in `components/ui/BrandIcons.tsx` |
-| `corporate/Story/Link`, `Link-1`…`Link-4`, `Link-6` | `TrendingUp`, `Rocket`, `BriefcaseBusiness`, `Command`, `FilePen`, `CircleDollarSign` |
-| `corporate/analy`, `assess`, `upskill`, `sale` | `CodeXml`, `LayoutPanelLeft`, `Layers` (old file reused the code icon), `Headphones` |
-| `corporate/bulb`, `career`, `xp` | `Lightbulb`, `BriefcaseBusiness`, `MessageSquareQuote` |
-| `corporate/glob`, `part`, `pro` | `Globe`, `Handshake`, `TrendingUp` |
-| `corporate/benfits/*` (5) | `ChartNoAxesCombined`, `HeartHandshake`, `ThumbsUp`, `Magnet`, `Settings` |
-| `corporate/why1`…`why4` | `Ticket`, `ChartPie`, `UserSearch`, `Crosshair` |
+| `public/home/enrolled.webp` | User-generated 5-headshot strip |
+| `public/home/womanimg.webp` | User-generated businesswoman cut-out ("Join Our Training Courses" card) |
+| `public/home/whoweare.webp` | Supplied photo `84730.jpg` ⚠️ looks like a Freepik file — add "Image by Freepik" credit or use a premium licence |
+| `public/home/about.webp` | Removed. Now `about-advisor-blur.webp` (default) + `about-advisor-mark.webp` (hover), user-generated |
 
-## C. Don't generate: draw as CSS/SVG
+### Become an Instructor
 
-| File | Replacement |
+| File | Replaced with |
 |---|---|
-| `public/home/pattern.webp` | dot grid via CSS `radial-gradient` background |
-| `public/home/underline.webp` | small inline SVG brush stroke in brand orange |
-| `public/contactus/country/Uk.webp`, `Unitedstatesofamerica.webp`, `india.webp` | inline SVG flags (national flags are public domain) or the MIT `flag-icons` set |
+| `public/home/testsection/womanimg.webp` | Removed. Hero now uses `public/become-an-instructor/hero.webp` (user-supplied) |
 
-## D. Cannot be generated: third-party logos (need official files and permission)
+### Corporate
 
-AI must **not** recreate these. Download from each organisation's official brand kit, and only
-show them if NivLearn has the right (accredited partner / real client).
+| File | Replaced with |
+|---|---|
+| `public/corporate/banner.webp` | User-generated collage |
+| `public/corporate/transform.webp` | User-generated learning dashboard |
+| `public/corporate/CTA.webp` | User-generated team photo (Fortune 100 section) |
+| `public/corporate/perform.webp` | Unsplash stock |
+| `public/corporate/Story/img.webp` | Unsplash stock |
+| `public/corporate/why.webp` | Unsplash stock |
+| `public/corporate/g/img1.webp` … `img4.webp` (4) | Unsplash stock |
+
+### Hire From Us
+
+| File | Replaced with |
+|---|---|
+| `public/hire.webp` | User-supplied photo (fake checkerboard background removed) |
+| `public/hirefromus/image.webp` … `image7.webp` (8) | Unsplash stock |
+
+### About Us, Accreditations, Hire From Us, shared (user-generated, 2026-11-05)
+
+| File | Replaced with |
+|---|---|
+| `public/aboutus/mission1.webp` … `mission6.webp` (6) | Generated portraits (training, team, online learning, mentoring, code class, workshop) |
+| `public/aboutus/banvideo.webp` | Generated classroom presentation |
+| `public/aboutus/whychooseus.webp` | Generated trainer at flip chart |
+| `public/accredation/accredations.webp` | Generated hand signing certificate (navy) |
+| `public/accredation/certificateimg.webp` | Generated certificate illustration |
+| `public/hirefromus/speak.webp` | Generated megaphone + ribbon (transparent) |
+| `public/CourseCat/cta-learner.webp` | Generated waving woman with laptop (transparent) |
+| `public/Forms/lead-advisor-photo.webp` | Generated photo: smiling advisor with headset waving |
+
+### Other replacements
+
+| Item | Replaced with |
+|---|---|
+| Blog cover images | Now come from the CMS (no local files) |
+| Corporate course-card photos | Section now reuses the home page course listing (CMS images) |
+
+Unsplash photos: [Unsplash License](https://unsplash.com/license) — free for commercial use, no
+attribution needed.
+
+---
+
+## B. Small icons → Lucide icons
+
+✅ **Replaced (37):** all icon images on About Us, Contact Us and Corporate are now `lucide-react`
+icons in code; the image files were deleted. (About Us core-values sprite, Why-choose-us icons,
+Contact Us channel icons + WhatsApp badge, Corporate story/benefit/why-us/highlight/stat icons.)
+
+⏳ **Pending:** the icons inside `public/sprites/home.webp` (home page features — graduation cap,
+certificate, checklist, lock, lightbulb, coffee cup, etc.). Swap for Lucide icons in the home
+components, like the other pages.
+
+---
+
+## C. ⏳ Pending — draw in CSS / SVG (don't generate)
+
+| File | Used in | Replacement |
+|---|---|---|
+| `public/home/pattern.webp` | Home banner | Dot grid via CSS `radial-gradient` |
+| `public/home/bgpattern.webp` | Home "practice tests" cards | Subtle CSS pattern |
+| `public/home/underline.webp` | Home banners | Small inline SVG brush stroke in brand orange |
+| `public/contactus/country/Uk.webp`, `Unitedstatesofamerica.webp`, `india.webp` | Contact Us | Inline SVG flags (public domain) or the MIT `flag-icons` set |
+
+`public/default.webp` (generic grey image placeholder for course cards) is neutral — no change needed.
+
+---
+
+## D. 🚫 Third-party logos — need official files and permission
+
+AI must **not** recreate these. Download from each organisation's brand kit and show them only if
+NivLearn has the right (accredited partner / real client).
 
 | File | Contents | Action |
 |---|---|---|
-| `public/CourseLogos/courselogosprite.webp` | Certification badges: PRINCE2, ITIL 4, Scrum.org (PSM/PSPO/PSD/PAL), PMI (PMP/CAPM/PMI-ACP), Scrum Alliance (CSM/CSPO/A-CSM…), SAFe (SP/SA/SSM), ICAgile | Get official badges per accreditation body |
+| `public/CourseLogos/courselogosprite.webp` and duplicate `public/sprites/courselogosprite.webp` | Certification badges: PRINCE2, ITIL 4, Scrum.org, PMI, Scrum Alliance, SAFe, ICAgile | Official badges per accreditation body; keep one copy |
 | `public/accredation/pmilogo.webp` | PMI logo | PMI brand kit (Authorized Training Partner only) |
 | `public/accredation/scrum_Alliance.webp` | Scrum Alliance logo | Scrum Alliance brand kit |
-| `public/sprites/CorpVerticalSprites.webp` | ~40 client logos (Siemens, UBS, Philips, Orange…) | **Confirm these are NivLearn's clients.** If not, remove the section. |
-| `public/sprites/HomeBannerSpritesLogos.webp` | Client logos (SAP, HSBC, Intel, Shell…) + 3 people photos | Same as above; replace the 3 people photos with generated headshots |
+| `public/sprites/CorpVerticalSprites.webp` | ~40 client logos (Siemens, UBS, Philips…) | **Confirm these are NivLearn's clients.** If not, remove the sections |
+| `public/sprites/HomeBannerSpritesLogos.webp` | Client logos (SAP, HSBC, Intel, Shell…) + 3 people photos | Same as above; replace the 3 photos with generated headshots |
 
-## E. Unused, safe to delete
+---
 
-- ~~`public/corporate/Story/Link-5.webp`~~ (deleted)
-- `public/corporate/corporateMobile.webp`
+## E. Unused files — safe to delete
+
+| File | Note |
+|---|---|
+| `public/corporate/corporateMobile.webp` | Not referenced anywhere |
+| `public/home/banvideo.webp` | User-generated student photo; unused since the new home page |
+| ~~`public/corporate/Story/Link-5.webp`~~ | Deleted |

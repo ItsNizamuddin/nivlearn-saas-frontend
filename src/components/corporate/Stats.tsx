@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import Marquee from '@/components/ui/Marquee';
 import Section from '@/components/ui/Section';
 import SpriteLogo from '@/components/ui/SpriteLogo';
 import { buttonClass } from '@/components/ui/button';
 import { INDUSTRY_LOGOS } from '@/lib/logoSprites';
-import { ENQUIRY_ID, STATS } from './data';
+import { STATS } from './data';
+import LeadCta from '@/components/forms/LeadCta';
 
 function Figure({ value, text }: { value: string; text: string }) {
   return (
@@ -54,12 +54,12 @@ export default function Stats() {
             </ul>
             <p className="mt-4 text-sm font-semibold text-prime-dark">{performance.footer}</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href={`#${ENQUIRY_ID}`} className={buttonClass('primary')}>
+              <LeadCta form="corporateBrochure" className={buttonClass('primary')}>
                 Download Brochure
-              </Link>
-              <Link href={`#${ENQUIRY_ID}`} className={buttonClass('accent')}>
+              </LeadCta>
+              <LeadCta form="corporate" className={buttonClass('accent')}>
                 Request a custom quote
-              </Link>
+              </LeadCta>
             </div>
           </div>
         </div>

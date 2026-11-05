@@ -141,14 +141,24 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
                     <div className="lg:col-span-5 flex flex-col gap-6">
                         {/* Illustration with Floating Badge (no card frame) */}
                         <div className="relative hidden md:flex lg:flex-1 items-center justify-center">
-                            <div className="relative w-full max-w-[400px]">
+                            <div className="group relative w-full max-w-[400px]">
                                 <Image
-                                    src="/home/about-advisor.webp"
+                                    src="/home/about-advisor-blur.webp"
                                     alt="NivLearn certified professional"
                                     width={400}
                                     height={400}
                                     sizes="400px"
                                     className="w-full h-auto drop-shadow-xl"
+                                />
+                                {/* Hover state: same photo with the NivLearn mark backdrop, cross-faded in */}
+                                <Image
+                                    src="/home/about-advisor-mark.webp"
+                                    alt=""
+                                    aria-hidden
+                                    width={400}
+                                    height={400}
+                                    sizes="400px"
+                                    className="absolute inset-0 w-full h-auto opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-100 motion-reduce:transition-none"
                                 />
 
                                 {/* Floating Micro Badge */}

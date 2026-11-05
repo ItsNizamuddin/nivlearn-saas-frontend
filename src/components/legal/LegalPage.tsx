@@ -5,7 +5,7 @@ import Section from '@/components/ui/Section';
 import CtaBanner from '@/components/ui/CtaBanner';
 import { cn } from '@/lib/utils';
 import { getLegalDoc, LEGAL_DOCS, type LegalSlug } from '@/content/legal';
-import ctaImage from '../../../public/CourseCat/cta1.webp';
+import ctaImage from '../../../public/CourseCat/cta-learner.webp';
 
 /** Sidebar listing every legal page; the current one is highlighted. */
 function LegalNav({ current }: { current: LegalSlug }) {
@@ -71,7 +71,7 @@ export default function LegalPage({ slug, children }: { slug: LegalSlug; childre
         title="Get exclusive offers!"
         description="Kickstart Your Career in Agile & Project Management Today!"
         actionLabel="Avail Now!"
-        href="/contact-us"
+        form="advisor"
         image={ctaImage}
       />
     </Section>
