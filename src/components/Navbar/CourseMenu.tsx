@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { LayoutGrid, GraduationCap, ChevronRight } from 'lucide-react';
@@ -54,7 +54,7 @@ function CourseGridSkeleton() {
       </div>
 
       {/* Courses Cards Skeleton Grid */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+      <div className="flex-1 overflow-y-auto overscroll-contain custom-scrollbar p-2">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
             <div
@@ -105,9 +105,52 @@ export default function CourseMenu({
     onClose();
   };
 
+  useEffect(() => {
+    // 1. Lock document body scrolling while CourseMenu is open
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = 'hidden';
+    if (scrollBarWidth > 0) {
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
+    }
+
+    // 2. Wheel boundary trap: prevents scroll chaining to the background page
+    // when reaching the edges of inner scrollable containers or hovering over non-scrollable areas
+    const handleWheel = (e: WheelEvent) => {
+      const target = e.target as HTMLElement | null;
+      const scrollable = target?.closest('.custom-scrollbar') as HTMLElement | null;
+
+      if (!scrollable) {
+        // Cursor is over header, footer, borders, or backdrop: block wheel scroll
+        e.preventDefault();
+        return;
+      }
+
+      // Cursor is over an inner scrollable list (courses or categories)
+      const { scrollTop, scrollHeight, clientHeight } = scrollable;
+      const isAtTop = scrollTop <= 0 && e.deltaY < 0;
+      const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight - 1 && e.deltaY > 0;
+
+      if (isAtTop || isAtBottom) {
+        // Stop scroll propagation at list boundaries
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   return (
     <div
-      className="fixed inset-0 top-16 z-40 bg-black/25 backdrop-blur-[1px] flex justify-center pt-1 px-4 cursor-default"
+      className="fixed inset-0 top-16 z-40 bg-black/25 backdrop-blur-[1px] flex justify-center pt-1 px-4 cursor-default overscroll-contain"
       onClick={onClose}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -115,7 +158,7 @@ export default function CourseMenu({
       {/* Mega Menu Modal Container with Consistent Responsive Height */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-md border border-zinc-200 lg:max-w-6xl 2xl:max-w-7xl w-full mx-auto overflow-hidden flex flex-col h-[620px] lg:h-[680px] xl:h-[720px] max-h-[calc(100vh-80px)] min-h-[520px] shadow-2xl cursor-auto"
+        className="bg-white rounded-md border border-zinc-200 lg:max-w-6xl 2xl:max-w-7xl w-full mx-auto overflow-hidden flex flex-col h-[620px] lg:h-[680px] xl:h-[720px] max-h-[calc(100vh-80px)] min-h-[520px] shadow-2xl cursor-auto overscroll-contain"
       >
         {/* Main 2-Column Layout */}
         <div className="flex flex-1 min-h-0">
@@ -131,7 +174,7 @@ export default function CourseMenu({
             </div>
 
             {/* Category List or Skeleton */}
-            <div className="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1.5">
+            <div className="flex-1 overflow-y-auto overscroll-contain custom-scrollbar p-2 space-y-1.5">
               {categories.length === 0 ? (
                 <CategoryListSkeleton />
               ) : (
@@ -199,7 +242,7 @@ export default function CourseMenu({
               </div>
 
               {/* Courses Scrollable Grid */}
-              <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+              <div className="flex-1 overflow-y-auto overscroll-contain custom-scrollbar p-2">
                 {currentCategory && currentCategory.courses && currentCategory.courses.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {currentCategory.courses.map((course) => {

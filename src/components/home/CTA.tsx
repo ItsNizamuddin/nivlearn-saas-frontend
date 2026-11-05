@@ -89,7 +89,6 @@ export default function CTA({
                             width={281}
                             height={303}
                             className="object-contain w-auto h-36 sm:h-48 md:h-52 lg:h-56 xl:h-64 drop-shadow-md translate-y-1"
-                            priority
                         />
                     </div>
                 </div>

@@ -73,7 +73,7 @@ export default function CoursesSection({
 
     return (
         <section
-            className="py-8 mt-4 md:mt-0 md:py-16 bg-surface border-t border-border-muted/50"
+            className="py-8 mt-4 md:mt-0 md:py-16 bg-surface"
             id="courses"
         >
             <div className="section-container">

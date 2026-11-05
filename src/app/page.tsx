@@ -45,11 +45,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+export const revalidate = 3600;
+
+export default async function Home() {
   const categories = await getCategories();
 
   return (
@@ -62,9 +60,9 @@ export default async function Home({
       <TopExperiences />
       <WhoWeAre />
       <TestsSection />
-      {/* <Corporate />
+      <Corporate />
       <ExpertServices />
-      <TestimonialSections searchParams={searchParams} /> */}
+      <TestimonialSections />
     </>
   );
 }

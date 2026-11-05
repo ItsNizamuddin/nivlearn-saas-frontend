@@ -1,11 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Play, Star, CheckCircle2, Download } from 'lucide-react';
 import rating from '../../../public/home/enrolled.webp';
 import underline from '../../../public/home/underline.webp';
-import video from '../../../public/home/banvideo.webp';
 import pattern from '../../../public/home/pattern.webp';
 import Link from 'next/link';
 import { useLeadModal } from '@/context/LeadModalContext';
@@ -70,9 +69,6 @@ export default function Banner() {
         });
     }
 
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const animationRef = useRef<number | null>(null);
-
     // Auto-rotate alumni cards
     useEffect(() => {
         const interval = setInterval(() => {
@@ -84,34 +80,6 @@ export default function Banner() {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, []);
-
-    // Seamless ticker for hiring partner logos
-    useEffect(() => {
-        const scrollContainer = scrollRef.current;
-        if (!scrollContainer || logos.length === 0) return;
-
-        const scrollWidth = scrollContainer.scrollWidth / 2;
-        let scrollLeft = 0;
-
-        const autoScroll = () => {
-            if (scrollContainer) {
-                scrollLeft += 1;
-                if (scrollLeft >= scrollWidth) {
-                    scrollLeft = 0;
-                }
-                scrollContainer.scrollLeft = scrollLeft;
-            }
-            animationRef.current = requestAnimationFrame(autoScroll);
-        };
-
-        animationRef.current = requestAnimationFrame(autoScroll);
-
-        return () => {
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-            }
-        };
     }, []);
 
     return (
@@ -177,16 +145,13 @@ export default function Banner() {
                             </span>
                         </div>
 
-                        {/* Hiring Partners Ticker */}
-                        <div className="bg-slate-100 lg:bg-white/10 backdrop-blur-xs rounded-2xl p-4 flex items-center gap-4 max-w-xl mx-auto lg:mx-0">
-                            <span className="text-xs font-bold text-prime-dark lg:text-white uppercase tracking-wider shrink-0">
+                        {/* Hiring Partners Ticker (Pure CSS GPU-accelerated marquee) */}
+                        <div className="bg-slate-100 lg:bg-white/10 backdrop-blur-xs rounded-2xl p-4 flex items-center gap-4 max-w-xl mx-auto lg:mx-0 overflow-hidden">
+                            <span className="text-xs font-bold text-prime-dark lg:text-white uppercase tracking-wider shrink-0 z-10">
                                 Trusted by:
                             </span>
-                            <div
-                                ref={scrollRef}
-                                className="flex gap-x-10 overflow-hidden whitespace-nowrap w-full py-1"
-                            >
-                                <div className="flex items-center gap-x-10 shrink-0">
+                            <div className="relative overflow-hidden w-full py-1">
+                                <div className="animate-marquee flex items-center gap-x-10">
                                     {logos.concat(logos).map((logo, index) => (
                                         <span
                                             key={index}
@@ -243,12 +208,14 @@ export default function Banner() {
 
                             <div className="border-3 border-prime rounded-2xl overflow-hidden shadow-xl bg-slate-900 relative">
                                 {!isPlaying ? (
-                                    <div className="relative group cursor-pointer" onClick={handlePlayClick}>
+                                    <div className="relative aspect-video w-full group cursor-pointer" onClick={handlePlayClick}>
                                         <Image
-                                            src={video}
+                                            src="https://img.youtube.com/vi/iMIEMMvVx70/maxresdefault.jpg"
                                             alt="NivLearn Overview Video"
-                                            className="w-full h-auto object-cover group-hover:scale-102 transition-transform duration-300"
+                                            fill
+                                            className="object-cover group-hover:scale-102 transition-transform duration-300"
                                             priority
+                                            sizes="(max-width: 768px) 100vw, 448px"
                                         />
                                         <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/30 transition-colors flex items-center justify-center">
                                             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/90 group-hover:bg-white text-prime flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
@@ -261,7 +228,7 @@ export default function Banner() {
                                         <iframe
                                             width="100%"
                                             height="100%"
-                                            src="https://www.youtube.com/embed/UJezI5wmt6I?autoplay=1"
+                                            src="https://www.youtube.com/embed/iMIEMMvVx70?autoplay=1"
                                             title="NivLearn Video"
                                             className="w-full h-full"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -328,6 +328,7 @@ export default function TestimonialSectionView({
                                                 src={item.image.url}
                                                 alt={item.name}
                                                 fill
+                                                sizes="36px"
                                                 className="object-cover"
                                             />
                                         ) : (
@@ -503,6 +504,7 @@ export default function TestimonialSectionView({
                                             src={currentMobileItem.image.url}
                                             alt={currentMobileItem.name}
                                             fill
+                                            sizes="36px"
                                             className="object-cover"
                                         />
                                     ) : (

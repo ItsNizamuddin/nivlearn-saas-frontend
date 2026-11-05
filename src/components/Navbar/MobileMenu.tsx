@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import BrandLogo from '@/components/ui/BrandLogo';
@@ -25,6 +25,17 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
   const [expandedCategory, setExpandedCategory] = useState<string | null>(
     categories[0]?.slug ?? null
   );
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isOpen]);
 
   const toggleCategory = (slug: string) => {
     setExpandedCategory(expandedCategory === slug ? null : slug);
@@ -63,7 +74,7 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-3">
+        <div className="flex-1 overflow-y-auto overscroll-contain custom-scrollbar p-3 space-y-3">
           {/* Courses & Categories Section */}
           <div className="border border-zinc-200 rounded-xl overflow-hidden bg-white shadow-2xs">
             <button

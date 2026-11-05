@@ -175,7 +175,9 @@
 /* Dedicated slim scrollbar class */
 .custom-scrollbar {
   scrollbar-width: thin;
+  overscroll-behavior: contain;
   scrollbar-color: var(--scrollbar-thumb) transparent;
+
 }
 
 .custom-scrollbar::-webkit-scrollbar {

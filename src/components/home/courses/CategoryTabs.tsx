@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Category } from '@/components/Navbar/types';
 
 export interface CategoryTabsProps {
@@ -86,7 +86,7 @@ export default function CategoryTabs({
             <div
                 ref={tabsContainerRef}
                 onScroll={updateScrollButtons}
-                className="flex items-center gap-2 overflow-x-auto scrollbar-none scroll-smooth py-1 w-full"
+                className="flex items-center gap-2 overflow-x-auto scrollbar-none scroll-smooth p-1 w-full"
             >
                 {categories.map((cat) => {
                     const isSelected = cat.slug === selectedSlug;
@@ -95,23 +95,18 @@ export default function CategoryTabs({
                             key={cat.slug}
                             type="button"
                             onClick={() => onSelectCategory(cat.slug)}
-                            className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-md text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
-                                isSelected
-                                    ? 'bg-surface text-prime-dark border-2 border-prime-yellow shadow-xs'
-                                    : 'bg-surface text-text-muted hover:text-prime-dark hover:bg-sec-prime border border-border-muted'
-                            }`}
+                            className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-md text-xs sm:text-sm transition-all cursor-pointer ${isSelected
+                                    ? 'bg-surface text-prime-dark font-bold border border-prime-yellow ring-1 ring-prime-yellow shadow-xs'
+                                    : 'bg-surface text-text-muted font-medium hover:text-prime-dark hover:bg-sec-prime border border-border-muted'
+                                }`}
                         >
-                            {isSelected && (
-                                <CheckCircle2 className="w-4 h-4 text-prime-yellow shrink-0" />
-                            )}
                             <span className="capitalize">{cat.name}</span>
                             {cat.courses && cat.courses.length > 0 && (
                                 <span
-                                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                                        isSelected
+                                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold transition-colors ${isSelected
                                             ? 'bg-prime-yellow/20 text-prime-dark'
                                             : 'bg-sec-prime text-text-muted'
-                                    }`}
+                                        }`}
                                 >
                                     {cat.courses.length}
                                 </span>

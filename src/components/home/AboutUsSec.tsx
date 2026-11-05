@@ -146,12 +146,11 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
 
                             <div className="relative z-10 w-full max-w-[260px] aspect-square flex items-center justify-center">
                                 <Image
-                                    src="/Home/about.webp"
+                                    src="/home/about.webp"
                                     alt="NivLearn Global Credentials"
                                     width={340}
                                     height={314}
                                     className="object-contain w-full h-auto drop-shadow-sm"
-                                    priority
                                 />
                             </div>
 
