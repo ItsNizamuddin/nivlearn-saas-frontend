@@ -151,6 +151,7 @@ export default function WhoWeAre({ className = '' }: WhoWeAreProps) {
                                 width={600}
                                 height={600}
                                 alt="NivLearn Students and Mentors"
+                                sizes="(max-width: 768px) 100vw, 50vw"
                                 className="w-full h-auto object-cover transform hover:scale-102 transition-transform duration-500"
                                 priority={false}
                             />
@@ -160,6 +161,7 @@ export default function WhoWeAre({ className = '' }: WhoWeAreProps) {
                                 <Image
                                     src={enrolledImg}
                                     alt="Enrolled Learners"
+                                    sizes="140px"
                                     className="h-6 sm:h-7 w-auto object-contain"
                                 />
                                 <div className="flex items-center gap-1.5">

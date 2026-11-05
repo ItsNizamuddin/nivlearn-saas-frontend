@@ -407,7 +407,7 @@ export default function TestimonialSectionView({
                                                 alt={videoAlt}
                                                 fill
                                                 className="object-cover object-top"
-                                                sizes="100vw"
+                                                sizes="(max-width: 640px) 360px, 320px"
                                             />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center bg-slate-900 text-white">

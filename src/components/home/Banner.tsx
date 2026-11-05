@@ -101,8 +101,8 @@ export default function Banner() {
                                 <Image
                                     src={underline}
                                     alt="accent"
+                                    sizes="(max-width: 640px) 192px, 256px"
                                     className="w-48 sm:w-64 h-auto group-hover:animate-pulse"
-                                    priority
                                 />
                             </div>
                         </div>
@@ -139,7 +139,7 @@ export default function Banner() {
                                 <Star size={14} className="fill-prime-yellow text-prime-yellow" />
                                 <Star size={14} className="fill-prime-yellow text-prime-yellow" />
                             </div>
-                            <Image src={rating} alt="enrolled students" className="lg:hidden h-6 w-auto" priority />
+                            <Image src={rating} alt="enrolled students" sizes="120px" className="lg:hidden h-6 w-auto" />
                             <span className="text-whiteprime-dark lg:text-white text-xs sm:text-sm font-semibold">
                                 Trusted by over 4,32,000+ Learners Globally
                             </span>
@@ -203,7 +203,6 @@ export default function Banner() {
                                 src={pattern}
                                 alt="decor"
                                 className="absolute -z-10 -bottom-6 -right-6 w-32 h-auto opacity-70 hidden sm:block"
-                                priority
                             />
 
                             <div className="border-3 border-prime rounded-2xl overflow-hidden shadow-xl bg-slate-900 relative">
@@ -214,7 +213,6 @@ export default function Banner() {
                                             alt="NivLearn Overview Video"
                                             fill
                                             className="object-cover group-hover:scale-102 transition-transform duration-300"
-                                            priority
                                             sizes="(max-width: 768px) 100vw, 448px"
                                         />
                                         <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/30 transition-colors flex items-center justify-center">

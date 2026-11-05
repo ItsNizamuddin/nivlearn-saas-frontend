@@ -88,6 +88,7 @@ export default function CTA({
                             alt="Exclusive Offers"
                             width={281}
                             height={303}
+                            sizes="(max-width: 640px) 134px, (max-width: 1024px) 200px, 281px"
                             className="object-contain w-auto h-36 sm:h-48 md:h-52 lg:h-56 xl:h-64 drop-shadow-md translate-y-1"
                         />
                     </div>

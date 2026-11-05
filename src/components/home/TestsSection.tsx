@@ -144,6 +144,7 @@ export default function TestsSection({ className = '' }: TestsSectionProps) {
                                 <Image
                                     src={womanImg}
                                     alt="NivLearn Student with Laptop"
+                                    sizes="(max-width: 1024px) 192px, 208px"
                                     className="w-full h-full object-contain object-bottom transform group-hover:scale-103 transition-transform duration-500 drop-shadow-2xl"
                                     priority={false}
                                 />

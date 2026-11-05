@@ -1,16 +1,18 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import Banner from '@/components/home/Banner';
 import CoursesSection from '@/components/home/CoursesSection';
 import CTA from '@/components/home/CTA';
-import AboutUsSec from '@/components/home/AboutUsSec';
-import OurBestFeatures from '@/components/home/OurBestFeatures';
-import TopExperiences from '@/components/home/TopExperiences';
-import WhoWeAre from '@/components/home/WhoWeAre';
-import TestsSection from '@/components/home/TestsSection';
-import Corporate from '@/components/home/Corporate';
-import ExpertServices from '@/components/home/ExpertServices';
-import TestimonialSections from '@/components/home/TestimonialSections';
 import { getCategories } from '@/services/catalog.service';
+
+const AboutUsSec = dynamic(() => import('@/components/home/AboutUsSec'));
+const OurBestFeatures = dynamic(() => import('@/components/home/OurBestFeatures'));
+const TopExperiences = dynamic(() => import('@/components/home/TopExperiences'));
+const WhoWeAre = dynamic(() => import('@/components/home/WhoWeAre'));
+const TestsSection = dynamic(() => import('@/components/home/TestsSection'));
+const Corporate = dynamic(() => import('@/components/home/Corporate'));
+const ExpertServices = dynamic(() => import('@/components/home/ExpertServices'));
+const TestimonialSections = dynamic(() => import('@/components/home/TestimonialSections'));
 
 export const metadata: Metadata = {
   title: 'Learn In-Demand Tech Skills & Industry Certifications',

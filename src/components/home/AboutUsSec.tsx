@@ -150,6 +150,7 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
                                     alt="NivLearn Global Credentials"
                                     width={340}
                                     height={314}
+                                    sizes="(max-width: 1024px) 260px, 340px"
                                     className="object-contain w-full h-auto drop-shadow-sm"
                                 />
                             </div>
