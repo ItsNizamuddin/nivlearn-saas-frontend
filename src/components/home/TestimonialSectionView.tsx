@@ -75,13 +75,13 @@ export default function TestimonialSectionView({
         { id: 'all', label: 'All Reviews', count: testimonials.length },
         ...(hasAnyVideo
             ? [
-                  {
-                      id: 'video',
-                      label: 'Video Stories',
-                      count: testimonials.filter((t) => !!getVideoDetails(t).url).length,
-                      isVideo: true,
-                  },
-              ]
+                {
+                    id: 'video',
+                    label: 'Video Stories',
+                    count: testimonials.filter((t) => !!getVideoDetails(t).url).length,
+                    isVideo: true,
+                },
+            ]
             : []),
         ...availablePlatforms.map((p) => ({
             id: p,
@@ -95,10 +95,10 @@ export default function TestimonialSectionView({
         activeFilter === 'all'
             ? testimonials
             : activeFilter === 'video'
-            ? testimonials.filter((t) => !!getVideoDetails(t).url)
-            : testimonials.filter(
-                  (t) => t.platform?.toLowerCase() === activeFilter.toLowerCase()
-              );
+                ? testimonials.filter((t) => !!getVideoDetails(t).url)
+                : testimonials.filter(
+                    (t) => t.platform?.toLowerCase() === activeFilter.toLowerCase()
+                );
 
     // Sliding window of 3 for desktop in 1 row
     const maxDesktopIndex = Math.max(0, filteredList.length - 3);
@@ -166,26 +166,23 @@ export default function TestimonialSectionView({
                                 key={opt.id}
                                 type="button"
                                 onClick={() => handleFilterChange(opt.id)}
-                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold transition-all shrink-0 cursor-pointer ${
-                                    isSelected
+                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold transition-all shrink-0 cursor-pointer ${isSelected
                                         ? 'bg-prime text-white shadow-xs'
                                         : 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-200'
-                                }`}
+                                    }`}
                             >
                                 {opt.isVideo ? (
                                     <Video className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-prime'}`} />
                                 ) : (
                                     <Star
-                                        className={`w-3.5 h-3.5 ${
-                                            isSelected ? 'text-prime-yellow fill-prime-yellow' : 'text-amber-500 fill-amber-500'
-                                        }`}
+                                        className={`w-3.5 h-3.5 ${isSelected ? 'text-prime-yellow fill-prime-yellow' : 'text-amber-500 fill-amber-500'
+                                            }`}
                                     />
                                 )}
                                 <span>{opt.label}</span>
                                 <span
-                                    className={`text-[10px] px-1.5 py-0.2 rounded-md font-semibold ${
-                                        isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
-                                    }`}
+                                    className={`text-[10px] px-1.5 py-0.2 rounded-md font-semibold ${isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
+                                        }`}
                                 >
                                     {opt.count}
                                 </span>
@@ -198,13 +195,12 @@ export default function TestimonialSectionView({
             {/* 2. DESKTOP VIEW: Show in 1 row (3 cards) with Next and Previous buttons */}
             <div className="hidden md:block">
                 <div
-                    className={`grid gap-5 mx-auto items-stretch ${
-                        currentDesktopItems.length === 1
+                    className={`grid gap-5 mx-auto items-stretch ${currentDesktopItems.length === 1
                             ? 'max-w-md grid-cols-1'
                             : currentDesktopItems.length === 2
-                            ? 'max-w-3xl grid-cols-2'
-                            : 'max-w-6xl grid-cols-3'
-                    }`}
+                                ? 'max-w-3xl grid-cols-2'
+                                : 'max-w-6xl grid-cols-3'
+                        }`}
                 >
                     {currentDesktopItems.map((item) => {
                         const { url: videoUrl, thumbnail: videoThumb, alt: videoAlt } = getVideoDetails(item);
@@ -229,7 +225,7 @@ export default function TestimonialSectionView({
                                                     src={videoThumb}
                                                     alt={videoAlt}
                                                     fill
-                                                    className="object-cover object-top group-hover/vid:scale-105 transition-transform duration-300"
+                                                    className="object-contain object-top group-hover/vid:scale-105 transition-transform duration-300"
                                                     sizes="320px"
                                                 />
                                             ) : (
@@ -258,11 +254,10 @@ export default function TestimonialSectionView({
                                                     {[...Array(5)].map((_, i) => (
                                                         <Star
                                                             key={i}
-                                                            className={`w-3 h-3 ${
-                                                                i < (item.rating || 5)
+                                                            className={`w-3 h-3 ${i < (item.rating || 5)
                                                                     ? 'text-amber-500 fill-amber-500'
                                                                     : 'text-slate-200 fill-slate-200'
-                                                            }`}
+                                                                }`}
                                                         />
                                                     ))}
                                                 </div>
@@ -292,11 +287,10 @@ export default function TestimonialSectionView({
                                             {[...Array(5)].map((_, i) => (
                                                 <Star
                                                     key={i}
-                                                    className={`w-3.5 h-3.5 ${
-                                                        i < (item.rating || 5)
+                                                    className={`w-3.5 h-3.5 ${i < (item.rating || 5)
                                                             ? 'text-amber-500 fill-amber-500'
                                                             : 'text-slate-200 fill-slate-200'
-                                                    }`}
+                                                        }`}
                                                 />
                                             ))}
                                         </div>
@@ -434,11 +428,10 @@ export default function TestimonialSectionView({
                                                 {[...Array(5)].map((_, i) => (
                                                     <Star
                                                         key={i}
-                                                        className={`w-3 h-3 ${
-                                                            i < (currentMobileItem.rating || 5)
+                                                        className={`w-3 h-3 ${i < (currentMobileItem.rating || 5)
                                                                 ? 'text-amber-500 fill-amber-500'
                                                                 : 'text-slate-200 fill-slate-200'
-                                                        }`}
+                                                            }`}
                                                     />
                                                 ))}
                                             </div>
@@ -468,11 +461,10 @@ export default function TestimonialSectionView({
                                         {[...Array(5)].map((_, i) => (
                                             <Star
                                                 key={i}
-                                                className={`w-3.5 h-3.5 ${
-                                                    i < (currentMobileItem.rating || 5)
+                                                className={`w-3.5 h-3.5 ${i < (currentMobileItem.rating || 5)
                                                         ? 'text-amber-500 fill-amber-500'
                                                         : 'text-slate-200 fill-slate-200'
-                                                }`}
+                                                    }`}
                                             />
                                         ))}
                                     </div>

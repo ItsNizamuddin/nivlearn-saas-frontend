@@ -1,5 +1,5 @@
+import { Newspaper } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getCategory } from './data';
 
 /** `md` for cards, `sm` for thumbnails in lists. */
 const SIZES = {
@@ -8,20 +8,11 @@ const SIZES = {
 } as const;
 
 /**
- * Branded cover used until posts have real thumbnails: navy→blue gradient,
- * soft brand glows and the category icon. Purely decorative.
+ * Branded fallback for posts without a thumbnail: navy→blue gradient,
+ * soft brand glows and an article icon. Purely decorative.
  * Set the box size / aspect ratio / radius with `className`.
  */
-export default function BlogCover({
-  categoryId,
-  size = 'md',
-  className,
-}: {
-  categoryId: string;
-  size?: keyof typeof SIZES;
-  className?: string;
-}) {
-  const { icon: Icon } = getCategory(categoryId);
+export default function BlogCover({ size = 'md', className }: { size?: keyof typeof SIZES; className?: string }) {
   const s = SIZES[size];
   return (
     <div
@@ -31,7 +22,7 @@ export default function BlogCover({
       <span className={cn('absolute -top-1/4 -left-1/4 rounded-full bg-prime1/30 blur-2xl', s.glow)} />
       <span className={cn('absolute -right-1/4 -bottom-1/4 rounded-full bg-prime-yellow/30 blur-2xl', s.glow)} />
       <span className={cn('relative flex items-center justify-center bg-on-dark/10 ring-1 ring-on-dark/20', s.tile)}>
-        <Icon className={cn('text-on-dark', s.icon)} />
+        <Newspaper className={cn('text-on-dark', s.icon)} />
       </span>
     </div>
   );

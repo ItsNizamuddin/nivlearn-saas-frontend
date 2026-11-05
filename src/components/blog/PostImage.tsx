@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import BlogCover from './BlogCover';
-import type { BlogPost } from './data';
+import type { BlogImage } from './types';
 
 /**
- * Post cover photo, or the branded BlogCover when a post has none.
+ * Post thumbnail, or the branded BlogCover when a post has none.
  * Decorative by default (cards: the title says it all); pass `describe` on the article page.
  * Set the box (aspect ratio / size / radius) with `className`; the image fills it.
  */
 export default function PostImage({
-  post,
+  image,
   sizes,
   preload,
   coverSize,
@@ -17,26 +17,28 @@ export default function PostImage({
   className,
   imageClassName,
 }: {
-  post: Pick<BlogPost, 'image' | 'imageAlt' | 'categoryId'>;
+  image?: BlogImage;
   sizes: string;
   preload?: boolean;
   coverSize?: 'md' | 'sm';
-  /** Use the post's alt text instead of treating the image as decorative. */
+  /** Use the image's alt text instead of treating it as decorative. */
   describe?: boolean;
   className?: string;
   /** Extra classes on the <img> (e.g. hover zoom). */
   imageClassName?: string;
 }) {
-  if (!post.image) return <BlogCover categoryId={post.categoryId} size={coverSize} className={className} />;
+  if (!image) return <BlogCover size={coverSize} className={className} />;
   return (
     <div className={cn('relative overflow-hidden bg-surface-muted', className)}>
       <Image
-        src={post.image}
-        alt={describe ? (post.imageAlt ?? '') : ''}
+        src={image.url}
+        alt={describe ? image.alt : ''}
         fill
         sizes={sizes}
         preload={preload}
-        placeholder="blur"
+        // CMS files are already small, compressed WebP (~500px). Re-optimising them only
+        // adds a second round of compression, so serve the original as-is.
+        unoptimized
         className={cn('object-cover', imageClassName)}
       />
     </div>

@@ -4,6 +4,7 @@ import type { Feature } from '@/components/ui/FeatureCard';
 
 import heroImage from '../../../public/hire.webp';
 import speakImage from '../../../public/hirefromus/speak.webp';
+// Job role photos: Unsplash (unsplash.com/license — free for commercial use, no attribution needed).
 import role1 from '../../../public/hirefromus/image.webp';
 import role2 from '../../../public/hirefromus/image1.webp';
 import role3 from '../../../public/hirefromus/image2.webp';

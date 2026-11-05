@@ -38,7 +38,7 @@ export default function TabList({ idPrefix, label, items, active, onChange, clas
       role="tablist"
       aria-label={label}
       onKeyDown={onKeyDown}
-      className={cn('-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none]', className)}
+      className={cn('-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden', className)}
     >
       {items.map((tab) => {
         const selected = tab.id === active;

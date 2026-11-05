@@ -99,7 +99,7 @@ export default function TestsSection({ className = '' }: TestsSectionProps) {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-8 items-stretch">
 
                     {/* CARD 1: Training Bootcamps & Skill Building */}
-                    <div className="relative rounded-lg  bg-gradient-to-br from-prime-dark via-[#091b35] to-[#040e21] b shadow-xl overflow-hidden group min-h-[300px] sm:min-h-[320px] flex flex-col justify-between p-6 ">
+                    <div className="relative rounded-lg  bg-gradient-to-br from-prime via-[#004bb5] to-[#002f80] b shadow-xl overflow-hidden group min-h-[300px] sm:min-h-[320px] flex flex-col justify-between p-6 ">
                         {/* Background Subtle Geometric Pattern */}
                         <div
                             className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none mix-blend-overlay"
@@ -143,7 +143,7 @@ export default function TestsSection({ className = '' }: TestsSectionProps) {
                             <div className="relative w-44 md:w-48 lg:w-48 xl:w-52 h-[260px] md:h-[280px] lg:h-[290px] flex items-end">
                                 <Image
                                     src={womanImg}
-                                    alt="NivLearn Student with Laptop"
+                                    alt="NivLearn career advisor"
                                     sizes="(max-width: 1024px) 192px, 208px"
                                     className="w-full h-full object-contain object-bottom transform group-hover:scale-103 transition-transform duration-500 drop-shadow-2xl"
                                     priority={false}
@@ -158,7 +158,7 @@ export default function TestsSection({ className = '' }: TestsSectionProps) {
                     </div>
 
                     {/* CARD 2: Free Practice Test & Rep Guidance */}
-                    <div className="relative rounded-lg bg-gradient-to-br from-prime via-[#004bb5] to-[#002f80] border border-white/15 shadow-xl overflow-hidden group min-h-[300px] sm:min-h-[320px] flex flex-col justify-between p-6 ">
+                    <div className="relative rounded-lg bg-gradient-to-br from-prime-dark via-[#091b35] to-[#040e21] border border-white/15 shadow-xl overflow-hidden group min-h-[300px] sm:min-h-[320px] flex flex-col justify-between p-6 ">
                         {/* Background Subtle Geometric Pattern */}
                         <div
                             className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none mix-blend-overlay"
@@ -188,7 +188,7 @@ export default function TestsSection({ className = '' }: TestsSectionProps) {
                                 <button
                                     type="button"
                                     onClick={handleTakeTest}
-                                    className="w-full sm:w-fit inline-flex items-center justify-center gap-3 bg-prime-dark hover:bg-prime-dark/90 active:scale-95 text-white font-extrabold text-xs sm:text-sm px-5 py-2 rounded-lg shadow-md transition-all cursor-pointer group/btn"
+                                    className="w-full sm:w-fit inline-flex items-center justify-center gap-3 bg-prime hover:bg-prime-outline active:scale-95 text-white font-extrabold text-xs sm:text-sm px-5 py-2 rounded-lg shadow-md transition-all cursor-pointer group/btn"
                                 >
                                     <span>Take Free Test</span>
                                     <div className="bg-white/20 p-1.5 rounded-lg group-hover/btn:translate-x-0.5 transition-transform">

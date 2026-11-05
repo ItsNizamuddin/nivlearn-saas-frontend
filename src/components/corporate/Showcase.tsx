@@ -5,12 +5,15 @@ import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import SpriteLogo from '@/components/ui/SpriteLogo';
 import { CERT_LOGOS } from '@/lib/logoSprites';
+import { IconTile } from '@/components/ui/FeatureCard';
 import { CERTIFICATIONS, GLOBAL, WHY_US, type WhyUsItem } from './data';
 
-function WhyCard({ icon, title, description }: WhyUsItem) {
+function WhyCard({ icon: Icon, title, description }: WhyUsItem) {
   return (
     <li className="rounded-2xl border border-prime/15 bg-surface p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-prime/30 hover:shadow-card">
-      <Image src={icon} alt="" className="size-12" />
+      <IconTile>
+        <Icon />
+      </IconTile>
       <h3 className="mt-4 text-lg font-bold text-prime-dark">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-text-muted">{description}</p>
     </li>

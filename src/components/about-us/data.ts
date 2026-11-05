@@ -1,4 +1,18 @@
-import { BookOpen, Presentation, Globe, MapPin, Users } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import {
+  Award,
+  BookOpen,
+  CalendarClock,
+  Globe,
+  GraduationCap,
+  Headset,
+  Lightbulb,
+  MapPin,
+  Presentation,
+  SlidersHorizontal,
+  Users,
+  Wrench,
+} from 'lucide-react';
 import type { StaticImageData } from 'next/image';
 
 import mission1 from '../../../public/aboutus/mission1.webp';
@@ -8,10 +22,6 @@ import mission4 from '../../../public/aboutus/mission4.webp';
 import mission5 from '../../../public/aboutus/mission5.webp';
 import mission6 from '../../../public/aboutus/mission6.webp';
 import whyChooseUsImage from '../../../public/aboutus/whychooseus.webp';
-import expertiseIcon from '../../../public/aboutus/whychooseus/expertise.webp';
-import customizationIcon from '../../../public/aboutus/whychooseus/customization.webp';
-import approachIcon from '../../../public/aboutus/whychooseus/decision-making.webp';
-import supportIcon from '../../../public/aboutus/whychooseus/technical-support.webp';
 import perksVideoPoster from '../../../public/aboutus/banvideo.webp';
 
 /* ---------------------------------- Banner --------------------------------- */
@@ -73,22 +83,12 @@ export const MISSION_SLIDES = [
 
 /* ------------------------------- Core values ------------------------------- */
 
-/** Position of each icon inside /aboutus/aboutus_sprites.webp (one request for all icons). */
-export interface SpriteIcon {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-}
-
 export interface CoreValue {
   id: number;
   title: string;
   description: string;
-  sprite: SpriteIcon;
+  icon: LucideIcon;
 }
-
-export const CORE_VALUES_SPRITE_URL = '/aboutus/aboutus_sprites.webp';
 
 export const CORE_VALUES_INTRO = {
   eyebrow: 'What drives us',
@@ -96,29 +96,28 @@ export const CORE_VALUES_INTRO = {
 } as const;
 
 // The source page repeated "Expertise" and "Excellence" a second time with
-// identical text; duplicates removed. Sprite positions for those spare icons:
-// { width: 45, height: 40, x: 142, y: 10 } and { width: 45, height: 46, x: 75, y: 76 }.
+// identical text; duplicates removed.
 export const CORE_VALUES: readonly CoreValue[] = [
   {
     id: 1,
     title: 'Expertise',
     description:
       'We are dedicated to offering training programs that are led by industry experts and seasoned professionals. Our instructors bring a wealth of knowledge and experience to the classroom, ensuring that learners receive the most up-to-date and relevant insights. We believe in the power of expertise to inspire and empower individuals.',
-    sprite: { width: 46, height: 46, x: 10, y: 10 },
+    icon: GraduationCap,
   },
   {
     id: 2,
     title: 'Excellence',
     description:
       'We maintain a strong commitment to excellence in all aspects of our training programs. From course design and instructional delivery to customer service and support, we consistently strive for the highest quality standards. Our goal is to exceed the expectations of our learners and provide them with an exceptional learning experience.',
-    sprite: { width: 46, height: 46, x: 76, y: 10 },
+    icon: Award,
   },
   {
     id: 3,
     title: 'Flexibility',
     description:
       'Recognizing the diverse needs and schedules of our learners, we offer flexible training options. Our courses are available in different formats, including in-person sessions, live virtual classrooms, and self-paced online modules. We believe in providing accessible and convenient learning opportunities that fit the busy lifestyles of professionals.',
-    sprite: { width: 45, height: 46, x: 10, y: 76 },
+    icon: CalendarClock,
   },
 ];
 
@@ -159,32 +158,32 @@ export const WHY_CHOOSE_US = {
 } as const;
 
 export interface WhyChooseUsPoint {
-  icon: StaticImageData;
+  icon: LucideIcon;
   title: string;
   description: string;
 }
 
 export const WHY_CHOOSE_US_POINTS: readonly WhyChooseUsPoint[] = [
   {
-    icon: expertiseIcon,
+    icon: Lightbulb,
     title: 'Expertise',
     description:
       'Our team consists of industry experts and seasoned professionals who bring extensive knowledge and practical experience to our consulting and bootcamp programs.',
   },
   {
-    icon: customizationIcon,
+    icon: SlidersHorizontal,
     title: 'Customization',
     description:
       "We understand that every organization and individual has unique needs and goals. That's why our consulting services and bootcamp programs are highly customizable.",
   },
   {
-    icon: approachIcon,
+    icon: Wrench,
     title: 'Practical Approach',
     description:
       'We believe in the power of hands-on learning and real-world application. Our programs are designed to provide practical skills and strategies that can be immediately implemented in the workplace.',
   },
   {
-    icon: supportIcon,
+    icon: Headset,
     title: 'Continuous Support',
     description:
       'Our commitment to your success extends beyond the duration of our consulting engagements and bootcamp programs. We provide ongoing support and resources.',
