@@ -232,9 +232,9 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
 
         {/* Title & Description */}
         <div>
-          <h4 className="font-heading text-xs sm:text-sm font-bold text-prime-dark leading-snug line-clamp-1">
+          <h3 className="font-heading text-xs sm:text-sm font-bold text-prime-dark leading-snug line-clamp-1">
             {course.course_title}
-          </h4>
+          </h3>
           <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
             New mentor-led cohorts launch every 2 weeks with 1-on-1 guidance, live projects, and placement support.
           </p>
@@ -318,9 +318,9 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
 
         {/* Title & Delivery Info */}
         <div>
-          <h4 className="font-heading text-xs sm:text-sm font-bold text-prime-dark leading-snug line-clamp-1">
+          <h3 className="font-heading text-xs sm:text-sm font-bold text-prime-dark leading-snug line-clamp-1">
             {selectedClass.title || course.course_title}
-          </h4>
+          </h3>
           <div className="flex flex-wrap items-center gap-1.5 mt-1 text-[11px]">
             {selectedClass.schedule?.batchType && (
               <span className="font-semibold text-prime-dark bg-light px-1.5 py-0.2 rounded border border-border-muted/60 capitalize">
@@ -431,9 +431,9 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
 
         {/* Title & Inline Compact Stats */}
         <div>
-          <h4 className="font-heading text-xs sm:text-sm font-bold text-prime-dark leading-snug line-clamp-1">
+          <h3 className="font-heading text-xs sm:text-sm font-bold text-prime-dark leading-snug line-clamp-1">
             {selectedProgram.title}
-          </h4>
+          </h3>
           <div className="flex items-center gap-1.5 mt-1 text-[11px] text-slate-500 font-medium">
             <span>{selectedProgram.stats?.lessonCount || 14} Videos</span>
             <span className="text-slate-300">•</span>

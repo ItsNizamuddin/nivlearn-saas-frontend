@@ -90,8 +90,8 @@ export default async function CategoryPage({ params }: PageProps) {
         subtitle="Claim our limited-time scholarship, cohort fee discount, and 1-on-1 career consultation today."
         buttonText="Get Exclusive Offer"
       />
-      <CategoryCertificate title={category.name} />
-      <CategoryFAQ categoryName={category.name} faqs={category.faqs} />
+      <CategoryCertificate title={category.name} categorySlug={slug} />
+      <CategoryFAQ categoryName={category.name} categorySlug={slug} faqs={category.faqs} />
       <CategorySEOContent
         internalSection={category.internalSection}
         bottomSection={category.bottomSection}

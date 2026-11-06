@@ -1,19 +1,44 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import type { Course } from '@/components/Navbar/types';
 import CourseCard from '@/components/home/courses/CourseCard';
-import { Sparkles, BookOpen } from 'lucide-react';
+import MobileCourseView from '@/components/home/courses/MobileCourseView';
+import { Sparkles, BookOpen, ChevronRight } from 'lucide-react';
+import { useLeadModal } from '@/context/LeadModalContext';
 
 export default function CategoryCourses({
   categoryName,
   categorySlug,
-  courses,
+  courses = [],
 }: {
   categoryName: string;
   categorySlug: string;
   courses: Course[];
 }) {
+  const { openModal } = useLeadModal();
+  const [visibleCount, setVisibleCount] = useState<number>(6);
+
+  const displayedCourses = useMemo(() => {
+    return courses.slice(0, visibleCount);
+  }, [courses, visibleCount]);
+
+  const handleEnquire = (course: Course) => {
+    openModal({
+      formTitle: `Enquire About ${course.name}`,
+      formDescription: `Get detailed syllabus, upcoming batch schedules, and fee details for ${course.name}.`,
+      defaultValues: {
+        courseSlug: course.slug,
+        leadSource: `${categorySlug}-courses-grid`,
+      },
+      config: {
+        showCourse: true,
+        showMessage: true,
+        purpose: true,
+      },
+    });
+  };
+
   return (
     <section id="courses" className="section-container py-10 lg:py-16">
       {/* Header */}
@@ -35,25 +60,57 @@ export default function CategoryCourses({
         </div>
       </div>
 
-      {/* Courses Grid */}
-      {courses.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {courses.map((course) => (
-            <CourseCard
-              key={course.slug}
-              course={course}
-              activeCategorySlug={categorySlug}
-            />
-          ))}
+      {/* Courses Content */}
+      {courses.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-16 px-4 text-center rounded-xl bg-surface-muted border border-border-muted/50 my-6">
+          <BookOpen className="w-10 h-10 text-text-muted/60 mb-3" />
+          <h3 className="text-base sm:text-lg font-bold text-prime-dark mb-1">
+            No courses available yet
+          </h3>
+          <p className="text-xs sm:text-sm text-text-muted max-w-sm">
+            Courses for{' '}
+            <span className="font-semibold text-prime">
+              {categoryName}
+            </span>{' '}
+            are being updated. Check back shortly or contact our team.
+          </p>
         </div>
       ) : (
-        <div className="text-center py-12 bg-slate-50 rounded-xl border border-dashed border-slate-300">
-          <BookOpen className="w-10 h-10 text-slate-400 mx-auto mb-2" />
-          <p className="text-sm font-semibold text-slate-700">No courses available for this category yet.</p>
-          <p className="text-xs text-text-muted mt-0.5">Please check back soon or consult a learning advisor.</p>
-        </div>
+        <>
+          {/* 1. Mobile View: 1 Card at a time + Previous & Next Buttons */}
+          <MobileCourseView
+            courses={courses}
+            activeCategorySlug={categorySlug}
+            onEnquire={handleEnquire}
+          />
+
+          {/* 2. Desktop & Tablet Grid View */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {displayedCourses.map((course, idx) => (
+              <CourseCard
+                key={`${course.slug}-${idx}`}
+                course={course}
+                activeCategorySlug={categorySlug}
+                onEnquire={handleEnquire}
+              />
+            ))}
+          </div>
+
+          {/* Load More Button (Desktop only) */}
+          {courses.length > visibleCount && (
+            <div className="hidden md:flex justify-center items-center mt-10">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((prev) => prev + 6)}
+                className="inline-flex items-center gap-2 px-6 py-2.5 border border-prime text-prime hover:bg-prime hover:text-on-dark font-semibold text-sm rounded-md shadow-xs transition-colors cursor-pointer"
+              >
+                <span>Load More Courses</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+        </>
       )}
     </section>
   );
 }
-

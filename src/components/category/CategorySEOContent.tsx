@@ -29,13 +29,11 @@ export default function CategorySEOContent({
               className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
             >
               <span className="font-heading text-sm sm:text-base font-bold text-prime-dark flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-prime" />
                 {internalSection?.title || 'Program Overview & Career Pathways'}
               </span>
               <ChevronDown
-                className={`w-4 h-4 text-prime shrink-0 transition-transform duration-300 ${
-                  internalOpen ? 'rotate-180' : ''
-                }`}
+                className={`w-4 h-4 text-prime shrink-0 transition-transform duration-300 ${internalOpen ? 'rotate-180' : ''
+                  }`}
               />
             </button>
             {internalOpen && (
@@ -55,13 +53,11 @@ export default function CategorySEOContent({
               className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
             >
               <span className="font-heading text-sm sm:text-base font-bold text-prime-dark flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-prime" />
                 {bottomSection?.title || 'Certification Guide & Exam Guidelines'}
               </span>
               <ChevronDown
-                className={`w-4 h-4 text-prime shrink-0 transition-transform duration-300 ${
-                  bottomOpen ? 'rotate-180' : ''
-                }`}
+                className={`w-4 h-4 text-prime shrink-0 transition-transform duration-300 ${bottomOpen ? 'rotate-180' : ''
+                  }`}
               />
             </button>
             {bottomOpen && (

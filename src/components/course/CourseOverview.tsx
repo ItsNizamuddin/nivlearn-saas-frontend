@@ -337,9 +337,9 @@ export default function CourseOverview({ course }: { course: CourseDetail }) {
           {(course.skills?.length || course.tools?.length) ? (
             <div className="bg-surface border border-border-muted/80 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
               <div>
-                <h4 className="font-heading text-sm font-bold text-prime-dark uppercase tracking-wider">
+                <h3 className="font-heading text-sm font-bold text-prime-dark uppercase tracking-wider">
                   Industry Software & Practical Frameworks
-                </h4>
+                </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
                   Master enterprise-grade tools used daily by top industry teams
                 </p>
