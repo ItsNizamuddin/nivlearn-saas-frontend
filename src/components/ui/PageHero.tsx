@@ -78,7 +78,7 @@ export default function PageHero({
 
         {image && (
           <div className={cn('flex justify-center lg:self-end', imageDesktopOnly && 'hidden lg:flex')}>
-            <Image src={image} alt={imageAlt} preload sizes="(min-width: 1024px) 45vw, 90vw" className="h-auto max-h-80 w-auto sm:max-h-96 lg:max-h-[480px]" />
+            <Image src={image} alt={imageAlt} preload sizes="(min-width: 1024px) 45vw, 90vw" className="h-auto max-h-80 w-auto sm:max-h-96 lg:max-h-120" />
           </div>
         )}
       </Container>

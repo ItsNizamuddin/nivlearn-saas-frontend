@@ -278,3 +278,11 @@
   & h4 { font-size: 1.125rem; }
   & > :first-child { margin-top: 0; }
 }
+
+/* ============================================================
+ * Bottom-sheet slide-up animation (used by ScheduleDetailsDialog)
+ * ============================================================ */
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}

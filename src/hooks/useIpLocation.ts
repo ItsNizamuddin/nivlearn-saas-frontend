@@ -1,6 +1,30 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+/*
+ * Visitor location from their IP (country, timezone, currency).
+ *
+ * - One lookup per page: every component calling useIpLocation() shares a single
+ *   lookup (module-level store + in-flight promise), instead of each one calling
+ *   /api/location (and ipify) on its own.
+ * - No server/browser mismatch: server render and first client render both start
+ *   in `loading: true`; the saved location is read only after hydration
+ *   (useSyncExternalStore with a fixed server snapshot).
+ * - Timeouts and storage errors: each request gives up after a few seconds instead
+ *   of hanging. If browser storage is blocked (private windows), the result is
+ *   still kept in memory for the visit; it just isn't saved for the next one.
+ * - Fast for returning visitors: a saved location younger than 24h is used at once
+ *   (`loading: false`), so prices load without waiting for the network.
+ * - Still re-checked on every page load, in the background: the IP can change (travel,
+ *   VPN, mobile network). If the country, currency or timezone changed, `data` is
+ *   replaced and pages refetch prices; if nothing changed, `data` keeps the same object,
+ *   so nothing refetches.
+ * - First visit (no saved location): `loading` stays true until the check answers.
+ * - A failed check is retried on the next component mount (e.g. client navigation).
+ * - Fires a `geolocation:updated` window event with the fresh location (LeadForm uses
+ *   it to pick the phone dial code).
+ */
+
+import { useEffect, useSyncExternalStore } from 'react';
 
 export interface IpLocationData {
     status: string;
@@ -17,12 +41,14 @@ export interface IpLocationData {
     org?: string;
     as?: string;
     query: string;
+    /** Currency the CMS prices in for this country (set by /api/location). */
     currency?: string;
+    /** Which lookup answered: edge headers, ip-api, ipwho.is, or the dev fallback. */
+    source?: string;
     cachedAt?: number;
 }
 
 const CACHE_KEY = 'geoLocation';
-const SESSION_CHECK_KEY = 'geoLocation_session_verified';
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 export function getCachedGeoLocation(): IpLocationData | null {
@@ -35,147 +61,111 @@ export function getCachedGeoLocation(): IpLocationData | null {
             return parsed;
         }
     } catch {
-        localStorage.removeItem(CACHE_KEY);
+        try {
+            localStorage.removeItem(CACHE_KEY);
+        } catch {
+            // Storage unavailable
+        }
     }
     return null;
 }
 
-export function useIpLocation(ip?: string | null) {
-    const [data, setData] = useState<IpLocationData | null>(() => getCachedGeoLocation());
-    const [loading, setLoading] = useState<boolean>(() => !getCachedGeoLocation());
-    const [error, setError] = useState<string | null>(null);
+/* ---------- shared store: one lookup per page load, however many components ask ---------- */
 
-    // Sync state when another hook or background worker updates geolocation
+interface LocationState {
+    data: IpLocationData | null;
+    loading: boolean;
+    error: string | null;
+}
+
+const SERVER_STATE: LocationState = { data: null, loading: true, error: null };
+let state: LocationState | null = null;
+let inflight: Promise<void> | null = null;
+const listeners = new Set<() => void>();
+
+/** The saved location, only while it is younger than CACHE_TTL_MS. */
+function freshCache() {
+    const stored = getCachedGeoLocation();
+    return stored?.cachedAt && Date.now() - stored.cachedAt < CACHE_TTL_MS ? stored : null;
+}
+
+function getState(): LocationState {
+    if (!state) {
+        const cached = freshCache();
+        state = { data: cached, loading: !cached, error: null };
+    }
+    return state;
+}
+
+const sameLocation = (a: IpLocationData | null, b: IpLocationData) =>
+    !!a && a.countryCode === b.countryCode && a.currency === b.currency && a.timezone === b.timezone;
+
+function setState(next: Partial<LocationState>) {
+    state = { ...getState(), ...next };
+    listeners.forEach((listener) => listener());
+}
+
+function subscribe(listener: () => void) {
+    listeners.add(listener);
+    return () => listeners.delete(listener);
+}
+
+/** On localhost the server only sees 127.0.0.1, so ask ipify for the real public IP. */
+async function localPublicIp() {
+    const host = window.location.hostname;
+    if (host !== 'localhost' && host !== '127.0.0.1') return null;
+    try {
+        const res = await fetch('https://api64.ipify.org?format=json', { signal: AbortSignal.timeout(2500) });
+        const data = res.ok ? await res.json() : null;
+        return typeof data?.ip === 'string' ? data.ip : null;
+    } catch {
+        return null;
+    }
+}
+
+async function lookup() {
+    const cached = getState().data;
+
+    try {
+        const ip = await localPublicIp();
+        const res = await fetch(ip ? `/api/location?ip=${encodeURIComponent(ip)}` : '/api/location', {
+            signal: AbortSignal.timeout(5000),
+        });
+        if (!res.ok) throw new Error(`Location lookup failed (${res.status})`);
+        const result: IpLocationData = await res.json();
+        if (result.status !== 'success' || !result.countryCode) throw new Error('Location could not be resolved');
+
+        const withTime = { ...result, cachedAt: Date.now() };
+        try {
+            localStorage.setItem(CACHE_KEY, JSON.stringify(withTime));
+        } catch {
+            // Private mode / quota: keep it in memory only
+        }
+        // Same place as the saved location: keep the object so dependants don't refetch.
+        setState({ data: sameLocation(cached, withTime) ? cached : withTime, loading: false, error: null });
+        window.dispatchEvent(new CustomEvent('geolocation:updated', { detail: withTime }));
+    } catch (err: unknown) {
+        // Allow a retry on the next mount; keep any cached location, otherwise report the
+        // failure (callers fall back to defaults).
+        inflight = null;
+        setState({ loading: false, error: cached ? null : err instanceof Error ? err.message : 'Location lookup failed' });
+    }
+}
+
+/** Starts the lookup once per page load (again after a failure). */
+export function ensureIpLocation() {
+    inflight ??= lookup();
+    return inflight;
+}
+
+/**
+ * Visitor location from their IP (country, timezone, currency), cached for 24h.
+ * Server render and first client render both see `loading: true`, so there is no hydration mismatch.
+ */
+export function useIpLocation() {
+    const current = useSyncExternalStore(subscribe, getState, () => SERVER_STATE);
     useEffect(() => {
-        const handleUpdate = (e: Event) => {
-            const detail = (e as CustomEvent<IpLocationData>).detail;
-            if (detail) {
-                setData(detail);
-            }
-        };
-
-        window.addEventListener('geolocation:updated', handleUpdate);
-        return () => window.removeEventListener('geolocation:updated', handleUpdate);
+        void ensureIpLocation();
     }, []);
-
-    useEffect(() => {
-        let isMounted = true;
-
-        const checkLocation = async () => {
-            const cached = getCachedGeoLocation();
-            const now = Date.now();
-            const isFresh = cached?.cachedAt && now - cached.cachedAt < CACHE_TTL_MS;
-
-            let sessionVerified = false;
-            try {
-                sessionVerified = Boolean(sessionStorage.getItem(SESSION_CHECK_KEY));
-            } catch {
-                // Ignore storage access errors
-            }
-
-            // If we have valid cache, no custom IP was requested, and this session was already verified within 24h:
-            // Serve cached data immediately without any network call.
-            if (cached && !ip && isFresh && sessionVerified) {
-                if (isMounted) {
-                    setData(cached);
-                    setLoading(false);
-                }
-                return;
-            }
-
-            // If we have cached data, make UI usable immediately while verifying drift in background
-            if (cached && !ip) {
-                if (isMounted) {
-                    setData(cached);
-                    setLoading(false);
-                }
-            } else if (isMounted) {
-                setLoading(true);
-            }
-
-            try {
-                let targetIp = ip;
-
-                // When testing locally without explicit IP, probe ipify to test real public IP
-                if (!targetIp && typeof window !== 'undefined') {
-                    const isLocal =
-                        window.location.hostname === 'localhost' ||
-                        window.location.hostname === '127.0.0.1';
-
-                    if (isLocal) {
-                        try {
-                            const ipRes = await fetch('https://api64.ipify.org?format=json', {
-                                signal: AbortSignal.timeout(2500),
-                            });
-                            if (ipRes.ok) {
-                                const ipData = await ipRes.json();
-                                if (ipData.ip) {
-                                    targetIp = ipData.ip;
-                                }
-                            }
-                        } catch {
-                            // Fallback to server detection
-                        }
-                    }
-                }
-
-                const url = targetIp
-                    ? `/api/location?ip=${encodeURIComponent(targetIp)}`
-                    : '/api/location';
-
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`Location lookup failed (${response.status})`);
-                }
-
-                const freshResult: IpLocationData = await response.json();
-
-                if (freshResult.status === 'success' && isMounted) {
-                    const resultWithTime: IpLocationData = {
-                        ...freshResult,
-                        cachedAt: now,
-                    };
-
-                    const ipChanged = cached?.query !== freshResult.query;
-                    const countryChanged = cached?.countryCode !== freshResult.countryCode;
-
-                    // Update localStorage & session marker
-                    try {
-                        localStorage.setItem(CACHE_KEY, JSON.stringify(resultWithTime));
-                        sessionStorage.setItem(SESSION_CHECK_KEY, '1');
-                    } catch {
-                        // Ignore quota/private mode errors
-                    }
-
-                    // Only trigger state updates/events if data actually changed or initial load
-                    if (!cached || ipChanged || countryChanged) {
-                        setData(resultWithTime);
-                        window.dispatchEvent(
-                            new CustomEvent('geolocation:updated', { detail: resultWithTime })
-                        );
-                    }
-                } else if (!cached && isMounted) {
-                    setError('Failed to resolve location');
-                }
-            } catch (err: unknown) {
-                if (!cached && isMounted) {
-                    const message =
-                        err instanceof Error ? err.message : 'An unexpected error occurred';
-                    setError(message);
-                }
-            } finally {
-                if (isMounted) {
-                    setLoading(false);
-                }
-            }
-        };
-
-        void checkLocation();
-
-        return () => {
-            isMounted = false;
-        };
-    }, [ip]);
-
-    return { data, loading, error };
+    return current;
 }

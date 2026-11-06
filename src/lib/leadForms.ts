@@ -23,6 +23,27 @@ export const LEAD_FORMS = {
     config: { showCourse: true, showMessage: true },
   },
 
+  /** Schedules page: no batch fits, or a custom quote. */
+  schedule: {
+    formTitle: 'Find a Batch That Fits',
+    formDescription: 'Tell us your preferred dates and timings and we will suggest a batch or set one up for you.',
+    defaultValues: { leadSource: 'schedules-page' },
+    config: { showCourse: true, showMessage: true },
+    extraFields: [
+      {
+        name: 'preferredTiming',
+        label: 'Preferred timing',
+        type: 'select',
+        options: [
+          { label: 'Weekdays', value: 'weekday' },
+          { label: 'Weekends', value: 'weekend' },
+          { label: 'Flexible', value: 'flexible' },
+        ],
+      },
+    ],
+    submitButtonText: 'Request a Batch',
+  },
+
   corporate: {
     formTitle: 'Plan Training for Your Team',
     formDescription: 'Share your requirements and our corporate team will send a tailored proposal.',

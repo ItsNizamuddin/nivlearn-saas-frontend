@@ -2,23 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react';
 import type { ScheduleData, SchedulePagination } from '@/types/schedules';
+import { currencyForCountry } from '@/components/schedules/types';
+import { viewerTimeZone } from '@/lib/scheduleTime';
 import { useIpLocation } from './useIpLocation';
 
-const COUNTRY_CURRENCY_MAP: Record<string, string> = {
-  IN: 'INR',
-  US: 'USD',
-  GB: 'GBP',
-  AE: 'AED',
-  SG: 'SGD',
-  AU: 'AUD',
-  CA: 'CAD',
-  EU: 'EUR',
-  DE: 'EUR',
-  FR: 'EUR',
-  IT: 'EUR',
-  ES: 'EUR',
-  NL: 'EUR',
-};
 
 export interface UseSchedulesOptions {
   limit?: number;
@@ -40,7 +27,8 @@ export function useSchedules(courseSlug: string, options: UseSchedulesOptions = 
   const isFirstRun = useRef(true);
 
   useEffect(() => {
-    if (locationLoading && !locationData) return;
+    // Wait for a location (saved or fresh); a changed country refetches via locationData.
+    if (locationLoading) return;
     if (!courseSlug) {
       setLoadingSchedules(false);
       return;
@@ -53,17 +41,9 @@ export function useSchedules(courseSlug: string, options: UseSchedulesOptions = 
       isFirstRun.current = false;
 
       try {
-        let detectedCurrency = 'USD';
-        let detectedTimezone = 'Asia/Kolkata';
-
-        if (locationData) {
-          if (locationData.countryCode && COUNTRY_CURRENCY_MAP[locationData.countryCode]) {
-            detectedCurrency = COUNTRY_CURRENCY_MAP[locationData.countryCode];
-          }
-          if (locationData.timezone) {
-            detectedTimezone = locationData.timezone;
-          }
-        }
+        // Currency from the visitor's IP (empty → the API route uses the edge country, then USD).
+        const detectedCurrency = locationData?.currency ?? currencyForCountry(locationData?.countryCode) ?? '';
+        const detectedTimezone = viewerTimeZone(locationData?.timezone);
 
         const effectiveCurrency = customCurrency || detectedCurrency;
         const effectiveTimezone = customTimezone || detectedTimezone;

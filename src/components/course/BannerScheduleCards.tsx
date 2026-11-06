@@ -2,7 +2,11 @@
 
 import React from 'react';
 import { Calendar, Clock, Wifi, Laptop, MapPin, CheckCircle2, ChevronRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useIpLocation } from '@/hooks/useIpLocation';
 import { useSchedules } from '@/hooks/useSchedules';
+import { viewerTimeZone } from '@/lib/scheduleTime';
 import { useLeadModal } from '@/context/LeadModalContext';
 import type { ScheduleData } from '@/types/schedules';
 
@@ -51,8 +55,24 @@ function formatScheduleTime(startsAt: string, endsAt?: string, timezone?: string
 export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerScheduleCardsProps) {
   const { schedules, loadingSchedules } = useSchedules(courseSlug, { limit: 2 });
   const { openModal } = useLeadModal();
+  const router = useRouter();
+  const { data: geo } = useIpLocation();
 
   const handleEnrollClick = (schedule?: ScheduleData) => {
+    // Priced batch → checkout (multi-plan batches → plan picker on the schedules page).
+    const pricing = schedule?.filteredPricing?.[0];
+    if (schedule?.code && pricing) {
+      if (schedule.pricingTemplateId) {
+        router.push(`/schedules/${courseSlug}`);
+        return;
+      }
+      const params = new URLSearchParams({ schedule: schedule.code });
+      if (pricing.currency?.code) params.set('currency', pricing.currency.code);
+      params.set('tz', viewerTimeZone(geo?.timezone));
+      router.push(`/checkout?${params}`);
+      return;
+    }
+
     const batchInfo = schedule
       ? `${schedule.batchType ? `${schedule.batchType.toUpperCase()} ` : ''}${formatScheduleDate(schedule.startsAt, schedule.endsAt)} (${schedule.code || 'BATCH'})`
       : 'Upcoming Batch';
@@ -266,7 +286,13 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
         })}
       </div>
 
-      <div className="pt-1">
+      <div className="pt-1 space-y-1">
+        <Link
+          href={`/schedules/${courseSlug}`}
+          className="block w-full text-center text-xs text-prime-dark hover:text-prime font-bold py-1 transition-colors"
+        >
+          View all batches &rarr;
+        </Link>
         <button
           type="button"
           onClick={handleEnquireCustom}
