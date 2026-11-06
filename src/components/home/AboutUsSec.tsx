@@ -86,9 +86,9 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
                 leadSource: 'home-credentials-section',
             },
             config: {
-                showCourse: true,
+                showCourse: false,
                 showMessage: true,
-                purpose: true,
+                purpose: false,
             },
         });
     };
@@ -287,26 +287,6 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
                                 </div>
                             );
                         })}
-
-                        {/* Bottom Action Strip */}
-                        <div className="mt-2 bg-prime-dark text-on-dark rounded-lg p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
-                            <div>
-                                <h4 className="text-sm font-bold text-on-dark">
-                                    Ready to fast-track your global certification?
-                                </h4>
-                                <p className="text-xs text-on-dark/70 mt-0.5">
-                                    Our learning advisors are available to review your profile and match your track.
-                                </p>
-                            </div>
-                            <button
-                                type="button"
-                                onClick={handleEnquireCredentials}
-                                className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-prime-yellow hover:bg-prime-yellow/90 active:scale-95 text-white font-bold text-xs sm:text-sm rounded-md shadow-xs transition-all cursor-pointer"
-                            >
-                                <span>Get Consultation</span>
-                                <ArrowRight className="w-3.5 h-3.5 text-white" />
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

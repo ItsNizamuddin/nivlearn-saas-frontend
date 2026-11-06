@@ -25,6 +25,39 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
   const [expandedCategory, setExpandedCategory] = useState<string | null>(
     categories[0]?.slug ?? null
   );
+  const [coursesByCat, setCoursesByCat] = useState<Record<string, Category['courses']>>({});
+  const [loadingCategory, setLoadingCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen || !expandedCategory) return;
+    const cat = categories.find((c) => c.slug === expandedCategory);
+    if (!cat) return;
+
+    if (coursesByCat[expandedCategory] || (cat.courses && cat.courses.length > 0)) {
+      return;
+    }
+
+    let isMounted = true;
+    setLoadingCategory(expandedCategory);
+
+    fetch(`/api/courses?category=${expandedCategory}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!isMounted) return;
+        setCoursesByCat((prev) => ({
+          ...prev,
+          [expandedCategory]: data.courses || [],
+        }));
+      })
+      .catch((err) => console.error('Failed to load courses:', err))
+      .finally(() => {
+        if (isMounted) setLoadingCategory(null);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isOpen, expandedCategory, categories]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -95,7 +128,8 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
               <div className="divide-y divide-zinc-100 border-t border-zinc-200">
                 {categories.map((category) => {
                   const isExpanded = expandedCategory === category.slug;
-                  const coursesCount = category.courses?.length || 0;
+                  const activeCategoryCourses = coursesByCat[category.slug] || category.courses || [];
+                  const isFetchingCategory = loadingCategory === category.slug;
 
                   return (
                     <div key={category.slug} className="bg-white">
@@ -113,9 +147,11 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
                             className={`shrink-0 ${isExpanded ? 'text-prime-yellow' : 'text-zinc-400'}`}
                           />
                           <span className="truncate">{category.name}</span>
-                          <span className="text-[10px] text-zinc-400 font-normal shrink-0">
-                            ({coursesCount})
-                          </span>
+                          {activeCategoryCourses.length > 0 && (
+                            <span className="text-[10px] text-zinc-400 font-normal shrink-0">
+                              ({activeCategoryCourses.length})
+                            </span>
+                          )}
                         </div>
                         <ChevronDown
                           size={14}
@@ -126,8 +162,12 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
                       {/* Course Items List inside Category */}
                       {isExpanded && (
                         <div className="bg-slate-50/70 px-2 py-2 space-y-1.5 border-t border-zinc-100">
-                          {category.courses && category.courses.length > 0 ? (
-                            category.courses.map((course) => {
+                          {isFetchingCategory ? (
+                            <div className="p-3 text-center text-xs text-zinc-400 animate-pulse">
+                              Loading programs...
+                            </div>
+                          ) : activeCategoryCourses.length > 0 ? (
+                            activeCategoryCourses.map((course) => {
                               const iconUrl =
                                 course.courseCard?.courseIcon?.thumbnail ||
                                 course.courseCard?.courseIcon?.url;

@@ -97,7 +97,7 @@ export default function SearchableSelect({
                     setIsOpen(true);
                 }}
                 className={`
-                    relative w-full cursor-pointer rounded-md bg-surface py-2 text-xs ${icon ? 'pl-9' : 'pl-3'} pr-8 text-left border
+                    relative w-full h-10 flex items-center cursor-pointer rounded-md bg-surface text-xs sm:text-sm ${icon ? 'pl-9' : 'pl-3'} pr-8 text-left border
                     focus:outline-none focus:ring-2 focus:ring-prime/10 focus:border-prime
                     transition-all duration-200
                     ${isOpen ? 'ring-2 ring-prime/10 border-prime' : (value ? 'border-border-muted text-foreground' : 'border-border-muted text-text-muted hover:border-prime/50')}

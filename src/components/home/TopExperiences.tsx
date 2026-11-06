@@ -18,21 +18,21 @@ export interface TopExperiencesProps {
 export default function TopExperiences({ className = '' }: TopExperiencesProps) {
     const { openModal } = useLeadModal();
 
-    const handleConsultation = () => {
-        openModal({
-            formTitle: 'Schedule a Free Consultation',
-            formDescription:
-                'Discuss your certification roadmap, exam requirements, and batch availability with a Senior Learning Advisor.',
-            defaultValues: {
-                leadSource: 'home-top-experiences',
-            },
-            config: {
-                showCourse: true,
-                showMessage: false,
-                purpose: true,
-            },
-        });
-    };
+    // const handleConsultation = () => {
+    //     openModal({
+    //         formTitle: 'Schedule a Free Consultation',
+    //         formDescription:
+    //             'Discuss your certification roadmap, exam requirements, and batch availability with a Senior Learning Advisor.',
+    //         defaultValues: {
+    //             leadSource: 'home-top-experiences',
+    //         },
+    //         config: {
+    //             showCourse: true,
+    //             showMessage: false,
+    //             purpose: true,
+    //         },
+    //     });
+    // };
 
     return (
         <section
@@ -292,7 +292,7 @@ export default function TopExperiences({ className = '' }: TopExperiencesProps) 
                         </div>
 
                         {/* Action Button */}
-                        <div className="mt-5 sm:mt-7 flex justify-center lg:justify-start">
+                        {/* <div className="mt-5 sm:mt-7 flex justify-center lg:justify-start">
                             <button
                                 type="button"
                                 onClick={handleConsultation}
@@ -301,7 +301,7 @@ export default function TopExperiences({ className = '' }: TopExperiencesProps) 
                                 <span>Get Free Career Advice</span>
                                 <ArrowRight className="w-4 h-4 text-white" />
                             </button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 

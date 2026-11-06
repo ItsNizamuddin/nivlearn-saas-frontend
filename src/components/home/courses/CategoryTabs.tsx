@@ -95,9 +95,9 @@ export default function CategoryTabs({
                             key={cat.slug}
                             type="button"
                             onClick={() => onSelectCategory(cat.slug)}
-                            className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-md text-xs sm:text-sm transition-all cursor-pointer ${isSelected
-                                    ? 'bg-surface text-prime-dark font-bold border border-prime-yellow ring-1 ring-prime-yellow shadow-xs'
-                                    : 'bg-surface text-text-muted font-medium hover:text-prime-dark hover:bg-sec-prime border border-border-muted'
+                            className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-md text-xs sm:text-sm font-semibold transition-colors duration-150 cursor-pointer outline-none ${isSelected
+                                    ? 'bg-surface text-prime-dark border-2 border-prime-yellow shadow-xs'
+                                    : 'bg-surface text-text-muted hover:text-prime-dark hover:border-slate-300 hover:bg-sec-prime/40 border-2 border-border-muted/80'
                                 }`}
                         >
                             <span className="capitalize">{cat.name}</span>

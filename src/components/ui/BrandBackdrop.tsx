@@ -16,17 +16,21 @@ const TONES = {
 
 /** `lg` for full-width heroes, `sm` for cards / banners. */
 const SIZES = {
-  lg: { className: '-right-20 w-72 md:-right-24 md:w-md', sizes: '(min-width: 768px) 28rem, 18rem' },
+  lg: { className: '-right-20 w-72 md:-right-20 md:w-md', sizes: '(min-width: 768px) 28rem, 18rem' },
   sm: { className: '-right-12 w-56 md:-right-14 md:w-64', sizes: '16rem' },
 } as const;
 
 export default function BrandBackdrop({
   tone = 'light',
   size = 'lg',
+  top = 'top-1/2',
+  translateY = '-translate-y-1/2',
   className,
 }: {
   tone?: keyof typeof TONES;
   size?: keyof typeof SIZES;
+  top?: string;
+  translateY?: string;
   /** Extra classes, e.g. visibility (`hidden md:block`). Don't set position/width here. */
   className?: string;
 }) {
@@ -37,7 +41,9 @@ export default function BrandBackdrop({
       aria-hidden
       sizes={SIZES[size].sizes}
       className={cn(
-        'pointer-events-none absolute top-1/2 h-auto -translate-y-1/2 select-none',
+        'pointer-events-none absolute h-auto select-none',
+        top,
+        translateY,
         SIZES[size].className,
         TONES[tone],
         className,
