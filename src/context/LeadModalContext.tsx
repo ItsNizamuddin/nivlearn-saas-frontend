@@ -35,6 +35,7 @@ export interface LeadModalConfig {
     /** Page-specific questions (sent as customFields). */
     extraFields?: LeadFormExtraField[];
     submitButtonText?: string;
+    downloadUrl?: string;
     onSuccess?: () => void;
     source?: string;
     courseSlug?: string;
@@ -81,7 +82,7 @@ export function LeadModalProvider({
 
 export function useLeadModal() {
     const context = useContext(LeadModalContext);
-    if (context === undefined) {
+    if (!context) {
         throw new Error('useLeadModal must be used within a LeadModalProvider');
     }
     return context;

@@ -60,8 +60,8 @@ export default function LegalPage({ slug, children }: { slug: LegalSlug; childre
           <h1 className="border-b border-border-muted pb-5 text-3xl font-bold tracking-tight text-prime-dark sm:text-4xl">
             {doc.title}
           </h1>
-          {/* Trusted, static content from src/content/legal.ts */}
-          <div className="rich-text mt-6" dangerouslySetInnerHTML={{ __html: doc.html }} />
+          {/* Trusted, static content from src/content/legal.ts styled with rich-text & skilldeck-rich-text */}
+          <div className="rich-text skilldeck-rich-text mt-6" dangerouslySetInnerHTML={{ __html: doc.html }} />
           {children}
         </article>
       </div>

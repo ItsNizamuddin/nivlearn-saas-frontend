@@ -22,7 +22,7 @@ const envSchema = z.object({
     .string()
     .default('')
     .transform((val) => val?.trim().replace(/^['"]|['"]$/g, '') || ''),
-  NEXT_TURNSTILE_SITE_KEY: z
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: z
     .string()
     .default('')
     .transform((val) => val?.trim().replace(/^['"]|['"]$/g, '') || ''),
@@ -50,4 +50,3 @@ if (!parsedEnv.success) {
 }
 
 export const env = parsedEnv.data;
-

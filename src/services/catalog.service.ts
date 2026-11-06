@@ -234,9 +234,11 @@ export interface CourseDetail {
       organization?: string;
     };
   };
-  syllabus_content?: {
-    syllabus_accordian?: Array<{ title: string; des: string; duration?: string; _id?: string }>;
-  };
+  syllabus_content?:
+    | {
+        syllabus_accordian?: Array<{ title: string; des?: string; value?: string; duration?: string; _id?: string }>;
+      }
+    | Array<{ title: string; value?: string; des?: string; duration?: string; _id?: string }>;
   career?: {
     career_title?: string;
     career_description?: string;
@@ -278,7 +280,10 @@ export interface CourseDetail {
     [key: string]: unknown;
   }>;
   leadmagnet?: Array<{
-    broucher?: { url?: string; alt?: string };
+    name?: string;
+    uid?: string;
+    broucher?: { url?: string; alt?: string; thumbnail?: string };
+    certificate?: { url?: string; alt?: string; thumbnail?: string };
   }>;
   internalSection?: { title?: string; value?: string };
   bottomSection?: { title?: string; value?: string };

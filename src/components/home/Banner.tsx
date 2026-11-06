@@ -97,17 +97,19 @@ export default function Banner() {
 
     function triggerForm() {
         openModal({
-            formTitle: 'Corporate Training',
+            formTitle: 'Enterprise Team Training',
             formDescription:
-                'Fill out your details to for more details',
+                'Request custom team curriculums, dedicated cohorts, and volume enterprise pricing.',
             defaultValues: {
-                leadSource: 'home-banner',
+                leadSource: 'home-banner-corporate',
                 purpose: 'Corporate Training',
             },
             config: {
                 showCourse: true,
                 showMessage: true,
+                company: true,
             },
+            submitButtonText: 'Request Corporate Proposal',
         });
     }
 
