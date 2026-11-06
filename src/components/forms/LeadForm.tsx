@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { Loader2, Send, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Loader2, ArrowRight, AlertCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
 import LeadFormCourseSelector from './LeadFormCourseSelector';
 import FloatingField from './FloatingField';
 import TurnstileWidget from './TurnstileWidget';
@@ -75,6 +75,7 @@ export default function LeadForm({
         friendEmail: defaultValues.friendEmail || '',
         friendPhone: defaultValues.friendPhone || '',
         pagePath: '',
+        website_hp: '', // Honeypot field for bot trap
         ...defaultValues
     });
 
@@ -88,25 +89,18 @@ export default function LeadForm({
 
     const [extraValues, setExtraValues] = useState<Record<string, string>>(initialExtra);
 
-    useEffect(() => {
-        setExtraValues(initialExtra());
-    }, [initialExtra]);
-
     // Automatically hide visible course selector on course pages while keeping course data attached
     const shouldShowCourseField = isCoursePage ? false : (config.showCourse !== false);
-    const hasManyFields = Boolean(
-        shouldShowCourseField ||
-        config.purpose ||
-        config.company ||
-        config.designation ||
-        config.showMessage !== false
-    );
 
     const hasTurnstileKey = Boolean((process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '').trim());
     const [turnstileToken, setTurnstileToken] = useState<string>(hasTurnstileKey ? '' : 'dev-bypass');
     const [captchaError, setCaptchaError] = useState(false);
     const formLabel = defaultValues.leadSource || 'Lead Form';
     const formId = formLabel.toLowerCase().replace(/\s+/g, '_');
+
+    // Only allow submission when Turnstile verification has succeeded (or when Turnstile is not configured)
+    const isTurnstileReady = !hasTurnstileKey || Boolean(turnstileToken);
+    const isSubmitDisabled = loading || !isTurnstileReady;
 
     useEffect(() => {
         if (!formData.pagePath && typeof window !== 'undefined') {
@@ -169,6 +163,13 @@ export default function LeadForm({
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Enforce Turnstile verification before proceeding
+        if (hasTurnstileKey && !turnstileToken) {
+            setErrorMessage('Security verification in progress. Please wait a moment.');
+            return;
+        }
+
         setLoading(true);
         setErrorMessage(null);
 
@@ -192,6 +193,7 @@ export default function LeadForm({
                 leadSource: formData.leadSource,
                 pagePath: formData.pagePath || (typeof window !== 'undefined' ? window.location.pathname : ''),
                 purpose: formData.purpose,
+                website_hp: formData.website_hp, // Honeypot field
                 country: geo?.country,
                 countryCode: geo?.countryCode,
                 city: geo?.city,
@@ -235,6 +237,7 @@ export default function LeadForm({
                 friendName: '',
                 friendPhone: '',
                 friendEmail: '',
+                website_hp: '',
                 pagePath: typeof window !== 'undefined' ? window.location.pathname : '',
                 ...defaultValues
             });
@@ -263,7 +266,7 @@ export default function LeadForm({
                 <button
                     type="button"
                     onClick={() => setSuccess(false)}
-                    className="px-4 py-2 bg-prime hover:bg-prime-outline text-on-dark font-medium rounded-md shadow-xs transition-colors text-xs sm:text-sm cursor-pointer"
+                    className="px-5 py-2.5 bg-prime-yellow hover:bg-amber-400 text-prime-dark font-bold rounded-xl shadow-xs transition-all text-xs sm:text-sm cursor-pointer"
                 >
                     Submit Another Inquiry
                 </button>
@@ -272,6 +275,23 @@ export default function LeadForm({
     }
 
     const isCompact = layout === 'compact';
+
+    // Resolve contextually relevant submit CTA
+    const sourceStr = (formData.leadSource || '').toLowerCase();
+    const titleStr = (typeof formTitle === 'string' ? formTitle : '').toLowerCase();
+    const isCurriculumIntent = sourceStr.includes('curriculum') || sourceStr.includes('syllabus') || titleStr.includes('curriculum') || titleStr.includes('syllabus');
+    const isCorporateIntent = Boolean(config.company) || sourceStr.includes('corporate') || titleStr.includes('corporate');
+
+    let resolvedButtonText = submitButtonText;
+    if (submitButtonText === 'Submit Inquiry') {
+        if (isCurriculumIntent) {
+            resolvedButtonText = 'Download Syllabus PDF';
+        } else if (isCorporateIntent) {
+            resolvedButtonText = 'Request Team Proposal';
+        } else {
+            resolvedButtonText = 'Request Free Callback';
+        }
+    }
 
     return (
         <div className="bg-surface">
@@ -291,17 +311,31 @@ export default function LeadForm({
 
             <form
                 onSubmit={handleSubmit}
-                className={isCompact ? 'space-y-2' : 'px-4 py-5 space-y-3.5'}
+                className={isCompact ? 'space-y-2.5' : 'px-4 py-5 space-y-3.5'}
             >
+                {/* Honeypot field for bot trap (hidden from legitimate humans, filled by automated bot spiders) */}
+                <div className="absolute -left-[9999px] -top-[9999px] opacity-0 pointer-events-none select-none h-0 w-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+                    <label htmlFor="website_hp">Leave this field blank</label>
+                    <input
+                        type="text"
+                        id="website_hp"
+                        name="website_hp"
+                        value={formData.website_hp}
+                        onChange={handleChange}
+                        tabIndex={-1}
+                        autoComplete="off"
+                    />
+                </div>
+
                 {/* Inline Error Banner */}
                 {errorMessage && (
-                    <div className="p-2.5 rounded-md bg-danger/10 border border-danger/20 text-danger text-xs font-medium flex items-center gap-2 animate-in fade-in duration-200">
+                    <div className="p-2.5 rounded-lg bg-danger/10 border border-danger/20 text-danger text-xs font-medium flex items-center gap-2 animate-in fade-in duration-200">
                         <AlertCircle className="w-4 h-4 shrink-0" />
                         <span>{errorMessage}</span>
                     </div>
                 )}
 
-                {/* Full Name */}
+                {/* Full Name - Always Full Width */}
                 <FloatingField
                     label="Full Name"
                     name="fullName"
@@ -312,31 +346,31 @@ export default function LeadForm({
                     icon={fieldIcons?.fullName}
                 />
 
-                {/* Phone & Email: In a row when multiple fields exist, stacked when short form */}
-                <div className={hasManyFields ? "grid grid-cols-1 sm:grid-cols-2 gap-2.5" : "space-y-2"}>
-                    <FloatingField
-                        label="Phone Number"
-                        name="phone"
-                        type="tel"
-                        required
-                        value={formData.phone}
-                        onChange={handleChange}
-                        dialCode={formData.dialCode}
-                        onDialCodeChange={handleChange}
-                        placeholder="Phone Number"
-                        icon={fieldIcons?.phone}
-                    />
-                    <FloatingField
-                        label="Email Address"
-                        name="email"
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="Email Address"
-                        icon={fieldIcons?.email}
-                    />
-                </div>
+                {/* Phone Number - Full Width for international prefix and unobstructed typing */}
+                <FloatingField
+                    label="Phone Number"
+                    name="phone"
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={handleChange}
+                    dialCode={formData.dialCode}
+                    onDialCodeChange={handleChange}
+                    placeholder="Phone Number"
+                    icon={fieldIcons?.phone}
+                />
+
+                {/* Email Address - Full Width */}
+                <FloatingField
+                    label="Email Address"
+                    name="email"
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email Address"
+                    icon={fieldIcons?.email}
+                />
 
                 {/* Course & Purpose Selection: paired in a row when both exist */}
                 {shouldShowCourseField && config.purpose ? (
@@ -401,7 +435,7 @@ export default function LeadForm({
 
                 {/* Corporate Fields */}
                 {(config.company || config.designation) && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {config.company && (
                             <FloatingField
                                 label="Company Name"
@@ -438,7 +472,7 @@ export default function LeadForm({
                         placeholder={field.placeholder}
                         options={field.options}
                         rows={2}
-                        minHeight={isCompact ? 65 : 85}
+                        minHeight={isCompact ? 60 : 75}
                     />
                 ))}
 
@@ -451,15 +485,15 @@ export default function LeadForm({
                         value={formData.message}
                         onChange={handleChange}
                         rows={2}
-                        minHeight={isCompact ? 65 : 85}
+                        minHeight={isCompact ? 60 : 75}
                         placeholder="Tell us about your learning goals or team requirements..."
                         icon={fieldIcons?.message}
                     />
                 )}
 
-                {/* Turnstile Captcha (Invisible Mode - zero visual obstruction) */}
+                {/* Turnstile Captcha (Invisible Mode - zero visual obstruction, presents challenge only if suspicious) */}
                 {hasTurnstileKey && (
-                    <div className="h-0 w-0 overflow-hidden opacity-0 pointer-events-none">
+                    <div className="flex justify-center">
                         <TurnstileWidget
                             size="invisible"
                             onVerify={(token) => {
@@ -480,30 +514,42 @@ export default function LeadForm({
                     </p>
                 )}
 
-                {/* Submit Button */}
+                {/* Submit Button - Disabled until Turnstile verification passes */}
                 <button
                     type="submit"
-                    disabled={loading}
-                    className="w-full py-2.5 px-3 bg-prime hover:bg-prime-outline text-on-dark font-semibold rounded-md shadow-xs transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed group text-xs sm:text-sm cursor-pointer"
+                    disabled={isSubmitDisabled}
+                    className="w-full py-3 px-4 bg-prime-yellow hover:bg-prime-yellow/90 text-white font-extrabold rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md group text-xs sm:text-sm cursor-pointer"
                 >
                     {loading ? (
                         <>
                             <Loader2 className="w-4 h-4 animate-spin" />
                             <span>Submitting...</span>
                         </>
+                    ) : !isTurnstileReady ? (
+                        <>
+                            <Loader2 className="w-4 h-4 animate-spin text-prime-dark/70" />
+                            <span>Verifying Security...</span>
+                        </>
                     ) : (
                         <>
-                            <span>{submitButtonText}</span>
-                            <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                            <span>{resolvedButtonText}</span>
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                         </>
                     )}
                 </button>
 
-                <p className="text-center text-[11px] text-text-muted pt-1">
-                    By submitting, you agree to NivLearn&apos;s{' '}
-                    <Link href="/privacy-policy" className="text-prime underline-offset-2 hover:underline">Privacy Policy</Link> and{' '}
-                    <Link href="/terms-and-conditions" className="text-prime underline-offset-2 hover:underline">Terms</Link>.
-                </p>
+                {/* Privacy and Trust Reassurance */}
+                <div className="pt-1 text-center space-y-1">
+                    <div className="flex items-center justify-center gap-1.5 text-[11px] text-text-muted">
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span>100% Privacy Guaranteed • Zero Spam</span>
+                    </div>
+                    <p className="text-center text-[10.5px] text-text-muted/80">
+                        By submitting, you agree to NivLearn&apos;s{' '}
+                        <Link href="/privacy-policy" className="text-prime underline-offset-2 hover:underline">Privacy Policy</Link> and{' '}
+                        <Link href="/terms-and-conditions" className="text-prime underline-offset-2 hover:underline">Terms</Link>.
+                    </p>
+                </div>
             </form>
         </div>
     );

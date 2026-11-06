@@ -54,8 +54,10 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-title" content="NivLearn" />
         <link rel="preconnect" href="https://cloud-storage.skilldeck.net" crossOrigin="" />
         <link rel="dns-prefetch" href="https://cloud-storage.skilldeck.net" />
-
-
+        <link
+          rel="stylesheet"
+          href="https://cloud-storage.skilldeck.net/static/editor/skilldeck-rich-text.min.css"
+        />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <LeadModalProvider courses={courseOptions}>

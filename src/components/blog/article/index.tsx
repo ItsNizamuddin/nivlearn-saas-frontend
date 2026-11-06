@@ -108,13 +108,13 @@ export default function BlogArticle({ post, recent, categories, related }: BlogA
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-14">
           <div>
-            {/* HTML is sanitized in blog.service before it gets here. */}
-            <article className="rich-text" dangerouslySetInnerHTML={{ __html: post.body }} />
+            {/* HTML is sanitized in blog.service before it gets here, styled with rich-text & skilldeck-rich-text */}
+            <article className="rich-text skilldeck-rich-text" dangerouslySetInnerHTML={{ __html: post.body }} />
 
             {post.sections.map((section, i) => (
               <section key={i} className="mt-10 border-t border-border-muted/70 pt-8">
                 {section.title && <h2 className="mb-4 text-2xl font-bold text-prime-dark">{section.title}</h2>}
-                <div className="rich-text" dangerouslySetInnerHTML={{ __html: section.html }} />
+                <div className="rich-text skilldeck-rich-text" dangerouslySetInnerHTML={{ __html: section.html }} />
               </section>
             ))}
 

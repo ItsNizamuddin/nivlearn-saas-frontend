@@ -54,7 +54,7 @@ export default function FloatingField({
     const containerClasses = `relative group ${className}`;
 
     // Explicit h-10 ensures equal height across all text/email/number inputs
-    const inputBaseClasses = `w-full ${icon ? 'pl-9 pr-3' : 'px-3'} h-10 bg-surface border border-border-muted rounded-md text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs focus:outline-none focus:border-prime focus:ring-2 focus:ring-prime/10 transition-all flex items-center`;
+    const inputBaseClasses = `w-full ${icon ? 'pl-9 pr-3' : 'px-3'} h-10 bg-surface border border-border-muted rounded-lg text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs focus:outline-none focus:border-prime focus:ring-2 focus:ring-prime/10 transition-all flex items-center`;
     const activePlaceholder = placeholder || label;
 
     const renderIcon = (alignTop = false) => icon && (
@@ -94,12 +94,12 @@ export default function FloatingField({
                         rows={rows}
                         placeholder={activePlaceholder}
                         style={{ minHeight: `${minHeight}px` }}
-                        className={`w-full ${icon ? 'pl-9 pr-3' : 'px-3'} py-2 bg-surface border border-border-muted rounded-md text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs focus:outline-none focus:border-prime focus:ring-2 focus:ring-prime/10 transition-all resize-none`}
+                        className={`w-full ${icon ? 'pl-9 pr-3' : 'px-3'} py-2 bg-surface border border-border-muted rounded-lg text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs focus:outline-none focus:border-prime focus:ring-2 focus:ring-prime/10 transition-all resize-none`}
                     />
                 </>
             ) : type === 'tel' && dialCode !== undefined ? (
                 /* Phone Field with Country Flag & Dial Code prefix, exactly matching h-10 height */
-                <div className="flex w-full h-10 rounded-md border border-border-muted bg-surface focus-within:border-prime focus-within:ring-2 focus-within:ring-prime/10 transition-all">
+                <div className="flex w-full h-10 rounded-lg border border-border-muted bg-surface focus-within:border-prime focus-within:ring-2 focus-within:ring-prime/10 transition-all">
                     <CountryCodePicker
                         value={dialCode}
                         onChange={(newDial) => {
@@ -125,7 +125,7 @@ export default function FloatingField({
                         pattern={pattern}
                         maxLength={maxLength}
                         title={title}
-                        className="w-full h-full min-w-0 px-2 sm:px-2.5 text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs bg-transparent focus:outline-none rounded-r-md"
+                        className="w-full h-full min-w-0 px-2.5 sm:px-3 text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs bg-transparent focus:outline-none rounded-r-lg"
                     />
                 </div>
             ) : (

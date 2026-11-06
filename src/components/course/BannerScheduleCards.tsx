@@ -11,6 +11,13 @@ interface BannerScheduleCardsProps {
   courseTitle: string;
 }
 
+function formatSingleDate(dateString?: string): string {
+  if (!dateString) return '';
+  const d = new Date(dateString);
+  if (isNaN(d.getTime())) return dateString;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
 function formatScheduleDate(startsAt: string, endsAt?: string): string {
   if (!startsAt) return 'Flexible Batches Available';
   const start = new Date(startsAt);
@@ -49,12 +56,24 @@ function formatScheduleTime(startsAt: string, endsAt?: string, timezone?: string
 }
 
 export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerScheduleCardsProps) {
-  const { schedules, loadingSchedules } = useSchedules(courseSlug, { limit: 2 });
+  const { schedules, pagination, loadingSchedules } = useSchedules(courseSlug, { limit: 50 });
   const { openModal } = useLeadModal();
 
   const handleEnrollClick = (schedule?: ScheduleData) => {
+    const rawCommence =
+      schedule?.commenceDate ||
+      schedule?.commencedDate ||
+      schedule?.commencementDate ||
+      schedule?.commencedAt ||
+      schedule?.commence_date;
+    const commenceFormatted = formatSingleDate(rawCommence);
+
+    const dateLabel = schedule?.isFlexibleSchedule
+      ? `Flexible Dates / Student's Choice${commenceFormatted ? ` (Starts from ${commenceFormatted})` : ''}`
+      : formatScheduleDate(schedule?.startsAt || '', schedule?.endsAt);
+
     const batchInfo = schedule
-      ? `${schedule.batchType ? `${schedule.batchType.toUpperCase()} ` : ''}${formatScheduleDate(schedule.startsAt, schedule.endsAt)} (${schedule.code || 'BATCH'})`
+      ? `${schedule.batchType ? `${schedule.batchType.toUpperCase()} ` : ''}${dateLabel} (${schedule.code || 'BATCH'})`
       : 'Upcoming Batch';
 
     openModal({
@@ -159,7 +178,7 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
           </div>
         </div>
         <span className="text-[11px] font-semibold text-prime bg-prime/10 px-2 py-0.5 rounded-full">
-          {activeSchedules.length} Available
+          {pagination?.total || activeSchedules.length} Available
         </span>
       </div>
 
@@ -175,6 +194,14 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
           const tz = schedule.country?.timeZone || 'Asia/Kolkata';
           const dateRange = formatScheduleDate(schedule.startsAt, schedule.endsAt);
           const timeRange = formatScheduleTime(schedule.startsAt, schedule.endsAt, tz);
+
+          const rawCommence =
+            schedule.commenceDate ||
+            schedule.commencedDate ||
+            schedule.commencementDate ||
+            schedule.commencedAt ||
+            schedule.commence_date;
+          const commenceDateFormatted = formatSingleDate(rawCommence);
 
           const isFast = schedule.enableRecommend || schedule.fillingFast || idx === 0;
 
@@ -215,7 +242,20 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
                 <div className="flex items-start gap-2">
                   <Calendar className="w-3.5 h-3.5 text-prime shrink-0 mt-0.5" />
                   <div className="min-w-0">
-                    <p className="text-xs font-bold text-prime-dark truncate">{dateRange}</p>
+                    {schedule.isFlexibleSchedule ? (
+                      <div>
+                        <p className="text-xs font-bold text-prime-dark">
+                          Flexible Dates / Student&apos;s Choice
+                        </p>
+                        {commenceDateFormatted && (
+                          <span className="text-[11px] font-semibold text-emerald-700 block mt-0.5">
+                            Starts from: {commenceDateFormatted}
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <p className="text-xs font-bold text-prime-dark truncate">{dateRange}</p>
+                    )}
                     {schedule.totalSessions && (
                       <span className="text-[11px] text-slate-500 font-medium">
                         {schedule.totalSessions} Sessions
@@ -225,7 +265,7 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
                   </div>
                 </div>
 
-                {timeRange && (
+                {!schedule.isFlexibleSchedule && timeRange && (
                   <div className="flex items-center gap-2 pt-1 border-t border-slate-100 text-[11px] text-slate-600 font-medium">
                     <Clock className="w-3 h-3 text-slate-400 shrink-0" />
                     <span className="truncate">{timeRange}</span>
@@ -266,11 +306,24 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
         })}
       </div>
 
-      <div className="pt-1">
+      <div className="pt-1 space-y-1">
+        {(pagination?.total || activeSchedules.length) > 2 && (
+          <button
+            type="button"
+            onClick={handleEnquireCustom}
+            className="w-full text-center text-xs font-bold text-prime hover:text-prime-dark transition-colors flex items-center justify-center gap-1 cursor-pointer py-0.5"
+          >
+            <span>
+              +{(pagination?.total || activeSchedules.length) - 2} more upcoming{' '}
+              {(pagination?.total || activeSchedules.length) - 2 === 1 ? 'batch' : 'batches'} available
+            </span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        )}
         <button
           type="button"
           onClick={handleEnquireCustom}
-          className="w-full text-center text-xs text-prime hover:text-prime-dark font-semibold py-1 transition-colors cursor-pointer"
+          className="w-full text-center text-xs text-slate-500 hover:text-prime transition-colors cursor-pointer"
         >
           Need weekend fast-track or custom dates? Request cohort &rarr;
         </button>

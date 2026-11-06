@@ -16,6 +16,8 @@ interface TurnstileRenderOptions {
 interface TurnstileApi {
     render: (container: HTMLElement, options: TurnstileRenderOptions) => string;
     remove: (widgetId: string) => void;
+    execute: (container?: HTMLElement | string) => void;
+    reset: (widgetId?: string) => void;
 }
 
 declare global {
@@ -57,6 +59,13 @@ export default function TurnstileWidget({
         onExpireRef.current = onExpire;
     }, [onVerify, onError, onExpire]);
 
+    // Check if script already exists on window (e.g. from previous renders)
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.turnstile && !scriptLoaded) {
+            setScriptLoaded(true);
+        }
+    }, [scriptLoaded]);
+
     useEffect(() => {
         if (!isInteracted || !scriptLoaded || !SITE_KEY) return;
 
@@ -66,7 +75,7 @@ export default function TurnstileWidget({
                     widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
                         sitekey: SITE_KEY,
                         size,
-                        appearance: size === 'invisible' ? 'interaction-only' : 'always',
+                        appearance: 'always',
                         callback: (token: string) => {
                             if (onVerifyRef.current) onVerifyRef.current(token);
                         },
@@ -106,7 +115,7 @@ export default function TurnstileWidget({
         <div>
             <Script
                 src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-                strategy="lazyOnload"
+                strategy="afterInteractive"
                 onLoad={() => setScriptLoaded(true)}
             />
             <div ref={turnstileRef} />

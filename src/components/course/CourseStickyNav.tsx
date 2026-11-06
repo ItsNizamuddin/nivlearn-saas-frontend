@@ -111,11 +111,16 @@ export default function CourseStickyNav({
     }
   };
 
+  const brochureUrl =
+    course?.leadmagnet?.[0]?.broucher?.url ||
+    (course?.leadmagnet?.[0] as unknown as { brochure?: { url?: string } })?.brochure?.url;
+
   const handleEnquire = () => {
     openModal({
       formTitle: course?.course_title ? `Enquire About ${course.course_title}` : 'Enquire About Course',
       formDescription: `Get batch schedules, fee structure, and syllabus details${course?.course_title ? ` for ${course.course_title}` : ''
         }.`,
+      downloadUrl: brochureUrl,
       defaultValues: {
         leadSource: course?.slug ? `course-stickynav-${course.slug}` : 'course-stickynav',
         courseSlug: course?.slug,
