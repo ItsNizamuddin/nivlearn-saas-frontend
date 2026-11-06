@@ -172,10 +172,11 @@ export interface CategoryDetail {
   salaryImages?: string[];
   accreditionImages?: Array<{ url: string; alt?: string; thumbnail?: string }>;
   accredation?: Array<{ url: string; alt?: string; thumbnail?: string }>;
-  faqs?: Array<{ question: string; answer: string; _id?: string }>;
+  faqs?: Array<{ question?: string; answer?: string; title?: string; value?: string; _id?: string }>;
   internalSection?: { title?: string; value?: string };
   bottomSection?: { title?: string; value?: string };
   courses?: RawCourse[];
+  image?: { url: string; alt?: string; thumbnail?: string };
 }
 
 export interface CourseDetail {

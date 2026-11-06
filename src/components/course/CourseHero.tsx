@@ -186,7 +186,7 @@ export default function CourseHero({
               <a
                 href="#schedules"
                 onClick={(e) => smoothScrollTo('#schedules', e)}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-secondary text-white bg-secondary hover:text-white font-bold text-xs sm:text-sm px-6 py-2.5 rounded-lg transition-all cursor-pointer shadow-xs active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-prime text-white bg-prime hover:bg-prime-dark hover:border-prime-dark font-bold text-xs sm:text-sm px-6 py-2.5 rounded-lg transition-colors cursor-pointer shadow-xs active:scale-95"
               >
                 View Schedules
               </a>

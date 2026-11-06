@@ -155,7 +155,7 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
           <button
             type="button"
             onClick={handleEnquireCustom}
-            className="w-full py-2.5 px-4 bg-prime-yellow hover:bg-prime-yellow/90 active:scale-98 text-white font-bold text-xs sm:text-sm rounded-lg transition-all cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
+            className="w-full py-2.5 px-4 bg-prime-yellow hover:bg-amber-400 active:scale-98 text-prime-dark font-extrabold text-xs sm:text-sm rounded-lg transition-colors cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
           >
             <span>Enquire Next Batch</span>
             <ChevronRight className="w-4 h-4" />
@@ -295,7 +295,7 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
                 <button
                   type="button"
                   onClick={() => handleEnrollClick(schedule)}
-                  className="inline-flex items-center gap-1 bg-prime-yellow hover:bg-prime-yellow/90 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg transition-all cursor-pointer shadow-xs"
+                  className="inline-flex items-center gap-1 bg-prime-yellow hover:bg-amber-400 active:scale-95 text-prime-dark font-extrabold text-xs px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer shadow-xs"
                 >
                   <span>Enroll Now</span>
                   <ChevronRight className="w-3.5 h-3.5" />

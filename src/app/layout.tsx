@@ -54,10 +54,18 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-title" content="NivLearn" />
         <link rel="preconnect" href="https://cloud-storage.skilldeck.net" crossOrigin="" />
         <link rel="dns-prefetch" href="https://cloud-storage.skilldeck.net" />
-        <link
-          rel="stylesheet"
-          href="https://cloud-storage.skilldeck.net/static/editor/skilldeck-rich-text.min.css"
+        {/* Asynchronously loads the live CDN stylesheet without blocking initial render */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href='https://cloud-storage.skilldeck.net/static/editor/skilldeck-rich-text.min.css';document.head.appendChild(l);})()`,
+          }}
         />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://cloud-storage.skilldeck.net/static/editor/skilldeck-rich-text.min.css"
+          />
+        </noscript>
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <LeadModalProvider courses={courseOptions}>
