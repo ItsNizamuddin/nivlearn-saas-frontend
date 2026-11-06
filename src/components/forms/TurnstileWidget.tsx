@@ -5,11 +5,12 @@ import { useEffect, useRef, useState } from 'react';
 
 interface TurnstileRenderOptions {
     sitekey: string;
-    size: 'compact' | 'normal';
+    size?: 'compact' | 'normal' | 'flexible' | 'invisible';
+    appearance?: 'always' | 'execute' | 'interaction-only';
     callback: (token: string) => void;
-    'error-callback': () => void;
-    'expired-callback': () => void;
-    theme: 'light';
+    'error-callback'?: () => void;
+    'expired-callback'?: () => void;
+    theme?: 'light' | 'dark' | 'auto';
 }
 
 interface TurnstileApi {
@@ -27,6 +28,7 @@ interface TurnstileWidgetProps {
     onVerify: (token: string) => void;
     onError?: () => void;
     onExpire?: () => void;
+    size?: 'compact' | 'normal' | 'flexible' | 'invisible';
     isInteracted?: boolean;
 }
 
@@ -36,6 +38,7 @@ export default function TurnstileWidget({
     onVerify,
     onError,
     onExpire,
+    size = 'invisible',
     isInteracted = true
 }: TurnstileWidgetProps) {
     const turnstileRef = useRef<HTMLDivElement>(null);
@@ -62,7 +65,8 @@ export default function TurnstileWidget({
                 try {
                     widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
                         sitekey: SITE_KEY,
-                        size: 'normal',
+                        size,
+                        appearance: size === 'invisible' ? 'interaction-only' : 'always',
                         callback: (token: string) => {
                             if (onVerifyRef.current) onVerifyRef.current(token);
                         },
@@ -92,7 +96,7 @@ export default function TurnstileWidget({
                 }
             }
         };
-    }, [isInteracted, scriptLoaded]);
+    }, [isInteracted, scriptLoaded, size]);
 
     if (!SITE_KEY) {
         return null;
@@ -109,4 +113,3 @@ export default function TurnstileWidget({
         </div>
     );
 }
-

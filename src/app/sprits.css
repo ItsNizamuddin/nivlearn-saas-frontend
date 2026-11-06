@@ -565,3 +565,639 @@
   height: 34px;
   background: url(/sprites/home.webp) -332px -64px;
 }
+
+/* Added from NevoLearn for Category and Course Pages */
+.star-rating-sprite {
+  width: 80px;
+  height: 20px;
+  background: url("/course/banner_sprites.webp") -130px -70px;
+}
+
+.fb-rating-sprite {
+  width: 100px;
+  height: 40px;
+  background: url("/course/banner_sprites.webp") -130px -10px;
+}
+
+.google-rating-sprite {
+  width: 100px;
+  height: 40px;
+  background: url("/course/banner_sprites.webp") -10px -70px;
+}
+
+.tp-rating-sprite {
+  width: 100px;
+  height: 40px;
+  background: url("/course/banner_sprites.webp") -10px -10px;
+}
+
+.amazon-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -5px -186px;
+}
+
+.accenture-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -115px -246px;
+}
+
+.amd-sprite {
+  width: 100px;
+  height: 51px;
+  background: url("/course/company_sprites.webp") -5px -5px;
+}
+
+.kandradigital-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -225px -246px;
+}
+
+.cognizant-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -336px -5px;
+}
+
+.tcs-sprite {
+  width: 101px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -115px -5px;
+}
+
+.intel-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -115px -186px;
+}
+
+.ibm-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -226px -125px;
+}
+
+.ai-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -226px -65px;
+}
+
+.wellsfargo-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -226px -5px;
+}
+
+.mindtree-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -115px -126px;
+}
+
+.kandrafoods-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -5px -246px;
+}
+
+.infosys-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -5px -126px;
+}
+
+.wipro-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -115px -66px;
+}
+
+.vlsifirst-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -5px -66px;
+}
+
+.iquanti-sprite {
+  width: 100px;
+  height: 20px;
+  background: url("/course/corporate_sprites.webp") -251px -156px;
+}
+
+.microsoft-sprite {
+  width: 100px;
+  height: 50px;
+  background: url("/course/company_sprites.webp") -225px -186px;
+}
+
+.redbus-sprite {
+  width: 101px;
+  height: 61px;
+  background: url("/course/corporate_sprites.webp") -130px -10px;
+}
+
+.bigbasket-sprite {
+  width: 100px;
+  height: 25px;
+  background: url("/course/corporate_sprites.webp") -251px -111px;
+}
+
+.twitter-sprite {
+  width: 100px;
+  height: 100px;
+  background: url("/course/corporate_sprites.webp") -10px -10px;
+}
+
+.facebook-sprite {
+  width: 26px;
+  height: 26px;
+  background: url("/Footer/footer_sprites.webp") -10px -60px;
+}
+
+.pay-sprite {
+  width: 145px;
+  height: 30px;
+  background: url("/Footer/footer_sprites.webp") -10px -10px;
+}
+
+.instagram-sprite {
+  width: 26px;
+  height: 26px;
+  background: url("/Footer/footer_sprites.webp") -56px -60px;
+}
+
+.linkedin-sprite {
+  width: 26px;
+  height: 26px;
+  background: url("/Footer/footer_sprites.webp") -102px -60px;
+}
+
+.australia-sprite {
+  width: 20px;
+  height: 20px;
+  background: url("/Footer/footer_sprites.webp") -175px -10px;
+}
+
+.us-sprite {
+  width: 20px;
+  height: 20px;
+  background: url("/Footer/footer_sprites.webp") -175px -50px;
+}
+
+.india-sprite {
+  width: 20px;
+  height: 20px;
+  background: url("/Footer/footer_sprites.webp") -175px -90px;
+}
+
+.uk-sprite {
+  width: 20px;
+  height: 20px;
+  background: url("/Footer/footer_sprites.webp") -10px -152px;
+}
+
+.malaysia-sprite {
+  width: 20px;
+  height: 20px;
+  background: url("/Footer/footer_sprites.webp") -50px -152px;
+}
+
+.singapore-sprite {
+  width: 20px;
+  height: 20px;
+  background: url("/Footer/footer_sprites.webp") -90px -152px;
+}
+
+.twitter-footer-sprite {
+  width: 26px;
+  height: 26px;
+  background: url("/Footer/footer_sprites.webp") -10px -106px;
+}
+
+.whatsapp-sprite {
+  width: 26px;
+  height: 26px;
+  background: url("/Footer/footer_sprites.webp") -56px -106px;
+}
+
+.youtube-sprite {
+  width: 26px;
+  height: 26px;
+  background: url("/Footer/footer_sprites.webp") -102px -106px;
+}
+
+.simpliaxis-sprite {
+  width: 100px;
+  height: 30px;
+  background: url("/course/companies_sprites.webp") -10px -10px;
+}
+
+.simplilearn-sprite {
+  width: 100px;
+  height: 30px;
+  background: url("/course/companies_sprites.webp") -10px -60px;
+}
+
+.money-back {
+  width: 40px;
+  height: 50px;
+  background: url("/cart/cartsprites.webp") -70px -60px;
+  display: inline-block;
+}
+
+.protected-ssl {
+  width: 45px;
+  height: 50px;
+  background: url("/cart/cartsprites.webp") -10px -60px;
+  display: inline-block;
+  margin: 0rem 1rem;
+}
+
+.safe-checkout {
+  width: 140px;
+  height: 50px;
+  background: url("/cart/cartsprites.webp") -10px -10px;
+  display: inline-block;
+  margin: 0rem 1rem;
+}
+
+.bg-australia {
+  width: 31px;
+  height: 20px;
+  background: url("/sprites/footer.webp") -130px -71px;
+}
+
+.bg-card {
+  width: 35px;
+  height: 25px;
+  background: url("/sprites/footer.webp") -10px -115px;
+}
+
+.bg-footerlogo {
+  width: 218px;
+  height: 41px;
+  background: url("/sprites/footer.webp") -10px -10px;
+}
+
+.bg-gpay {
+  width: 40px;
+  height: 24px;
+  background: url("/sprites/footer.webp") -10px -71px;
+}
+
+.bg-india {
+  width: 28px;
+  height: 20px;
+  background: url("/sprites/footer.webp") -114px -115px;
+}
+
+.bg-paypal {
+  width: 40px;
+  height: 24px;
+  background: url("/sprites/footer.webp") -70px -71px;
+}
+
+.bg-uk {
+  width: 29px;
+  height: 20px;
+  background: url("/sprites/footer.webp") -181px -71px;
+}
+
+.bg-usa {
+  width: 29px;
+  height: 20px;
+  background: url("/sprites/footer.webp") -65px -115px;
+}
+
+.bg-corporatetraining {
+  width: 172px;
+  height: 144px;
+  background: url("/sprites/course.webp") -10px -10px;
+}
+
+.bg-enrolled1 {
+  width: 91px;
+  height: 30px;
+  background: url("/sprites/course.webp") -10px -406px;
+}
+
+.bg-facebook {
+  width: 21px;
+  height: 20px;
+  background: url("/sprites/course.webp") -436px -310px;
+}
+
+.bg-google {
+  width: 21px;
+  height: 20px;
+  background: url("/sprites/course.webp") -310px -174px;
+}
+
+.bg-schedules {
+  width: 172px;
+  height: 144px;
+  background: url("/sprites/course.webp") -202px -10px;
+}
+
+.bg-trustpilot {
+  width: 22px;
+  height: 20px;
+  background: url("/sprites/course.webp") -394px -310px;
+}
+
+.bg-underline {
+  width: 173px;
+  height: 12px;
+  background: url("/sprites/course.webp") -10px -374px;
+}
+
+.bg-whynevolearn1 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/course.webp") -10px -174px;
+}
+
+.bg-whynevolearn2 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/course.webp") -110px -174px;
+}
+
+.bg-whynevolearn3 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/course.webp") -210px -174px;
+}
+
+.bg-whynevolearn4 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/course.webp") -10px -274px;
+}
+
+.bg-whynevolearn5 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/course.webp") -110px -274px;
+}
+
+.bg-whynevolearn6 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/course.webp") -210px -274px;
+}
+
+.bg-whynevolearn7 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/course.webp") -394px -10px;
+}
+
+.bg-whynevolearn8 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/course.webp") -394px -110px;
+}
+
+.bg-whynevolearn9 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/course.webp") -394px -210px;
+}
+
+.bg-catstats1 {
+  width: 30px;
+  height: 30px;
+  background: url("/sprites/category.webp") -10px -60px;
+}
+
+.bg-catstats2 {
+  width: 31px;
+  height: 30px;
+  background: url("/sprites/category.webp") -10px -10px;
+}
+
+.bg-catstats3 {
+  width: 31px;
+  height: 30px;
+  background: url("/sprites/category.webp") -61px -10px;
+}
+
+.bg-catstats4 {
+  width: 30px;
+  height: 30px;
+  background: url("/sprites/category.webp") -60px -60px;
+}
+
+.bg-whyus5 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/whyus_sprites.webp") -10px -10px;
+}
+
+.bg-whyus6 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/whyus_sprites.webp") -110px -10px;
+}
+
+.bg-whyus7 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/whyus_sprites.webp") -10px -110px;
+}
+
+.bg-whyus8 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/whyus_sprites.webp") -110px -110px;
+}
+
+.bg-whyus9 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/whyus_sprites.webp") -210px -10px;
+}
+
+.bg-whyus1 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/whyus_sprites.webp") -210px -110px;
+}
+
+.bg-whyus2 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/whyus_sprites.webp") -10px -210px;
+}
+
+.bg-whyus3 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/whyus_sprites.webp") -110px -210px;
+}
+
+.bg-whyus4 {
+  width: 80px;
+  height: 80px;
+  background: url("/sprites/whyus_sprites.webp") -210px -210px;
+}
+
+.bg-core1 {
+  width: 46px;
+  height: 46px;
+  background: url("/aboutus/aboutus_sprites.webp") -10px -10px;
+}
+
+.bg-core2 {
+  width: 45px;
+  height: 40px;
+  background: url("/aboutus/aboutus_sprites.webp") -142px -10px;
+}
+
+.bg-core3 {
+  width: 46px;
+  height: 46px;
+  background: url("/aboutus/aboutus_sprites.webp") -76px -10px;
+}
+
+.bg-core4 {
+  width: 45px;
+  height: 46px;
+  background: url("/aboutus/aboutus_sprites.webp") -10px -76px;
+}
+
+.bg-core5 {
+  width: 45px;
+  height: 46px;
+  background: url("/aboutus/aboutus_sprites.webp") -75px -76px;
+}
+
+.bg-in {
+  width: 30px;
+  height: 30px;
+  background: url("/navbar/navbar_sprites.webp") -145px -117px;
+}
+
+.bg-pad {
+  width: 30px;
+  height: 30px;
+  background: url("/navbar/navbar_sprites.webp") -195px -10px;
+}
+
+.bg-placement {
+  width: 30px;
+  height: 30px;
+  background: url("/navbar/navbar_sprites.webp") -195px -60px;
+}
+
+.bg-pmp_min {
+  width: 95px;
+  height: 38px;
+  background: url("/navbar/navbar_sprites.webp") -10px -10px;
+}
+
+.bg-rocket {
+  width: 30px;
+  height: 30px;
+  background: url("/navbar/navbar_sprites.webp") -195px -110px;
+}
+
+.bg-temp {
+  width: 30px;
+  height: 30px;
+  background: url("/navbar/navbar_sprites.webp") -10px -188px;
+}
+
+.bg-trainer {
+  width: 30px;
+  height: 30px;
+  background: url("/navbar/navbar_sprites.webp") -60px -188px;
+}
+
+.bg-web {
+  width: 30px;
+  height: 30px;
+  background: url("/navbar/navbar_sprites.webp") -110px -188px;
+}
+
+.bg-whatsapp {
+  width: 20px;
+  height: 21px;
+  background: url("/navbar/navbar_sprites.webp") -245px -60px;
+}
+
+.bg-yt {
+  width: 30px;
+  height: 30px;
+  background: url("/navbar/navbar_sprites.webp") -160px -188px;
+}
+
+.bg-chat {
+  width: 45px;
+  height: 45px;
+  background: url("/navbar/navbar_sprites.webp") -80px -117px;
+}
+
+.bg-Blog {
+  width: 30px;
+  height: 30px;
+  background: url("/navbar/navbar_sprites.webp") -245px -10px;
+}
+
+.bg-business_min {
+  width: 90px;
+  height: 29px;
+  background: url("/navbar/navbar_sprites.webp") -10px -68px;
+}
+
+.bg-csm_min {
+  width: 50px;
+  height: 51px;
+  background: url("/navbar/navbar_sprites.webp") -125px -10px;
+}
+
+.bg-cspo_min {
+  width: 50px;
+  height: 51px;
+  background: url("/navbar/navbar_sprites.webp") -10px -117px;
+}
+
+.bg-Open_book {
+  width: 38px;
+  height: 38px;
+  background: url("/Blogs/bloginner_sprites.webp") -204px -120px;
+}
+
+.bg-Vector {
+  width: 38px;
+  height: 38px;
+  background: url("/Blogs/bloginner_sprites.webp") -126px -202px;
+}
+
+.bg-Author {
+  width: 38px;
+  height: 38px;
+  background: url("/Blogs/bloginner_sprites.webp") -10px -202px;
+}
+
+.bg-Like {
+  width: 38px;
+  height: 38px;
+  background: url("/Blogs/bloginner_sprites.webp") -68px -202px;
+}
+
+.bg-blogBannertop {
+  width: 174px;
+  height: 172px;
+  background: url("/Blogs/bloginner_sprites.webp") -10px -10px;
+}
+
+.bg-blogBannerbottom {
+  width: 90px;
+  height: 90px;
+  background: url("/Blogs/bloginner_sprites.webp") -204px -10px;
+}

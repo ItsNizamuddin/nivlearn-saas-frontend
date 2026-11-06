@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { LayoutGrid, GraduationCap, ChevronRight } from 'lucide-react';
-import { Category } from './types';
+import { Category, Course } from './types';
 import NavContact from './NavContact';
 
 interface CourseMenuProps {
@@ -88,13 +88,52 @@ export default function CourseMenu({
   onMouseLeave,
 }: CourseMenuProps) {
   const currentCategory = selectedCategory || categories[0] || null;
+  const [coursesByCat, setCoursesByCat] = useState<Record<string, Course[]>>({});
+  const [loadingCategory, setLoadingCategory] = useState<string | null>(null);
 
-  // True fetching state: actively fetching, or categories list is empty, or selected category courses haven't arrived yet
+  // Fetch courses on-demand only when a category is selected/clicked
+  useEffect(() => {
+    if (!currentCategory?.slug) return;
+    const catSlug = currentCategory.slug;
+
+    // Check if courses already loaded for this category
+    if (coursesByCat[catSlug] || (currentCategory.courses && currentCategory.courses.length > 0)) {
+      return;
+    }
+
+    let isMounted = true;
+    setLoadingCategory(catSlug);
+
+    fetch(`/api/courses?category=${catSlug}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!isMounted) return;
+        setCoursesByCat((prev) => ({
+          ...prev,
+          [catSlug]: data.courses || [],
+        }));
+      })
+      .catch((err) => {
+        console.error('Failed to load courses for category:', err);
+      })
+      .finally(() => {
+        if (isMounted) setLoadingCategory(null);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [currentCategory?.slug]);
+
+  const activeCourses = currentCategory
+    ? coursesByCat[currentCategory.slug] || currentCategory.courses || []
+    : [];
+
   const isFetchingCourses =
     isLoading ||
     categories.length === 0 ||
     !currentCategory ||
-    !currentCategory.courses;
+    loadingCategory === currentCategory?.slug;
 
   const handleSelectCategory = (category: Category) => {
     if (category.slug === currentCategory?.slug) return;
@@ -223,7 +262,7 @@ export default function CourseMenu({
                     </h3>
                     {currentCategory && (
                       <p className="text-xs text-zinc-500 mt-0.5">
-                        {currentCategory.courses?.length || 0} programs available • Industry Recognized
+                        {activeCourses.length} programs available • Industry Recognized
                       </p>
                     )}
                   </div>
@@ -243,9 +282,9 @@ export default function CourseMenu({
 
               {/* Courses Scrollable Grid */}
               <div className="flex-1 overflow-y-auto overscroll-contain custom-scrollbar p-2">
-                {currentCategory && currentCategory.courses && currentCategory.courses.length > 0 ? (
+                {currentCategory && activeCourses.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {currentCategory.courses.map((course) => {
+                    {activeCourses.map((course) => {
                       const iconUrl =
                         course.courseCard?.courseIcon?.thumbnail ||
                         course.courseCard?.courseIcon?.url;

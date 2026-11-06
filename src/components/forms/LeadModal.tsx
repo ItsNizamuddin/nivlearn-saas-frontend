@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { X, CheckCircle2 } from 'lucide-react';
 import { useLeadModal } from '@/context/LeadModalContext';
 import LeadForm from './LeadForm';
@@ -13,8 +14,18 @@ interface LeadModalProps {
 }
 
 export default function LeadModal({ courses }: LeadModalProps = {}) {
+    const pathname = usePathname();
+    const pathSegments = (pathname || '').split('/').filter(Boolean);
+    const isCoursePage = pathSegments.length >= 2 && pathSegments[0] !== 'blog' && pathSegments[0] !== 'api';
+    const activeCourseSlug = isCoursePage ? pathSegments[1] : undefined;
+
     const { isOpen, closeModal, modalConfig, courses: contextCourses } = useLeadModal();
     const effectiveCourses = courses || modalConfig.courses || contextCourses;
+
+    const resolvedCourseSlug =
+        modalConfig.defaultValues?.courseSlug ||
+        modalConfig.courseSlug ||
+        (isCoursePage ? activeCourseSlug : undefined);
 
     const [visible, setVisible] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
@@ -42,7 +53,7 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
 
     return (
         <div
-            className={`fixed z-50 inset-0 flex items-center justify-center bg-overlay/60 backdrop-blur-xs px-4 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'
+            className={`fixed z-50 inset-0 flex items-center justify-center overflow-y-auto bg-overlay/60 backdrop-blur-xs p-4 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'
                 }`}
             onClick={closeModal}
             role="dialog"
@@ -134,7 +145,7 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
                         </div>
 
                         {/* Right Section: Interactive Form */}
-                        <div className="w-full md:w-1/2 px-1 max-h-[82vh] overflow-y-auto">
+                        <div className="w-full md:w-1/2 px-1">
                             <LeadForm
                                 layout="compact"
                                 formTitle={null}
@@ -146,7 +157,7 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
                                     hearAbout: modalConfig.config?.hearAbout ?? false,
                                     subject: modalConfig.config?.subject ?? false,
                                     purpose: modalConfig.config?.purpose ?? false,
-                                    showCourse: modalConfig.config?.showCourse ?? true,
+                                    showCourse: isCoursePage ? false : (modalConfig.config?.showCourse ?? true),
                                     showMessage: modalConfig.config?.showMessage ?? true,
                                     company: modalConfig.config?.company ?? false,
                                     designation: modalConfig.config?.designation ?? false,
@@ -154,8 +165,8 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
                                 }}
                                 defaultValues={{
                                     leadSource: modalConfig.defaultValues?.leadSource ?? modalConfig.source ?? 'cta-popup-form',
-                                    courseSlug: modalConfig.defaultValues?.courseSlug ?? modalConfig.courseSlug,
                                     ...modalConfig.defaultValues,
+                                    ...(resolvedCourseSlug ? { courseSlug: resolvedCourseSlug } : {}),
                                 }}
                                 extraFields={modalConfig.extraFields}
                                 submitButtonText={modalConfig.submitButtonText ?? "Submit Inquiry"}

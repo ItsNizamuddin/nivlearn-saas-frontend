@@ -100,8 +100,8 @@ export default function OurBestFeatures({ className = '' }: OurBestFeaturesProps
             },
             config: {
                 showCourse: true,
-                showMessage: false,
-                purpose: true,
+                showMessage: true,
+                purpose: false,
             },
         });
     };
