@@ -12,6 +12,7 @@ import BlogExplorer from '../BlogExplorer';
 import { formatDate, formatViews, LEVEL_UP } from '../data';
 import PostImage from '../PostImage';
 import { ALL_CATEGORIES, type BlogCategory, type BlogList, type BlogPost, type BlogSummary } from '../types';
+import BlogContent from './BlogContent';
 import NewsletterCard from './NewsletterCard';
 import RecentPosts from './RecentPosts';
 import ShareLinks from './ShareLinks';
@@ -108,13 +109,12 @@ export default function BlogArticle({ post, recent, categories, related }: BlogA
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-14">
           <div>
-            {/* HTML is sanitized in blog.service before it gets here. */}
-            <article className="rich-text" dangerouslySetInnerHTML={{ __html: post.body }} />
+            <BlogContent content={post.body} />
 
             {post.sections.map((section, i) => (
               <section key={i} className="mt-10 border-t border-border-muted/70 pt-8">
                 {section.title && <h2 className="mb-4 text-2xl font-bold text-prime-dark">{section.title}</h2>}
-                <div className="rich-text" dangerouslySetInnerHTML={{ __html: section.html }} />
+                <BlogContent content={section.html} />
               </section>
             ))}
 

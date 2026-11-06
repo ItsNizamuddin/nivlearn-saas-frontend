@@ -41,12 +41,12 @@ export interface BlogSummary {
 
 export interface BlogSection {
   title: string;
-  /** Sanitized HTML. */
+  /** CMS HTML as written, rendered by <BlogContent>. */
   html: string;
 }
 
 export interface BlogPost extends BlogSummary {
-  /** Sanitized HTML, rendered inside `.rich-text`. */
+  /** CMS HTML as written, rendered by <BlogContent>. */
   body: string;
   /** Extra CMS sections shown after the body (internal / bottom sections). */
   sections: BlogSection[];

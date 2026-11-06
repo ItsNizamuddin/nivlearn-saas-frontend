@@ -149,10 +149,7 @@ NivLearn has the right (accredited partner / real client).
 
 ---
 
-## E. Unused files — safe to delete
+## E. Unused files — deleted
 
-| File | Note |
-|---|---|
-| `public/corporate/corporateMobile.webp` | Not referenced anywhere |
-| `public/home/banvideo.webp` | User-generated student photo; unused since the new home page |
-| ~~`public/corporate/Story/Link-5.webp`~~ | Deleted |
+`public/corporate/corporateMobile.webp`, `public/home/banvideo.webp`,
+`public/logo-with-tagline.png`, `public/logo-with-tagline.webp`, `public/corporate/Story/Link-5.webp`.
