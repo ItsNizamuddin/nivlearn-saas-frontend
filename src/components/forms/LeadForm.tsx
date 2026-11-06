@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import { Loader2, Send, AlertCircle, CheckCircle2 } from 'lucide-react';
 import LeadFormCourseSelector from './LeadFormCourseSelector';
 import FloatingField from './FloatingField';
@@ -43,6 +44,17 @@ export default function LeadForm({
     const [success, setSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+    const pathname = usePathname();
+    const pathSegments = (pathname || '').split('/').filter(Boolean);
+    const isCoursePage = pathSegments.length >= 2 && pathSegments[0] !== 'blog' && pathSegments[0] !== 'api';
+    const courseSlugFromPath = isCoursePage ? pathSegments[1] : undefined;
+
+    const effectiveCourseSlug = defaultValues.courseSlug || (isCoursePage ? courseSlugFromPath : '');
+    const initialCourseTitle = effectiveCourseSlug
+        ? courses?.find((c) => c.slug === effectiveCourseSlug)?.name ||
+          effectiveCourseSlug.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
+        : '';
+
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -53,8 +65,8 @@ export default function LeadForm({
         participantsCount: '1',
         hearAboutUs: defaultValues.hearAboutUs || '',
         subject: '',
-        courseSlug: defaultValues.courseSlug || '',
-        selectedCourse: '',
+        courseSlug: effectiveCourseSlug,
+        selectedCourse: defaultValues.selectedCourse || initialCourseTitle,
         purpose: defaultValues.purpose || 'Upskilling',
         companyName: defaultValues.companyName || '',
         designation: defaultValues.designation || '',
@@ -64,6 +76,16 @@ export default function LeadForm({
         pagePath: '',
         ...defaultValues
     });
+
+    // Automatically hide visible course selector on course pages while keeping course data attached
+    const shouldShowCourseField = isCoursePage ? false : (config.showCourse !== false);
+    const hasManyFields = Boolean(
+        shouldShowCourseField ||
+        config.purpose ||
+        config.company ||
+        config.designation ||
+        config.showMessage !== false
+    );
 
     const hasTurnstileKey = Boolean((process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '').trim());
     const [turnstileToken, setTurnstileToken] = useState<string>(hasTurnstileKey ? '' : 'dev-bypass');
@@ -267,8 +289,8 @@ export default function LeadForm({
                     icon={fieldIcons?.fullName}
                 />
 
-                {/* Phone & Email */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {/* Phone & Email: In a row when multiple fields exist, stacked when short form */}
+                <div className={hasManyFields ? "grid grid-cols-1 sm:grid-cols-2 gap-2.5" : "space-y-2"}>
                     <FloatingField
                         label="Phone Number"
                         name="phone"
@@ -288,42 +310,70 @@ export default function LeadForm({
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="Email"
+                        placeholder="Email Address"
                         icon={fieldIcons?.email}
                     />
                 </div>
 
-                {/* Course Selection */}
-                {config.showCourse !== false && (
-                    <div className="w-full">
+                {/* Course & Purpose Selection: paired in a row when both exist */}
+                {shouldShowCourseField && config.purpose ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         <LeadFormCourseSelector
                             value={formData.courseSlug}
                             onChange={handleCourseChange}
-                            defaultSlug={defaultValues.courseSlug}
+                            defaultSlug={effectiveCourseSlug || defaultValues.courseSlug}
                             placeholder={coursePlaceholder}
                             icon={fieldIcons?.course}
                             courses={courses}
                         />
+                        <FloatingField
+                            label="Purpose"
+                            name="purpose"
+                            type="select"
+                            required
+                            value={formData.purpose}
+                            onChange={handleChange}
+                            options={[
+                                { label: 'Upskilling / Certification', value: 'Upskilling' },
+                                { label: 'Job Change / Career Switch', value: 'Job Change' },
+                                { label: 'Corporate Training for Team', value: 'Corporate Training' },
+                                { label: 'College Student Placement', value: 'College Placement' },
+                                { label: 'Other Inquiry', value: 'Other' },
+                            ]}
+                        />
                     </div>
-                )}
-
-                {/* Purpose Selection */}
-                {config.purpose && (
-                    <FloatingField
-                        label="Purpose"
-                        name="purpose"
-                        type="select"
-                        required
-                        value={formData.purpose}
-                        onChange={handleChange}
-                        options={[
-                            { label: 'Upskilling / Certification', value: 'Upskilling' },
-                            { label: 'Job Change / Career Switch', value: 'Job Change' },
-                            { label: 'Corporate Training for Team', value: 'Corporate Training' },
-                            { label: 'College Student Placement', value: 'College Placement' },
-                            { label: 'Other Inquiry', value: 'Other' },
-                        ]}
-                    />
+                ) : (
+                    <>
+                        {shouldShowCourseField && (
+                            <div className="w-full">
+                                <LeadFormCourseSelector
+                                    value={formData.courseSlug}
+                                    onChange={handleCourseChange}
+                                    defaultSlug={effectiveCourseSlug || defaultValues.courseSlug}
+                                    placeholder={coursePlaceholder}
+                                    icon={fieldIcons?.course}
+                                    courses={courses}
+                                />
+                            </div>
+                        )}
+                        {config.purpose && (
+                            <FloatingField
+                                label="Purpose"
+                                name="purpose"
+                                type="select"
+                                required
+                                value={formData.purpose}
+                                onChange={handleChange}
+                                options={[
+                                    { label: 'Upskilling / Certification', value: 'Upskilling' },
+                                    { label: 'Job Change / Career Switch', value: 'Job Change' },
+                                    { label: 'Corporate Training for Team', value: 'Corporate Training' },
+                                    { label: 'College Student Placement', value: 'College Placement' },
+                                    { label: 'Other Inquiry', value: 'Other' },
+                                ]}
+                            />
+                        )}
+                    </>
                 )}
 
                 {/* Corporate Fields */}
@@ -367,10 +417,11 @@ export default function LeadForm({
                     />
                 )}
 
-                {/* Turnstile Captcha */}
+                {/* Turnstile Captcha (Invisible Mode - zero visual obstruction) */}
                 {hasTurnstileKey && (
-                    <div className="w-full flex flex-col items-center justify-center min-h-[65px] pt-1">
+                    <div className="h-0 w-0 overflow-hidden opacity-0 pointer-events-none">
                         <TurnstileWidget
+                            size="invisible"
                             onVerify={(token) => {
                                 setTurnstileToken(token);
                                 setCaptchaError(false);
@@ -381,16 +432,18 @@ export default function LeadForm({
                                 setCaptchaError(true);
                             }}
                         />
-                        {captchaError && (
-                            <p className="text-danger text-xs mt-1 text-center font-medium">Security verification failed. Please try again.</p>
-                        )}
                     </div>
+                )}
+                {captchaError && (
+                    <p className="text-danger text-xs text-center font-medium">
+                        Security verification failed. Please try again.
+                    </p>
                 )}
 
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    disabled={loading || (hasTurnstileKey && !turnstileToken)}
+                    disabled={loading}
                     className="w-full py-2.5 px-3 bg-prime hover:bg-prime-outline text-on-dark font-semibold rounded-md shadow-xs transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed group text-xs sm:text-sm cursor-pointer"
                 >
                     {loading ? (

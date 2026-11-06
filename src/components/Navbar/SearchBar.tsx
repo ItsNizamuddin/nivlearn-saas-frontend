@@ -86,24 +86,30 @@ export default function SearchBar({
     return () => clearTimeout(timer);
   }, [query]);
 
-  // Flatten all courses across categories
-  const allCourses: SearchCourse[] = useMemo(() => {
-    return categories.flatMap((cat) =>
-      (cat.courses || []).map((c) => ({
-        ...c,
-        catslug: cat.slug,
-      }))
-    );
-  }, [categories]);
+  const [searchResults, setSearchResults] = useState<SearchCourse[]>([]);
 
-  // Filter courses matching debounced query by course name
-  const filtered = useMemo(() => {
-    const q = debouncedQuery.toLowerCase();
-    if (q.length < 1) return [];
-    return allCourses
-      .filter((c) => c.name.toLowerCase().includes(q))
-      .slice(0, 8);
-  }, [debouncedQuery, allCourses]);
+  // Search courses on-demand via API
+  useEffect(() => {
+    if (!debouncedQuery) {
+      setSearchResults([]);
+      return;
+    }
+
+    let isMounted = true;
+    fetch(`/api/courses?q=${encodeURIComponent(debouncedQuery)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!isMounted) return;
+        setSearchResults((data.courses || []).slice(0, 8));
+      })
+      .catch((err) => console.error('Search error:', err));
+
+    return () => {
+      isMounted = false;
+    };
+  }, [debouncedQuery]);
+
+  const filtered = searchResults;
 
   // Handle outside clicks to close search dropdown
   useEffect(() => {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { BookOpen, ChevronRight } from 'lucide-react';
 import { useLeadModal } from '@/context/LeadModalContext';
 import type { Category, Course } from '@/components/Navbar/types';
@@ -23,6 +23,8 @@ export default function CoursesSection({
     const [selectedSlug, setSelectedSlug] = useState<string>(
         categories[0]?.slug || ''
     );
+    const [coursesByCat, setCoursesByCat] = useState<Record<string, Course[]>>({});
+    const [loadingSlug, setLoadingSlug] = useState<string | null>(null);
 
     // Visible count for desktop grid (Load More pagination)
     const [visibleCount, setVisibleCount] = useState<number>(6);
@@ -35,10 +37,42 @@ export default function CoursesSection({
         );
     }, [categories, selectedSlug]);
 
+    // On-demand course fetch when a category tab is selected
+    useEffect(() => {
+        const slug = selectedSlug || activeCategory?.slug;
+        if (!slug) return;
+
+        if (coursesByCat[slug] || (activeCategory?.courses && activeCategory.courses.length > 0)) {
+            return;
+        }
+
+        let isMounted = true;
+        setLoadingSlug(slug);
+
+        fetch(`/api/courses?category=${slug}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (!isMounted) return;
+                setCoursesByCat((prev) => ({
+                    ...prev,
+                    [slug]: data.courses || [],
+                }));
+            })
+            .catch((err) => console.error('Failed to load courses:', err))
+            .finally(() => {
+                if (isMounted) setLoadingSlug(null);
+            });
+
+        return () => {
+            isMounted = false;
+        };
+    }, [selectedSlug, activeCategory]);
+
     const courses: Course[] = useMemo(() => {
-        if (!activeCategory) return [];
-        return activeCategory.courses || [];
-    }, [activeCategory]);
+        const slug = selectedSlug || activeCategory?.slug;
+        if (!slug) return [];
+        return coursesByCat[slug] || activeCategory?.courses || [];
+    }, [selectedSlug, activeCategory, coursesByCat]);
 
     const displayedCourses = useMemo(() => {
         return courses.slice(0, visibleCount);

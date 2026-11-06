@@ -86,9 +86,9 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
                 leadSource: 'home-credentials-section',
             },
             config: {
-                showCourse: true,
+                showCourse: false,
                 showMessage: true,
-                purpose: true,
+                purpose: false,
             },
         });
     };
@@ -173,9 +173,8 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
                                 NivLearn Global delivers accredited certification programs recognized worldwide. Through partnerships with accreditation pioneers including PMI and Scrum Alliance, we provide high-caliber instruction that translates directly to real-world promotions.
                             </p>
                             <div
-                                className={`grid transition-all duration-300 ease-in-out ${
-                                    isReadMore ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                                }`}
+                                className={`grid transition-all duration-300 ease-in-out ${isReadMore ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                                    }`}
                             >
                                 <div className="overflow-hidden">
                                     <p className="mt-2 text-text-muted text-xs sm:text-sm leading-relaxed">
@@ -256,19 +255,17 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
 
                                         <div className="shrink-0 text-text-muted ml-2">
                                             <ChevronDown
-                                                className={`w-5 h-5 transition-transform duration-300 ease-in-out ${
-                                                    isOpen ? 'rotate-180 text-prime' : 'rotate-0 text-text-muted'
-                                                }`}
+                                                className={`w-5 h-5 transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180 text-prime' : 'rotate-0 text-text-muted'
+                                                    }`}
                                             />
                                         </div>
                                     </button>
 
                                     <div
-                                        className={`grid transition-all duration-300 ease-in-out ${
-                                            isOpen
-                                                ? 'grid-rows-[1fr] opacity-100'
-                                                : 'grid-rows-[0fr] opacity-0'
-                                        }`}
+                                        className={`grid transition-all duration-300 ease-in-out ${isOpen
+                                            ? 'grid-rows-[1fr] opacity-100'
+                                            : 'grid-rows-[0fr] opacity-0'
+                                            }`}
                                     >
                                         <div className="overflow-hidden">
                                             <div className="px-4 sm:px-5 pb-5 pt-2 text-xs sm:text-sm text-text-muted border-t border-border-muted/30 leading-relaxed">
@@ -283,26 +280,6 @@ export default function AboutUsSec({ className = '' }: AboutUsSecProps) {
                                 </div>
                             );
                         })}
-
-                        {/* Bottom Action Strip */}
-                        <div className="mt-2 bg-prime-dark text-on-dark rounded-lg p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
-                            <div>
-                                <h4 className="text-sm font-bold text-on-dark">
-                                    Ready to fast-track your global certification?
-                                </h4>
-                                <p className="text-xs text-on-dark/70 mt-0.5">
-                                    Our learning advisors are available to review your profile and match your track.
-                                </p>
-                            </div>
-                            <button
-                                type="button"
-                                onClick={handleEnquireCredentials}
-                                className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-prime-yellow hover:bg-prime-yellow/90 active:scale-95 text-white font-bold text-xs sm:text-sm rounded-md shadow-xs transition-all cursor-pointer"
-                            >
-                                <span>Get Consultation</span>
-                                <ArrowRight className="w-3.5 h-3.5 text-white" />
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

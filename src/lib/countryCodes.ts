@@ -213,3 +213,16 @@ export const DIAL_CODES: readonly DialCode[] = [
 ];
 
 export const DEFAULT_DIAL_CODE = '+91';
+
+/**
+ * Converts a 2-letter ISO country code into a regional indicator emoji flag.
+ * E.g. 'IN' -> '🇮🇳', 'US' -> '🇺🇸'
+ */
+export function getCountryFlag(iso: string): string {
+  if (!iso || iso.length !== 2) return '🌐';
+  const codePoints = iso
+    .toUpperCase()
+    .split('')
+    .map((c) => 127397 + c.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
+}

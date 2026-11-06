@@ -1,9 +1,8 @@
 'use client';
 
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
-import { DIAL_CODES } from '@/lib/countryCodes';
 import SearchableSelect from './SearchableSelect';
+import CountryCodePicker from './CountryCodePicker';
 
 interface FloatingFieldProps {
     label: string;
@@ -53,8 +52,9 @@ export default function FloatingField({
     const fieldId = id || name;
 
     const containerClasses = `relative group ${className}`;
-    
-    const inputBaseClasses = `w-full ${icon ? 'pl-9 pr-3' : 'px-3'} py-2 bg-surface border border-border-muted rounded-md text-xs  text-foreground placeholder:text-text-muted/60 placeholder:text-xs focus:outline-none focus:border-prime focus:ring-2 focus:ring-prime/10 transition-all`;
+
+    // Explicit h-10 ensures equal height across all text/email/number inputs
+    const inputBaseClasses = `w-full ${icon ? 'pl-9 pr-3' : 'px-3'} h-10 bg-surface border border-border-muted rounded-md text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs focus:outline-none focus:border-prime focus:ring-2 focus:ring-prime/10 transition-all flex items-center`;
     const activePlaceholder = placeholder || label;
 
     const renderIcon = (alignTop = false) => icon && (
@@ -94,65 +94,26 @@ export default function FloatingField({
                         rows={rows}
                         placeholder={activePlaceholder}
                         style={{ minHeight: `${minHeight}px` }}
-                        className={`${inputBaseClasses} resize-none`}
+                        className={`w-full ${icon ? 'pl-9 pr-3' : 'px-3'} py-2 bg-surface border border-border-muted rounded-md text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs focus:outline-none focus:border-prime focus:ring-2 focus:ring-prime/10 transition-all resize-none`}
                     />
                 </>
             ) : type === 'tel' && dialCode !== undefined ? (
-                /* Phone Field with Country Dial Code prefix */
-                <div className="flex w-full rounded-md border border-border-muted bg-surface focus-within:border-prime focus-within:ring-2 focus-within:ring-prime/10 transition-all">
-                    <div className="relative shrink-0 flex items-center">
-                        <select
-                            name="dialCode"
-                            value={dialCode}
-                            onChange={onDialCodeChange || (onChange as unknown as (e: React.ChangeEvent<HTMLSelectElement>) => void)}
-                            aria-label="Country code"
-                            className="appearance-none w-14 bg-surface-muted/70 hover:bg-sec-prime text-xs text-foreground font-medium px-1.5 py-2 rounded-l-md border-r border-border-muted/70 cursor-pointer focus:outline-none"
-                        >
-                            {DIAL_CODES.map((c) => (
-                                <option key={c.iso} value={c.dial}>
-                                    {c.iso} {c.dial}
-                                </option>
-                            ))}
-                        </select>
-                        {/* <div className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-text-muted">
-                            <ChevronDown className="w-3.5 h-3.5" />
-                        </div> */}
-                    </div>
-                    <input
-                        type="tel"
-                        name={name}
-                        id={fieldId}
-                        required={required}
-                        value={value}
-                        onChange={onChange}
-                        placeholder={activePlaceholder}
-                        pattern={pattern}
-                        maxLength={maxLength}
-                        title={title}
-                        className="w-full px-3 py-2 text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs bg-transparent focus:outline-none rounded-r-md"
+                /* Phone Field with Country Flag & Dial Code prefix, exactly matching h-10 height */
+                <div className="flex w-full h-10 rounded-md border border-border-muted bg-surface focus-within:border-prime focus-within:ring-2 focus-within:ring-prime/10 transition-all">
+                    <CountryCodePicker
+                        value={dialCode}
+                        onChange={(newDial) => {
+                            if (onDialCodeChange) {
+                                onDialCodeChange({
+                                    target: { name: 'dialCode', value: newDial },
+                                } as unknown as React.ChangeEvent<HTMLSelectElement>);
+                            } else {
+                                onChange({
+                                    target: { name: 'dialCode', value: newDial },
+                                } as unknown as React.ChangeEvent<HTMLInputElement>);
+                            }
+                        }}
                     />
-                </div>
-            ) : type === 'tel' && dialCode !== undefined ? (
-                /* Phone Field with Country Dial Code prefix */
-                <div className="flex w-full rounded-md border border-border-muted bg-surface focus-within:border-prime focus-within:ring-2 focus-within:ring-prime/10 transition-all">
-                    <div className="relative shrink-0 flex items-center">
-                        <select
-                            name="dialCode"
-                            value={dialCode}
-                            onChange={onDialCodeChange || (onChange as unknown as (e: React.ChangeEvent<HTMLSelectElement>) => void)}
-                            aria-label="Country code"
-                            className="appearance-none bg-surface-muted/70 hover:bg-sec-prime text-xs sm:text-sm text-foreground font-medium pl-2.5 pr-6 py-2 rounded-l-md border-r border-border-muted/70 cursor-pointer focus:outline-none"
-                        >
-                            {DIAL_CODES.map((c) => (
-                                <option key={c.iso} value={c.dial}>
-                                    {c.iso} ({c.dial})
-                                </option>
-                            ))}
-                        </select>
-                        <div className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-text-muted">
-                            <ChevronDown className="w-3.5 h-3.5" />
-                        </div>
-                    </div>
                     <input
                         type="tel"
                         name={name}
@@ -164,7 +125,7 @@ export default function FloatingField({
                         pattern={pattern}
                         maxLength={maxLength}
                         title={title}
-                        className="w-full px-3 py-2 text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs bg-transparent focus:outline-none rounded-r-md"
+                        className="w-full h-full min-w-0 px-2 sm:px-2.5 text-xs sm:text-sm text-foreground placeholder:text-text-muted/60 placeholder:text-xs bg-transparent focus:outline-none rounded-r-md"
                     />
                 </div>
             ) : (

@@ -121,6 +121,16 @@
 
 /* In the base layer so Tailwind utilities on elements can still override. */
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  /* Ensure in-page anchor targets have comfortable breathing room below sticky navbars */
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+
   body {
     background: var(--background);
     color: var(--foreground);
