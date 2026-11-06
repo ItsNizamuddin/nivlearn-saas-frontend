@@ -1,10 +1,6 @@
+import type { LucideIcon } from 'lucide-react';
 import type { StaticImageData } from 'next/image';
-
-import chatIcon from '../../../public/contactus/getintouch/chat.webp';
-import supportIcon from '../../../public/contactus/getintouch/support.webp';
-import corporateIcon from '../../../public/contactus/getintouch/corporate.webp';
-import addressIcon from '../../../public/contactus/getintouch/addressIcon.webp';
-import whatsappLogo from '../../../public/contactus/getintouch/whatsapplogo.webp';
+import { Building2, LifeBuoy, MapPin, MessagesSquare } from 'lucide-react';
 import flagIndia from '../../../public/contactus/country/india.webp';
 import flagUk from '../../../public/contactus/country/Uk.webp';
 import flagUsa from '../../../public/contactus/country/Unitedstatesofamerica.webp';
@@ -21,7 +17,7 @@ export const CONTACT_INTRO = {
 } as const;
 
 export interface ContactChannel {
-  icon: StaticImageData;
+  icon: LucideIcon;
   title: string;
   detail: string;
   href?: string;
@@ -31,19 +27,18 @@ export interface ContactChannel {
 export const DIRECT_CONTACT = {
   title: 'Direct Contact',
   chat: {
-    icon: chatIcon,
+    icon: MessagesSquare,
     title: 'Chat',
     detail: 'Avg response time: less than a min',
     href: 'https://wa.me/910000000000', // DUMMY
     external: true,
   } satisfies ContactChannel,
-  whatsappLogo,
   emails: [
-    { icon: supportIcon, title: 'Support', detail: 'support@example.com', href: 'mailto:support@example.com' }, // DUMMY
-    { icon: corporateIcon, title: 'Corporate', detail: 'corporate@example.com', href: 'mailto:corporate@example.com' }, // DUMMY
+    { icon: LifeBuoy, title: 'Support', detail: 'support@example.com', href: 'mailto:support@example.com' }, // DUMMY
+    { icon: Building2, title: 'Corporate', detail: 'corporate@example.com', href: 'mailto:corporate@example.com' }, // DUMMY
   ] satisfies ContactChannel[],
   address: {
-    icon: addressIcon,
+    icon: MapPin,
     title: 'Address',
     detail: '123 Example Street, Sector 0, Example City, State 000000', // DUMMY
   } satisfies ContactChannel,

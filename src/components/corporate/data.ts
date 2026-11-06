@@ -1,37 +1,36 @@
-import type { StaticImageData } from 'next/image';
+import type { LucideIcon } from 'lucide-react';
+import {
+  Award,
+  BadgeCheck,
+  BriefcaseBusiness,
+  ChartColumn,
+  ChartColumnIncreasing,
+  CircleDollarSign,
+  ClipboardCheck,
+  Cpu,
+  FlaskConical,
+  Globe,
+  GraduationCap,
+  Handshake,
+  Headset,
+  Lightbulb,
+  Magnet,
+  MessagesSquare,
+  Pill,
+  Rocket,
+  ShoppingBag,
+  ThumbsUp,
+  TrendingUp,
+  Users,
+} from 'lucide-react';
 import type { Feature } from '@/components/ui/FeatureCard';
 
 import banner from '../../../public/corporate/banner.webp';
-import xpIcon from '../../../public/corporate/xp.webp';
-import careerIcon from '../../../public/corporate/career.webp';
-import bulbIcon from '../../../public/corporate/bulb.webp';
-import proIcon from '../../../public/corporate/pro.webp';
-import partIcon from '../../../public/corporate/part.webp';
-import globIcon from '../../../public/corporate/glob.webp';
 import transformImage from '../../../public/corporate/transform.webp';
-import assessIcon from '../../../public/corporate/assess.webp';
-import upskillIcon from '../../../public/corporate/upskill.webp';
-import analyzeIcon from '../../../public/corporate/analy.webp';
-import scaleIcon from '../../../public/corporate/sale.webp';
 import performImage from '../../../public/corporate/perform.webp';
 import ctaImage from '../../../public/corporate/CTA.webp';
-import benefit1 from '../../../public/corporate/benfits/Overlay+Border.webp';
-import benefit2 from '../../../public/corporate/benfits/Overlay+Border-1.webp';
-import benefit3 from '../../../public/corporate/benfits/Background+Border-1.webp';
-import benefit4 from '../../../public/corporate/benfits/Background+Border-2.webp';
-import benefit5 from '../../../public/corporate/benfits/Background+Border.webp';
-import storyTech from '../../../public/corporate/Story/Link.webp';
-import storyRetail from '../../../public/corporate/Story/Link-1.webp';
-import storyLife from '../../../public/corporate/Story/Link-2.webp';
-import storyConsulting from '../../../public/corporate/Story/Link-3.webp';
-import storyPharma from '../../../public/corporate/Story/Link-4.webp';
-import storyFinance from '../../../public/corporate/Story/Link-6.webp';
 import storyImage from '../../../public/corporate/Story/img.webp';
 import whyImage from '../../../public/corporate/why.webp';
-import why1 from '../../../public/corporate/why1.webp';
-import why2 from '../../../public/corporate/why2.webp';
-import why3 from '../../../public/corporate/why3.webp';
-import why4 from '../../../public/corporate/why4.webp';
 import global1 from '../../../public/corporate/g/img1.webp';
 import global2 from '../../../public/corporate/g/img2.webp';
 import global3 from '../../../public/corporate/g/img3.webp';
@@ -50,9 +49,9 @@ export const BANNER = {
   primaryAction: 'Explore Courses',
   secondaryAction: 'Speak to an Expert',
   highlights: [
-    { icon: xpIcon, label: 'Experience' },
-    { icon: careerIcon, label: 'Career Experts' },
-    { icon: bulbIcon, label: 'Top Skilled' },
+    { icon: Award, label: 'Experience' },
+    { icon: BriefcaseBusiness, label: 'Career Experts' },
+    { icon: Lightbulb, label: 'Top Skilled' },
   ],
   image: banner,
 } as const;
@@ -63,9 +62,9 @@ export const OVERVIEW = {
   title: 'Revolutionize Your Learning Experience',
   points: ['Interactive Modules', 'Hands-On Projects', 'Collaborative Environments', 'Flexible Learning'],
   stats: [
-    { icon: proIcon, value: '50,000+', label: 'Professionals upskilled' },
-    { icon: partIcon, value: '500+', label: 'Corporate partnerships' },
-    { icon: globIcon, value: '40+', label: 'Global markets served' },
+    { icon: TrendingUp, value: '50,000+', label: 'Professionals upskilled' },
+    { icon: Handshake, value: '500+', label: 'Corporate partnerships' },
+    { icon: Globe, value: '40+', label: 'Global markets served' },
   ],
 } as const;
 
@@ -74,7 +73,7 @@ export const OVERVIEW = {
 export interface TransformTab {
   id: string;
   label: string;
-  icon: StaticImageData;
+  icon: LucideIcon;
   title: string;
   description: string;
   points: readonly string[];
@@ -88,7 +87,7 @@ export const TRANSFORM = {
     {
       id: 'assess',
       label: 'Assess',
-      icon: assessIcon,
+      icon: ClipboardCheck,
       title: "Discover your team's strengths and weaknesses",
       description: 'Get visibility into what your teams know, where their skills stand today and where they need to skill up.',
       points: [
@@ -104,7 +103,7 @@ export const TRANSFORM = {
     {
       id: 'upskill',
       label: 'Upskill',
-      icon: upskillIcon,
+      icon: GraduationCap,
       title: 'Upskilling for Success',
       description: 'Help your teams build the skills they need to advance in their careers and your organization.',
       points: ['Targeted Skill Development', 'Diverse Learning Opportunities'],
@@ -112,7 +111,7 @@ export const TRANSFORM = {
     {
       id: 'analyze',
       label: 'Analyze',
-      icon: analyzeIcon,
+      icon: ChartColumn,
       title: 'Track Progress and Identify Gaps',
       description: 'Understand where your teams excel and where they need additional support.',
       points: ['Network and Collaborate', 'Apply New Skills'],
@@ -120,7 +119,7 @@ export const TRANSFORM = {
     {
       id: 'scale',
       label: 'Scale',
-      icon: scaleIcon,
+      icon: Rocket,
       title: "Scale Your Workforce's Capabilities",
       description: 'Build a culture of continuous learning and adaptability to stay ahead in the market.',
       points: ['Expand Learning Initiatives', 'Ensure Future-Ready Talent'],
@@ -131,10 +130,8 @@ export const TRANSFORM = {
 /* --------------------------------- Courses -------------------------------- */
 
 export const COURSES = {
-  eyebrow: 'How we are helping companies',
   title: 'Future-proof your teams with our in-demand courses',
-  /** How many courses to show in the grid. */
-  limit: 8,
+  subtitle: 'Live, instructor-led programs your teams can start this quarter, with enquiry and batch details for every course.',
 } as const;
 
 /* ---------------------------------- Stats --------------------------------- */
@@ -186,11 +183,11 @@ export const BENEFITS = {
   title: 'Benefits of Upskilling your team',
   chartTitle: 'Average improvement after training',
   items: [
-    { label: 'Productivity', title: 'Productivity Increased By 30%', subtitle: 'Best price guaranteed', percent: 30, icon: benefit1 },
-    { label: 'Retention Rate', title: 'Retention Rate Increased By 25%', subtitle: 'Limited-time offers', percent: 25, icon: benefit2 },
-    { label: 'Employee Satisfaction', title: 'Employee Satisfaction Improved 40%', subtitle: 'Experts worldwide', percent: 40, icon: benefit5 },
-    { label: 'Sales', title: "Company's Sales Up By 50%", subtitle: 'Full refund policy', percent: 50, icon: benefit3 },
-    { label: 'Team Spirit', title: 'Team Spirit & Collaboration Grown up to 25%', subtitle: 'Flexible scheduling', percent: 25, icon: benefit4 },
+    { label: 'Productivity', title: 'Productivity Increased By 30%', subtitle: 'Best price guaranteed', percent: 30, icon: TrendingUp },
+    { label: 'Retention Rate', title: 'Retention Rate Increased By 25%', subtitle: 'Limited-time offers', percent: 25, icon: Magnet },
+    { label: 'Employee Satisfaction', title: 'Employee Satisfaction Improved 40%', subtitle: 'Experts worldwide', percent: 40, icon: ThumbsUp },
+    { label: 'Sales', title: "Company's Sales Up By 50%", subtitle: 'Full refund policy', percent: 50, icon: ChartColumnIncreasing },
+    { label: 'Team Spirit', title: 'Team Spirit & Collaboration Grown up to 25%', subtitle: 'Flexible scheduling', percent: 25, icon: Handshake },
   ],
 } as const;
 
@@ -198,7 +195,7 @@ export const BENEFITS = {
 
 export interface Story {
   category: string;
-  icon: StaticImageData;
+  icon: LucideIcon;
   description: string;
   challenge: string;
   solution: string;
@@ -218,7 +215,7 @@ export const STORIES = {
   items: [
     {
       category: 'Technology',
-      icon: storyTech,
+      icon: Cpu,
       description:
         'To succeed, retailers must correctly anticipate what their customers want and then provide those things. Big data and analytics provide retailers the insights they need to keep their customers happy and returning to their stores. In an IBM study, 62% of retail respondents claimed that insights provided by analytics and information provided them with competitive advantages. A top retailer required data scientists and analysts who could navigate massive amounts of data to produce insights that inform business decisions.',
       challenge: 'The organization wanted to transform 400 employees into data scientists who could put their newly acquired skills into action immediately.',
@@ -226,15 +223,15 @@ export const STORIES = {
     },
     {
       category: 'Retail',
-      icon: storyRetail,
+      icon: ShoppingBag,
       description: 'Financial institutions are leveraging AI and machine learning to enhance risk assessment and fraud detection.',
       challenge: 'The company needed to train 300 analysts in advanced risk modeling techniques.',
       solution: 'A comprehensive training program on AI-driven risk management was deployed.',
     },
-    { category: 'Life Science', icon: storyLife, ...HEALTH_STORY },
-    { category: 'Consulting', icon: storyConsulting, ...HEALTH_STORY },
-    { category: 'Finance', icon: storyFinance, ...HEALTH_STORY },
-    { category: 'Pharmaceuticals', icon: storyPharma, ...HEALTH_STORY },
+    { category: 'Life Science', icon: FlaskConical, ...HEALTH_STORY },
+    { category: 'Consulting', icon: MessagesSquare, ...HEALTH_STORY },
+    { category: 'Finance', icon: CircleDollarSign, ...HEALTH_STORY },
+    { category: 'Pharmaceuticals', icon: Pill, ...HEALTH_STORY },
   ] satisfies Story[],
 };
 
@@ -248,24 +245,24 @@ export const WHY_US = {
   image: whyImage,
   items: [
     {
-      icon: why1,
+      icon: Users,
       title: '730+ Globally Acclaimed SMEs',
       description:
         'NivLearn, catering to over 730 worldwide SMEs, has been a trustworthy provider of high-quality tailor-made training programs for companies working in different sectors around the globe.',
     },
     {
-      icon: why3,
+      icon: Award,
       title: 'Proven Track Record',
       description:
         "With a history of successful training programs, helping 300k+ professionals to graduate, we have added value to these companies' workforce.",
     },
     {
-      icon: why2,
+      icon: BadgeCheck,
       title: 'Approved by Industry Experts',
       description:
         'Through our strategic interactions with eminent corporations and industry bodies, we can assure that our training programs are contemporary, in-depth, and dedicated to the latest industry trends approved by industry experts.',
     },
-    { icon: why4, title: 'Experienced Guide', description: 'Our team is available 24/7 to assist you with any queries or concerns.' },
+    { icon: Headset, title: 'Experienced Guide', description: 'Our team is available 24/7 to assist you with any queries or concerns.' },
   ],
 } as const;
 

@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { buttonClass } from '@/components/ui/button';
-import { BANNER, COURSES_ID, ENQUIRY_ID, OVERVIEW } from './data';
+import { BANNER, COURSES_ID, OVERVIEW } from './data';
+import LeadCta from '@/components/forms/LeadCta';
 
 export default function Banner() {
   return (
@@ -15,14 +15,14 @@ export default function Banner() {
             <a href={`#${COURSES_ID}`} className={buttonClass('accent', 'lg')}>
               {BANNER.primaryAction}
             </a>
-            <Link href={`#${ENQUIRY_ID}`} className={buttonClass('outline', 'lg')}>
+            <LeadCta form="corporate" className={buttonClass('outline', 'lg')}>
               {BANNER.secondaryAction}
-            </Link>
+            </LeadCta>
           </div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
             {BANNER.highlights.map((h) => (
               <li key={h.label} className="flex items-center gap-2 text-sm font-medium text-prime-dark">
-                <Image src={h.icon} alt="" className="size-7" />
+                <h.icon aria-hidden className="size-6 shrink-0 text-prime-yellow" />
                 {h.label}
               </li>
             ))}
@@ -53,7 +53,9 @@ export default function Banner() {
         <ul className="grid gap-4 sm:grid-cols-3 lg:border-l lg:border-on-dark/15 lg:pl-8">
           {OVERVIEW.stats.map((s) => (
             <li key={s.label} className="flex items-center gap-4 sm:flex-col sm:text-center">
-              <Image src={s.icon} alt="" className="size-14 shrink-0 object-contain" />
+              <span aria-hidden className="flex size-14 shrink-0 items-center justify-center rounded-full bg-surface text-prime-yellow">
+                <s.icon className="size-7" />
+              </span>
               <div>
                 <p className="font-heading text-2xl font-bold text-on-dark tabular-nums">{s.value}</p>
                 <p className="text-sm text-on-dark/75">{s.label}</p>

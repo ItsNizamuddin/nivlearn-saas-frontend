@@ -119,12 +119,12 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
                             )}
                             <div className="mt-1 flex justify-center">
                                 <Image
-                                    src="/Forms/popup.webp"
-                                    alt="Talk to Learning Advisor"
-                                    width={260}
-                                    height={230}
+                                    src="/Forms/lead-advisor-photo.webp"
+                                    alt="Smiling learning advisor with a headset waving hello"
+                                    width={280}
+                                    height={280}
                                     priority
-                                    className="mx-auto object-contain max-h-[220px] w-auto"
+                                    className="mx-auto aspect-square w-full max-w-[240px] rounded-xl object-cover shadow-md"
                                 />
                             </div>
                         </div>
@@ -168,7 +168,8 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
                                     ...modalConfig.defaultValues,
                                     ...(resolvedCourseSlug ? { courseSlug: resolvedCourseSlug } : {}),
                                 }}
-                                submitButtonText="Submit Inquiry"
+                                extraFields={modalConfig.extraFields}
+                                submitButtonText={modalConfig.submitButtonText ?? "Submit Inquiry"}
                                 onSuccess={() => {
                                     setIsSuccess(true);
                                     if (modalConfig.onSuccess) {

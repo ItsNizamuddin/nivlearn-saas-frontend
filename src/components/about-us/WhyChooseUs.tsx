@@ -31,8 +31,8 @@ export default function WhyChooseUs() {
                 key={point.title}
                 className="rounded-2xl border border-prime/15 bg-surface p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-prime/25 hover:shadow-card"
               >
-                <span className="flex size-14 items-center justify-center rounded-xl bg-prime/10">
-                  <Image src={point.icon} alt="" width={32} height={32} />
+                <span aria-hidden className="flex size-14 items-center justify-center rounded-xl bg-prime/10 text-prime">
+                  <point.icon className="size-7" />
                 </span>
                 <h3 className="mt-4 text-lg font-bold text-prime-dark">{point.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-text-muted">{point.description}</p>

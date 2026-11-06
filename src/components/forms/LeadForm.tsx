@@ -38,6 +38,7 @@ export default function LeadForm({
     layout = 'standard',
     coursePlaceholder,
     courses,
+    extraFields = [],
     onSuccess
 }: LeadFormProps) {
     const [loading, setLoading] = useState(false);
@@ -52,7 +53,7 @@ export default function LeadForm({
     const effectiveCourseSlug = defaultValues.courseSlug || (isCoursePage ? courseSlugFromPath : '');
     const initialCourseTitle = effectiveCourseSlug
         ? courses?.find((c) => c.slug === effectiveCourseSlug)?.name ||
-          effectiveCourseSlug.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
+        effectiveCourseSlug.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())
         : '';
 
     const [formData, setFormData] = useState({
@@ -76,6 +77,20 @@ export default function LeadForm({
         pagePath: '',
         ...defaultValues
     });
+
+    const initialExtra = useCallback(() => {
+        const initial: Record<string, string> = {};
+        for (const f of extraFields) {
+            initial[f.name] = f.defaultValue ?? '';
+        }
+        return initial;
+    }, [extraFields]);
+
+    const [extraValues, setExtraValues] = useState<Record<string, string>>(initialExtra);
+
+    useEffect(() => {
+        setExtraValues(initialExtra());
+    }, [initialExtra]);
 
     // Automatically hide visible course selector on course pages while keeping course data attached
     const shouldShowCourseField = isCoursePage ? false : (config.showCourse !== false);
@@ -146,6 +161,12 @@ export default function LeadForm({
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleExtraChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        if (errorMessage) setErrorMessage(null);
+        setExtraValues(prev => ({ ...prev, [name]: value }));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -176,6 +197,7 @@ export default function LeadForm({
                 city: geo?.city,
                 clientIp: geo?.query,
                 customFields: {
+                    ...extraValues,
                     hearAboutUs: formData.hearAboutUs,
                     subject: formData.subject,
                     companyName: formData.companyName,
@@ -216,6 +238,7 @@ export default function LeadForm({
                 pagePath: typeof window !== 'undefined' ? window.location.pathname : '',
                 ...defaultValues
             });
+            setExtraValues(initialExtra());
             if (onSuccess) onSuccess();
             if (hasTurnstileKey) setTurnstileToken('');
         } catch (error: unknown) {
@@ -401,6 +424,23 @@ export default function LeadForm({
                         )}
                     </div>
                 )}
+
+                {/* Page-specific questions */}
+                {extraFields.map((field) => (
+                    <FloatingField
+                        key={field.name}
+                        label={field.label}
+                        name={field.name}
+                        type={field.type ?? 'text'}
+                        required={field.required}
+                        value={extraValues[field.name] ?? ''}
+                        onChange={handleExtraChange}
+                        placeholder={field.placeholder}
+                        options={field.options}
+                        rows={2}
+                        minHeight={isCompact ? 65 : 85}
+                    />
+                ))}
 
                 {/* Message */}
                 {config.showMessage !== false && (

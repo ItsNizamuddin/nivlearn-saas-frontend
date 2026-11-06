@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import Banner from '@/components/home/Banner';
 import CoursesSection from '@/components/home/CoursesSection';
 import CTA from '@/components/home/CTA';
+import RecentBlogs from '@/components/blog/RecentBlogs';
 import { getCategories } from '@/services/catalog.service';
 
 const AboutUsSec = dynamic(() => import('@/components/home/AboutUsSec'));
@@ -65,6 +66,7 @@ export default async function Home() {
       <Corporate />
       <ExpertServices />
       <TestimonialSections />
+      <RecentBlogs tone="muted" />
     </>
   );
 }

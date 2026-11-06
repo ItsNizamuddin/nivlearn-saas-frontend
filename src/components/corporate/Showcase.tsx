@@ -5,12 +5,15 @@ import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import SpriteLogo from '@/components/ui/SpriteLogo';
 import { CERT_LOGOS } from '@/lib/logoSprites';
+import { IconTile } from '@/components/ui/FeatureCard';
 import { CERTIFICATIONS, GLOBAL, WHY_US, type WhyUsItem } from './data';
 
-function WhyCard({ icon, title, description }: WhyUsItem) {
+function WhyCard({ icon: Icon, title, description }: WhyUsItem) {
   return (
     <li className="rounded-2xl border border-prime/15 bg-surface p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-prime/30 hover:shadow-card">
-      <Image src={icon} alt="" className="size-12" />
+      <IconTile>
+        <Icon />
+      </IconTile>
       <h3 className="mt-4 text-lg font-bold text-prime-dark">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-text-muted">{description}</p>
     </li>
@@ -66,9 +69,10 @@ export function GlobalShowcase() {
   return (
     <Section tone="muted">
       <SectionHeading align="center" eyebrow={GLOBAL.eyebrow} title={GLOBAL.title} />
-      <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Phones: swipeable row (4 tall cards stacked was ~1900px); grid from sm up. */}
+      <ul className="-mx-4 mt-12 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden">
         {GLOBAL.items.map((item, i) => (
-          <li key={i} className="group relative overflow-hidden rounded-2xl shadow-sm">
+          <li key={i} className="group relative w-[78%] shrink-0 snap-start overflow-hidden rounded-2xl shadow-sm sm:w-auto">
             <Image
               src={item.image}
               alt=""

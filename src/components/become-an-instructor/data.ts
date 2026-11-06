@@ -1,7 +1,7 @@
 import { BookOpen, Globe, GraduationCap, Handshake, Medal, Presentation, Users, Video } from 'lucide-react';
 import type { Stat } from '@/components/ui/StatCard';
 import type { Feature } from '@/components/ui/FeatureCard';
-import heroImage from '../../../public/home/testsection/womanimg.webp';
+import heroImage from '../../../public/become-an-instructor/hero.webp';
 
 export const HERO = {
   eyebrow: 'Become an Instructor at NivLearn',
