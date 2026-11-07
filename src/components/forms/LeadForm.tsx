@@ -103,22 +103,24 @@ export default function LeadForm({
     const isSubmitDisabled = loading || !isTurnstileReady;
 
     useEffect(() => {
-        if (!formData.pagePath && typeof window !== 'undefined') {
-            setFormData(prev => ({ ...prev, pagePath: window.location.pathname }));
-        }
+        const initTimer = setTimeout(() => {
+            if (!formData.pagePath && typeof window !== 'undefined') {
+                setFormData(prev => ({ ...prev, pagePath: window.location.pathname }));
+            }
 
-        // Auto-detect country dial code from cached GeoIP if not explicitly provided
-        if (!defaultValues.dialCode) {
-            const geo = getCachedGeoLocation();
-            if (geo?.countryCode) {
-                const match = DIAL_CODES.find(
-                    (c) => c.iso.toUpperCase() === geo.countryCode.toUpperCase()
-                );
-                if (match) {
-                    setFormData((prev) => ({ ...prev, dialCode: match.dial }));
+            // Auto-detect country dial code from cached GeoIP if not explicitly provided
+            if (!defaultValues.dialCode) {
+                const geo = getCachedGeoLocation();
+                if (geo?.countryCode) {
+                    const match = DIAL_CODES.find(
+                        (c) => c.iso.toUpperCase() === geo.countryCode.toUpperCase()
+                    );
+                    if (match) {
+                        setFormData((prev) => ({ ...prev, dialCode: match.dial }));
+                    }
                 }
             }
-        }
+        }, 0);
 
         const handleGeoUpdated = (e: Event) => {
             if (defaultValues.dialCode) return;
@@ -135,7 +137,10 @@ export default function LeadForm({
         };
 
         window.addEventListener('geolocation:updated', handleGeoUpdated);
-        return () => window.removeEventListener('geolocation:updated', handleGeoUpdated);
+        return () => {
+            clearTimeout(initTimer);
+            window.removeEventListener('geolocation:updated', handleGeoUpdated);
+        };
     }, [formData.pagePath, defaultValues.dialCode]);
 
     const handleCourseChange = useCallback((slug: string, title?: string) => {
@@ -433,9 +438,9 @@ export default function LeadForm({
                     </>
                 )}
 
-                {/* Corporate Fields */}
+                {/* Corporate Fields: paired in 2 columns when both exist, full-width when only one exists */}
                 {(config.company || config.designation) && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className={config.company && config.designation ? "grid grid-cols-1 sm:grid-cols-2 gap-2.5" : "w-full"}>
                         {config.company && (
                             <FloatingField
                                 label="Company Name"

@@ -128,12 +128,12 @@ export default function CourseBenefits({ course }: { course: CourseDetail }) {
   };
 
   return (
-    <section id="benefits" className="relative bg-light py-12 lg:py-16 overflow-hidden border-y border-border-muted/50">
+    <section id="benefits" className="relative bg-light py-12 lg:py-16 border-y border-border-muted/50">
       <div className="section-container relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
 
           {/* ── Left Column: Context, Tabs & CTA ── */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24 flex flex-col gap-5">
+          <div className="lg:col-span-5 lg:sticky lg:top-24 self-start space-y-5">
 
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-prime/10 text-prime text-[11px] font-bold tracking-widest uppercase mb-3">
@@ -190,7 +190,7 @@ export default function CourseBenefits({ course }: { course: CourseDetail }) {
             )}
 
             {/* CTA Card — pushed to bottom via mt-auto */}
-            <div className="mt-auto rounded-xl bg-surface border border-border-muted/70 p-5 shadow-xs">
+            <div className="rounded-xl bg-surface border border-border-muted/70 p-5 shadow-xs">
               <p className="text-xs text-text-muted leading-relaxed mb-4">
                 {activeTab === 'individual'
                   ? 'Connect with a NivLearn advisor to get a personalised curriculum walkthrough, batch schedules, and placement support details.'
@@ -208,13 +208,13 @@ export default function CourseBenefits({ course }: { course: CourseDetail }) {
           </div>
 
           {/* ── Right Column: Full-width stacked benefit rows ── */}
-          <div className="lg:col-span-7 flex flex-col gap-2.5">
+          <div className={`lg:col-span-7 ${currentItems.length > 4 ? "grid grid-cols-1 sm:grid-cols-2 gap-3" : "flex flex-col gap-2.5"}`}>
             {currentItems.map((item, index) => {
               const itemNumber = (index + 1).toString().padStart(2, '0');
               return (
                 <div
                   key={`${activeTab}-${index}`}
-                  className="group relative flex items-center gap-4 bg-surface rounded-xl px-5 py-4 border border-border-muted/70 hover:border-prime/40 hover:shadow-md transition-all duration-200 overflow-hidden"
+                  className="group relative flex items-center gap-3 bg-surface rounded-xl px-4 py-3.5 border border-border-muted/70 hover:border-prime/40 hover:shadow-sm transition-all duration-200 overflow-hidden"
                 >
                   {/* Left brand accent bar */}
                   <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-prime/20 group-hover:bg-prime transition-colors duration-200" />

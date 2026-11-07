@@ -42,8 +42,11 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
     // Keep mounted during exit animation
     useEffect(() => {
         if (isOpen) {
-            setVisible(true);
-            setIsSuccess(false);
+            const timer = setTimeout(() => {
+                setVisible(true);
+                setIsSuccess(false);
+            }, 0);
+            return () => clearTimeout(timer);
         } else {
             const timer = setTimeout(() => {
                 setVisible(false);
@@ -59,7 +62,6 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
 
     const rawTitle = modalConfig.formTitle || 'Talk to Learning Advisor';
     const title = typeof rawTitle === 'string' ? rawTitle : 'Talk to Learning Advisor';
-    const description = modalConfig.formDescription;
 
     const titleLower = title.toLowerCase();
     const isCurriculum = titleLower.includes('curriculum') || titleLower.includes('syllabus') || titleLower.includes('download');
@@ -263,7 +265,8 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
                         </div>
 
                         {/* Right Section: Form Column */}
-                        <div className="w-full md:w-[58%] p-5 sm:p-6 overflow-y-auto max-h-[88vh] flex flex-col justify-center">
+                        <div className="w-full md:w-[58%] p-5 sm:p-6 overflow-y-auto max-h-[88vh] flex flex-col">
+                            <div className="w-full my-auto">
                             {/* Mobile Header (Shown on small screens only) */}
                             <div className="flex md:hidden flex-col items-center w-full pb-3 mb-3 border-b border-border-muted/50 text-center">
                                 <Image
@@ -315,8 +318,8 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
                                     purpose: modalConfig.config?.purpose ?? false,
                                     showCourse: isCoursePage ? false : (modalConfig.config?.showCourse ?? true),
                                     showMessage: modalConfig.config?.showMessage ?? true,
-                                    company: modalConfig.config?.company ?? false,
-                                    designation: modalConfig.config?.designation ?? false,
+                                    company: modalConfig.config?.company ?? (isCorporate ? true : false),
+                                    designation: modalConfig.config?.designation ?? (isCorporate ? true : false),
                                     isReferral: modalConfig.config?.isReferral ?? false,
                                 }}
                                 defaultValues={{
@@ -350,6 +353,7 @@ export default function LeadModal({ courses }: LeadModalProps = {}) {
                                     }
                                 }}
                             />
+                            </div>
                         </div>
                     </div>
                 )}

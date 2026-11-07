@@ -247,7 +247,15 @@ export interface CourseDetail {
     path?: Array<{ title?: string; value?: string; description?: string }>;
     career_path?: Array<{ title?: string; value?: string; description?: string }>;
     certification_process?: Array<{ title?: string; value?: string; desc?: string; description?: string }>;
-    certificates?: Array<{ name?: string; title?: string; image?: string; url?: string; certimg?: { url?: string; thumbnail?: string } }>;
+    certificates?: Array<{
+      name?: string;
+      title?: string;
+      description?: string;
+      desc?: string;
+      image?: string;
+      url?: string;
+      certimg?: { url?: string; thumbnail?: string };
+    }>;
     certificate_template?: string | { image: string };
   };
   benefits_section?: {

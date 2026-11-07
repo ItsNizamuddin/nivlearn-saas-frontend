@@ -45,13 +45,13 @@ export default function CourseFAQ({ course }: { course: CourseDetail }) {
   };
 
   return (
-    <section id="faqs" className="relative bg-white py-12 sm:py-14 border-b border-border-muted/50 overflow-hidden">
+    <section id="faqs" className="relative bg-white py-12 sm:py-14 border-b border-border-muted/50">
       <div className="section-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* ══════════════════════════════════════════════════════
               LEFT SIDEBAR: Context & Advisor Card (Desktop 4-5 cols, Mobile Header)
              ══════════════════════════════════════════════════════ */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-5">
+          <div className="lg:col-span-5 lg:sticky lg:top-20 self-start space-y-5">
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-prime/10 border border-prime/20 text-prime text-[11px] 2xl:text-xs font-bold uppercase tracking-wider mb-3">
                 <HelpCircle className="w-3.5 h-3.5" />
@@ -68,7 +68,7 @@ export default function CourseFAQ({ course }: { course: CourseDetail }) {
             </div>
 
             {/* Support / Ask Advisor Box (Desktop Only) */}
-            <div className="hidden lg:block bg-gradient-to-br from-light/50 via-white to-light/30 border border-border-muted/80 rounded-lg p-5 shadow-xs space-y-3.5">
+            <div className="hidden lg:block bg-linear-to-br from-light/50 via-white to-light/30 border border-border-muted/80 rounded-lg p-5 shadow-xs space-y-3.5">
               <div className="w-9 h-9 rounded-xl bg-prime/10 text-prime flex items-center justify-center">
                 <MessageCircleQuestion className="w-5 h-5" />
               </div>
