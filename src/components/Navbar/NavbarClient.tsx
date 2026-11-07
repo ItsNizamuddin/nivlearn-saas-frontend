@@ -26,6 +26,30 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
 
     const navRef = useRef<HTMLElement>(null);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const [topOffset, setTopOffset] = useState<number>(64);
+
+    // Dynamically calculate the bottom edge of the navbar so mega dropdowns align cleanly
+    // even when header ribbons are present, dismissed, or dynamic in height.
+    useEffect(() => {
+        if (!activeMenu) return;
+
+        const updateOffset = () => {
+            if (navRef.current) {
+                const rect = navRef.current.getBoundingClientRect();
+                setTopOffset(Math.max(0, Math.round(rect.bottom)));
+            }
+        };
+
+        updateOffset();
+
+        window.addEventListener('resize', updateOffset);
+        window.addEventListener('scroll', updateOffset, { passive: true });
+
+        return () => {
+            window.removeEventListener('resize', updateOffset);
+            window.removeEventListener('scroll', updateOffset);
+        };
+    }, [activeMenu]);
 
     // Desktop hover handlers with smooth debounce
     const handleMouseEnter = (menu: 'courses' | 'resources') => {
@@ -80,7 +104,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
 
     return (
         <>
-            <nav ref={navRef} className="w-full z-40 bg-surface border-b border-border-muted/60">
+            <nav ref={navRef} className="relative w-full z-40 bg-surface border-b border-border-muted/60">
                 <div className="section-container">
                     <div className="flex items-center justify-between h-16 py-3">
                         {/* Mobile In-Navbar Active Search Field */}
@@ -210,6 +234,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                         onMouseEnter={handleCancelLeave}
                         onMouseLeave={handleMouseLeave}
                         onClose={() => setActiveMenu(null)}
+                        topOffset={topOffset}
                     />
                 )}
 
@@ -219,6 +244,7 @@ export default function NavbarClient({ categories = [] }: NavbarClientProps) {
                         onMouseEnter={handleCancelLeave}
                         onMouseLeave={handleMouseLeave}
                         onClose={() => setActiveMenu(null)}
+                        topOffset={topOffset}
                     />
                 )}
             </nav>

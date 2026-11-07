@@ -9,9 +9,15 @@ interface ResourcesMenuProps {
   onClose: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  topOffset?: number;
 }
 
-export default function ResourcesMenu({ onClose, onMouseEnter, onMouseLeave }: ResourcesMenuProps) {
+export default function ResourcesMenu({
+  onClose,
+  onMouseEnter,
+  onMouseLeave,
+  topOffset = 64,
+}: ResourcesMenuProps) {
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     const originalPaddingRight = document.body.style.paddingRight;
@@ -48,15 +54,20 @@ export default function ResourcesMenu({ onClose, onMouseEnter, onMouseLeave }: R
       window.removeEventListener('wheel', handleWheel);
     };
   }, []);
+
   return (
     <div
-      className="fixed inset-0 top-16 z-40 bg-black/25 backdrop-blur-[1px] flex justify-center pt-2 px-4 cursor-default overscroll-contain"
+      className="fixed inset-x-0 bottom-0 z-40 bg-black/25 backdrop-blur-[1px] flex justify-center pt-2 px-4 cursor-default overscroll-contain"
+      style={{ top: `${topOffset}px` }}
       onClick={onClose}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       <div
         onClick={(e) => e.stopPropagation()}
+        style={{
+          maxHeight: `calc(100vh - ${topOffset + 24}px)`,
+        }}
         className="bg-white rounded-xl shadow-2xl border border-zinc-200/90 w-full max-w-5xl mx-auto overflow-hidden flex flex-col h-[480px] cursor-auto overscroll-contain"
       >
         {/* Main Content Area */}

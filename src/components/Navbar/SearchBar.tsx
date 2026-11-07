@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search, XCircle, ChevronRight, GraduationCap } from 'lucide-react';
@@ -47,7 +47,6 @@ function HighlightMatch({ text, query }: { text: string; query: string }) {
 }
 
 export default function SearchBar({
-  categories = [],
   onFocus,
   onSelect,
   className = 'w-full w-80 lg:w-62',
@@ -56,7 +55,7 @@ export default function SearchBar({
 }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
+  const isSearching = Boolean(query.trim() && query.trim() !== debouncedQuery);
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
@@ -72,15 +71,14 @@ export default function SearchBar({
   // 200ms Debounce Handler
   useEffect(() => {
     if (!query.trim()) {
-      setDebouncedQuery('');
-      setIsSearching(false);
-      return;
+      const t = setTimeout(() => {
+        setDebouncedQuery('');
+      }, 0);
+      return () => clearTimeout(t);
     }
 
-    setIsSearching(true);
     const timer = setTimeout(() => {
       setDebouncedQuery(query.trim());
-      setIsSearching(false);
     }, 200);
 
     return () => clearTimeout(timer);
@@ -91,7 +89,9 @@ export default function SearchBar({
   // Search courses on-demand via API
   useEffect(() => {
     if (!debouncedQuery) {
-      setSearchResults([]);
+      queueMicrotask(() => {
+        setSearchResults([]);
+      });
       return;
     }
 
