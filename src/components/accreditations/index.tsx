@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import CheckList from '@/components/ui/CheckList';
 import FeatureCard from '@/components/ui/FeatureCard';
 import PageHero from '@/components/ui/PageHero';
@@ -25,13 +25,13 @@ export default function Accreditations() {
       {/* Accreditation bodies */}
       <Section tone="muted">
         <SectionHeading title={BODIES.title} />
-        <ul className="mt-10 flex flex-wrap gap-6">
+        <ul className="mt-10 flex flex-wrap gap-4 sm:gap-6">
           {BODIES.logos.map((logo) => (
             <li
               key={logo.alt}
-              className="flex h-32 w-64 items-center justify-center rounded-2xl border border-prime/10 bg-surface p-8 shadow-sm transition-all duration-200 hover:border-prime/30 hover:shadow-card"
+              className="flex h-32 w-full sm:w-64 items-center justify-center rounded-2xl border border-prime/10 bg-surface p-6 sm:p-8 shadow-sm transition-all duration-200 hover:border-prime/30 hover:shadow-card"
             >
-              <Image src={logo.src} alt={logo.alt} width={200} height={60} sizes="200px" className="h-auto max-h-20 w-auto" />
+              <Image src={logo.src} alt={logo.alt} width={200} height={60} sizes="(min-width: 640px) 200px, 100vw" className="h-auto max-h-16 sm:max-h-20 w-auto" />
             </li>
           ))}
         </ul>
@@ -49,22 +49,22 @@ export default function Accreditations() {
         </ul>
       </Section>
 
-      {/* Accredited programs */}
-      <Section tone="dark" glow containerClassName="grid gap-10 lg:grid-cols-3 lg:items-center">
-        <SectionHeading tone="dark" title={PROGRAMS.title} />
-        <ul className="grid gap-6 sm:grid-cols-2 lg:col-span-2">
+      {/* Programs */}
+      <Section tone="light">
+        <SectionHeading title={PROGRAMS.title} />
+        <ul className="mt-10 grid gap-6 md:grid-cols-2">
           {PROGRAMS.items.map(({ icon: Icon, title, description }) => (
-            <FeatureCard key={title} tone="dark" icon={<Icon />} title={title} description={description} />
+            <FeatureCard key={title} icon={<Icon />} iconTone="orange" title={title} description={description} />
           ))}
         </ul>
       </Section>
 
-      {/* Maintaining standards */}
-      <Section tone="light">
+      {/* Standards */}
+      <Section>
         <SectionHeading eyebrow={STANDARDS.eyebrow} title={STANDARDS.title} />
         <ul className="mt-10 grid gap-6 md:grid-cols-2">
           {STANDARDS.items.map(({ icon: Icon, title, description }) => (
-            <FeatureCard key={title} icon={<Icon />} iconTone="orange" title={title} description={description} />
+            <FeatureCard key={title} layout="row" icon={<Icon />} iconTone="orange" title={title} description={description} />
           ))}
         </ul>
       </Section>
