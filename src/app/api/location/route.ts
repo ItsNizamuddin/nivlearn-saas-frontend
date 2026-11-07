@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
         }
 
         const searchParams = request.nextUrl.searchParams;
-        let ip = searchParams.get('ip') || clientIp;
+        const ip = searchParams.get('ip') || clientIp;
 
         const isLoopback =
             !ip ||

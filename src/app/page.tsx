@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic';
 import Banner from '@/components/home/Banner';
 import CoursesSection from '@/components/home/CoursesSection';
 import CTA from '@/components/home/CTA';
+import HomeSchema from '@/components/home/HomeSchema';
+import HomeSEOContent from '@/components/home/HomeSEOContent';
 import RecentBlogs from '@/components/blog/RecentBlogs';
 import { getCategories } from '@/services/catalog.service';
 
@@ -55,6 +57,7 @@ export default async function Home() {
 
   return (
     <>
+      <HomeSchema />
       <Banner />
       <CoursesSection categories={categories} />
       <CTA />
@@ -67,6 +70,7 @@ export default async function Home() {
       <ExpertServices />
       <TestimonialSections />
       <RecentBlogs tone="muted" />
+      <HomeSEOContent />
     </>
   );
 }

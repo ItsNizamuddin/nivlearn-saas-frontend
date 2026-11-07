@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getCourseBySlug } from '@/services/catalog.service';
+import { getCourseBySlug, getCourseSchedules } from '@/services/catalog.service';
 import CourseHero from '@/components/course/CourseHero';
 import CourseStickyNav from '@/components/course/CourseStickyNav';
 import CourseOverview from '@/components/course/CourseOverview';
@@ -87,7 +87,10 @@ export default async function CoursePage({ params }: PageProps) {
   const courseSlug = courseParts[0];
   const locationSlug = courseParts[1];
 
-  const course = await getCourseBySlug(courseSlug, locationSlug);
+  const [course, schedules] = await Promise.all([
+    getCourseBySlug(courseSlug, locationSlug),
+    getCourseSchedules(courseSlug),
+  ]);
 
   if (!course) {
     notFound();
@@ -139,7 +142,7 @@ export default async function CoursePage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <CourseSchema course={course} courseUrl={courseUrl} />
+      <CourseSchema course={course} courseUrl={courseUrl} schedules={schedules} />
       <CourseHero course={course} location={locationSlug} />
       <CourseStickyNav items={navItems} course={course} />
       <CourseOverview course={course} />
