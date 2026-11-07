@@ -9,7 +9,7 @@ import TruncatedContent from '@/components/ui/TruncatedContent';
 import BrandBackdrop from '@/components/ui/BrandBackdrop';
 import BannerScheduleCards from './BannerScheduleCards';
 import type { CourseDetail } from '@/services/catalog.service';
-import { parseToListItems, smoothScrollTo } from '@/lib/utils';
+import { parseToListItems } from '@/lib/utils';
 
 export default function CourseHero({
   course,
@@ -183,13 +183,13 @@ export default function CourseHero({
 
             {/* Action Buttons: balanced on mobile with prominent Download pill + side-by-side secondary actions */}
             <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 pt-2 sm:pt-3">
-              <a
-                href="#schedules"
-                onClick={(e) => smoothScrollTo('#schedules', e)}
+              {/* All batches for this course, with filters and plan picker */}
+              <Link
+                href={`/schedules/${course.slug}`}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-prime text-white bg-prime hover:bg-prime-dark hover:border-prime-dark font-bold text-xs sm:text-sm px-6 py-2.5 rounded-lg transition-colors cursor-pointer shadow-xs active:scale-95"
               >
                 View Schedules
-              </a>
+              </Link>
               <button
                 type="button"
                 onClick={handleCurriculumDownload}

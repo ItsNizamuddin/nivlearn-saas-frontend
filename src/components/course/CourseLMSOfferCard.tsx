@@ -13,8 +13,12 @@ import {
   PhoneCall,
   Check
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useLeadModal } from '@/context/LeadModalContext';
+import { useIpLocation } from '@/hooks/useIpLocation';
 import { useLmsOffers } from '@/hooks/useLmsOffers';
+import { viewerTimeZone } from '@/lib/scheduleTime';
+import { lmsProgramUrl } from '@/lib/site';
 import type { CourseDetail } from '@/services/catalog.service';
 import type { LMSClass, LMSProgram } from '@/types/lms';
 
@@ -44,6 +48,8 @@ function formatScheduleDate(startsAt?: string, endsAt?: string): string {
 
 export default function CourseLMSOfferCard({ course, isMobile = false }: CourseLMSOfferCardProps) {
   const { openModal } = useLeadModal();
+  const router = useRouter();
+  const { data: geo } = useIpLocation();
   const { classes, programs, loading } = useLmsOffers(course.slug);
 
   const hasClasses = classes.length > 0;
@@ -74,6 +80,21 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
     (course.leadmagnet?.[0] as unknown as { brochure?: { url?: string } })?.brochure?.url;
 
   const handleEnrollCohort = (cohort: LMSClass) => {
+    // A priced cohort is a schedule: pay on our checkout (multi-plan → plan picker on the schedules page).
+    const code = cohort.schedule?.code || cohort.cohortCode;
+    if (code && cohort.pricing?.payAmount) {
+      if (cohort.pricing.hasMultiplePlans) {
+        router.push(`/schedules/${cohort.course?.slug || course.slug}`);
+        return;
+      }
+      const params = new URLSearchParams({ schedule: code });
+      if (cohort.pricing.currency?.code) params.set('currency', cohort.pricing.currency.code);
+      params.set('tz', viewerTimeZone(geo?.timezone));
+      router.push(`/checkout?${params}`);
+      return;
+    }
+
+    // Unpriced cohort: keep the enquiry form.
     const isFlex = cohort.schedule?.isFlexibleSchedule;
     const rawCommence =
       cohort.schedule?.commenceDate ||
@@ -105,6 +126,12 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
   };
 
   const handleEnrollProgram = (program: LMSProgram) => {
+    // Self-paced programs are sold and delivered on the LMS.
+    if (program.id) {
+      window.location.assign(lmsProgramUrl(program.id));
+      return;
+    }
+
     const priceStr = program.pricing?.actualPrice
       ? ` (${program.pricing.symbol || '₹'}${program.pricing.actualPrice.toLocaleString()})`
       : '';
@@ -306,8 +333,8 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
                 type="button"
                 onClick={() => setSelectedClassIndex(idx)}
                 className={`text-[10px] px-2 py-0.5 rounded-md border transition-all cursor-pointer shrink-0 ${idx === selectedClassIndex
-                    ? 'bg-prime text-white border-prime font-bold shadow-2xs'
-                    : 'bg-light hover:bg-slate-100 text-slate-600 border-border-muted/70'
+                  ? 'bg-prime text-white border-prime font-bold shadow-2xs'
+                  : 'bg-light hover:bg-slate-100 text-slate-600 border-border-muted/70'
                   }`}
               >
                 Batch {idx + 1}
@@ -419,8 +446,8 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
                 type="button"
                 onClick={() => setSelectedProgramIndex(idx)}
                 className={`text-[10px] px-2 py-0.5 rounded-md border transition-all cursor-pointer shrink-0 truncate max-w-[140px] ${idx === selectedProgramIndex
-                    ? 'bg-amber-500 text-white border-amber-500 font-bold shadow-2xs'
-                    : 'bg-light hover:bg-slate-100 text-slate-600 border-border-muted/70'
+                  ? 'bg-amber-500 text-white border-amber-500 font-bold shadow-2xs'
+                  : 'bg-light hover:bg-slate-100 text-slate-600 border-border-muted/70'
                   }`}
               >
                 {prg.title}
@@ -467,9 +494,9 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
           <button
             type="button"
             onClick={() => handleEnrollProgram(selectedProgram)}
-            className="bg-prime-yellow hover:bg-amber-400 active:scale-95 text-prime-dark font-extrabold text-xs py-2 px-3.5 rounded-lg transition-all cursor-pointer shadow-xs flex items-center gap-1 shrink-0"
+            className="bg-prime-yellow hover:bg-amber-400 active:scale-95 text-white font-extrabold text-xs py-2 px-3.5 rounded-lg transition-all cursor-pointer shadow-xs flex items-center gap-1 shrink-0"
           >
-            <span>Buy Now</span>
+            <span>Get Full Access</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -492,8 +519,8 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
               type="button"
               onClick={() => setMobileTab('cohort')}
               className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${mobileTab === 'cohort'
-                  ? 'bg-surface text-prime-dark shadow-xs border border-border-muted/80'
-                  : 'text-slate-500 hover:text-slate-800'
+                ? 'bg-surface text-prime-dark shadow-xs border border-border-muted/80'
+                : 'text-slate-500 hover:text-slate-800'
                 }`}
             >
               <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
@@ -514,8 +541,8 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
               type="button"
               onClick={() => setMobileTab('program')}
               className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${mobileTab === 'program'
-                  ? 'bg-surface text-prime-dark shadow-xs border border-border-muted/80'
-                  : 'text-slate-500 hover:text-slate-800'
+                ? 'bg-surface text-prime-dark shadow-xs border border-border-muted/80'
+                : 'text-slate-500 hover:text-slate-800'
                 }`}
             >
               <Video className="w-3 h-3 text-amber-500 shrink-0" />

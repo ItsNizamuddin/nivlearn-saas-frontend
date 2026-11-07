@@ -206,11 +206,13 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
       <div className="space-y-3">
         {activeSchedules.slice(0, 2).map((schedule, idx) => {
           const pricing = schedule.filteredPricing?.[0];
-          const actualPrice = pricing?.actualPrice;
-          const comparedPrice = pricing?.comparedPrice;
+          // The CMS has no fixed meaning for the two prices: checkout charges the lower one,
+          // so show that and strike through the higher (same as the schedules page).
+          const prices = [pricing?.comparedPrice, pricing?.actualPrice].filter((p): p is number => typeof p === 'number' && p > 0);
+          const finalPrice = prices.length ? Math.min(...prices) : undefined;
+          const actualPrice = prices.length ? Math.max(...prices) : undefined;
           const currencySymbol = pricing?.currency?.symbol || '₹';
-          const isDiscounted = actualPrice && comparedPrice && comparedPrice < actualPrice;
-          const finalPrice = comparedPrice || actualPrice;
+          const isDiscounted = !!finalPrice && !!actualPrice && finalPrice < actualPrice;
 
           const tz = schedule.country?.timeZone || 'Asia/Kolkata';
           const dateRange = formatScheduleDate(schedule.startsAt, schedule.endsAt);
@@ -318,7 +320,8 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
                   onClick={() => handleEnrollClick(schedule)}
                   className="inline-flex items-center gap-1 bg-prime-yellow hover:bg-amber-400 active:scale-95 text-prime-dark font-extrabold text-xs px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer shadow-xs"
                 >
-                  <span>Enroll Now</span>
+                  {/* Multi-plan batches pick a plan on the schedules page first */}
+                  <span>{finalPrice && schedule.pricingTemplateId ? 'Choose Plan' : 'Enroll Now'}</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>

@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { useLeadModal } from '@/context/LeadModalContext';
 import type { CategoryDetail } from '@/services/catalog.service';
-import { smoothScrollTo } from '@/lib/utils';
+import { cn, smoothScrollTo } from '@/lib/utils';
 
 interface ParsedKeyPoint {
   title?: string;
@@ -229,7 +229,7 @@ export default function CategoryBanner({ category }: { category: CategoryDetail 
       </div>
 
       {/* ===== DESKTOP LAYOUT (>= lg) ===== */}
-      <div className="hidden lg:grid lg:grid-cols-12 items-start gap-10 xl:gap-14">
+      <div className="hidden lg:grid lg:grid-cols-12 items-center gap-10 xl:gap-14">
 
         {/* Left Column: 7 cols */}
         <div className="lg:col-span-7 space-y-6">
@@ -313,24 +313,32 @@ export default function CategoryBanner({ category }: { category: CategoryDetail 
                 </div>
               </div>
 
-              {/* Points List */}
-              <div className="px-5 py-4 space-y-3">
+              {/* Points List: title + 2-line summary each, so the card stays close to the hero's height */}
+              <ul className="px-5 py-4 space-y-3.5">
                 {desktopVisiblePoints.map((pt, idx) => (
-                  <div key={idx} className="flex items-start gap-3 group">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-emerald-500/20 transition-colors">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <li key={idx} className="flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <CheckCircle2 aria-hidden className="w-3.5 h-3.5 text-emerald-600" />
+                    </span>
+                    <div className="min-w-0">
+                      {pt.title && <p className="text-sm font-bold text-prime-dark leading-snug">{pt.title}</p>}
+                      <p
+                        className={cn(
+                          'text-[13px] text-slate-600 leading-relaxed',
+                          pt.title && 'mt-0.5',
+                          !desktopPointsExpanded && 'line-clamp-2',
+                        )}
+                      >
+                        {pt.description}
+                      </p>
                     </div>
-                    <p className="text-[13px] xl:text-sm text-slate-700 leading-relaxed">
-                      {pt.title && (
-                        <strong className="font-bold text-prime-dark">{pt.title}:&nbsp;</strong>
-                      )}
-                      <span className="font-medium">{pt.description}</span>
-                    </p>
-                  </div>
+                  </li>
                 ))}
+              </ul>
 
-                {/* Read More / Show Less Toggle (Desktop) */}
-                {keyPoints.length > POINTS_LIMIT && (
+              <div className="px-5 pb-3 -mt-1">
+                {/* Read More / Show Less Toggle (Desktop): also un-clamps the summaries */}
+                {(keyPoints.length > POINTS_LIMIT || keyPoints.some((pt) => pt.description.length > 110)) && (
                   <button
                     type="button"
                     onClick={() => setDesktopPointsExpanded(!desktopPointsExpanded)}
@@ -339,7 +347,9 @@ export default function CategoryBanner({ category }: { category: CategoryDetail 
                     <span>
                       {desktopPointsExpanded
                         ? 'Show Less'
-                        : `Read More (+${keyPoints.length - POINTS_LIMIT} highlights)`}
+                        : keyPoints.length > POINTS_LIMIT
+                          ? `Read More (+${keyPoints.length - POINTS_LIMIT} highlights)`
+                          : 'Read More'}
                     </span>
                     {desktopPointsExpanded ? (
                       <ChevronUp className="w-3.5 h-3.5" />
