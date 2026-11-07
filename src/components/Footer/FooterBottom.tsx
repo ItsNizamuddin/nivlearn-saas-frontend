@@ -29,7 +29,7 @@ export default function FooterBottom({ bottomRibbon }: FooterBottomProps) {
                     rel="noopener noreferrer"
                     className="text-on-dark/90 hover:text-prime-yellow transition-colors font-medium"
                 >
-                    Skilldeck
+                    Karyakrama
                 </a>
             </p>
 
