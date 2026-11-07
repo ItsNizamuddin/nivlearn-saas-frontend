@@ -5,13 +5,10 @@ import {
   Calendar,
   Clock,
   Laptop,
-  Wifi,
   MapPin,
   ChevronRight,
-  Sparkles,
   Video,
   PhoneCall,
-  Check
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useLeadModal } from '@/context/LeadModalContext';
@@ -56,7 +53,9 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
   const hasPrograms = programs.length > 0;
 
   // Mobile active tab ('cohort' | 'program')
-  const [mobileTab, setMobileTab] = useState<'cohort' | 'program'>('cohort');
+  const [userSelectedTab, setUserSelectedTab] = useState<'cohort' | 'program' | null>(null);
+  const mobileTab = userSelectedTab ?? (!hasClasses && hasPrograms ? 'program' : 'cohort');
+  const setMobileTab = setUserSelectedTab;
 
   // Selected cohort index if multiple classes exist
   const [selectedClassIndex, setSelectedClassIndex] = useState(0);
@@ -65,15 +64,6 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
   // Selected program index if multiple programs exist
   const [selectedProgramIndex, setSelectedProgramIndex] = useState(0);
   const selectedProgram = programs[selectedProgramIndex] || programs[0];
-
-  // Auto sync mobile tab if only one track exists
-  React.useEffect(() => {
-    if (hasClasses && !hasPrograms) {
-      setMobileTab('cohort');
-    } else if (!hasClasses && hasPrograms) {
-      setMobileTab('program');
-    }
-  }, [hasClasses, hasPrograms]);
 
   const brochureUrl =
     course.leadmagnet?.[0]?.broucher?.url ||
@@ -87,7 +77,7 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
         router.push(`/schedules/${cohort.course?.slug || course.slug}`);
         return;
       }
-      const params = new URLSearchParams({ schedule: code });
+      const params = new URLSearchParams({ schedule: code, cohort: 'true' });
       if (cohort.pricing.currency?.code) params.set('currency', cohort.pricing.currency.code);
       params.set('tz', viewerTimeZone(geo?.timezone));
       router.push(`/checkout?${params}`);
@@ -308,7 +298,7 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
   }
 
   // COMPACT LIVE COHORT CARD
-  const renderCohortCard = (compact: boolean = true) => {
+  const renderCohortCard = () => {
     if (!selectedClass) return null;
     return (
       <div className="rounded-lg overflow-hidden bg-surface border border-border-muted/80 shadow-xs hover:border-prime/40 transition-all p-3 sm:p-3.5 space-y-2.5">
@@ -415,7 +405,7 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
   };
 
   // COMPACT SELF-PACED CARD (NO BIG THUMBNAIL, COMPACT STATS)
-  const renderProgramCard = (compact: boolean = true) => {
+  const renderProgramCard = () => {
     if (!selectedProgram) return null;
     return (
       <div className="rounded-xl overflow-hidden bg-surface border border-border-muted/80 shadow-xs hover:border-amber-400/50 transition-all p-3 sm:p-3.5 space-y-2.5">
@@ -558,8 +548,8 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
         )}
 
         {/* Display selected card on mobile */}
-        {mobileTab === 'cohort' && (hasClasses ? renderCohortCard(true) : renderCohortFallbackCard())}
-        {mobileTab === 'program' && renderProgramCard(true)}
+        {mobileTab === 'cohort' && (hasClasses ? renderCohortCard() : renderCohortFallbackCard())}
+        {mobileTab === 'program' && renderProgramCard()}
 
         {/* Subtle Advisor link */}
         <button
@@ -582,10 +572,10 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
   return (
     <div className="hidden lg:block space-y-3">
       {/* 1. Live Cohort Card (or Rich Cohort Advisor Card if no classes scheduled yet) */}
-      {hasClasses ? renderCohortCard(true) : renderCohortFallbackCard()}
+      {hasClasses ? renderCohortCard() : renderCohortFallbackCard()}
 
       {/* 2. Self-Paced Track Card (Stacked below) */}
-      {hasPrograms && renderProgramCard(true)}
+      {hasPrograms && renderProgramCard()}
 
       {/* Subtle Learning Advisor Link underneath both */}
       <button

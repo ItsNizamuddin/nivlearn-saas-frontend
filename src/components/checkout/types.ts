@@ -49,6 +49,7 @@ export interface CheckoutData {
   price: Money;
   tax: TaxInfo;
   gateways: PaymentGateway[];
+  isCohort?: boolean;
 }
 
 const round2 = (n: number) => Math.round(n * 100) / 100;

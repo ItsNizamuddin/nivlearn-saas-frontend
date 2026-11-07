@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, CreditCard, LoaderCircle, Lock, ShieldCheck, Smartphone } from 'lucide-react';
+import { ArrowLeft, CreditCard, Headphones, KeyRound, LoaderCircle, Lock, ShieldCheck, Smartphone, Sparkles, Video } from 'lucide-react';
 import { buttonClass } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { formatMoney, type PaymentGateway } from './types';
@@ -16,10 +16,12 @@ export default function PaymentOptions({
   checkout,
   gateways,
   currency,
+  isCohort = false,
 }: {
   checkout: CheckoutState;
   gateways: PaymentGateway[];
   currency: string;
+  isCohort?: boolean;
 }) {
   const { pay, busy, activeGateway, stripeReady, mountStripeCard, confirmStripe, backToDetails, pricing, customer } = checkout;
   const total = formatMoney(pricing.totalPayable, currency);
@@ -89,6 +91,36 @@ export default function PaymentOptions({
           <button type="button" onClick={confirmStripe} disabled={busy} className={buttonClass('accent', 'lg', 'w-full disabled:opacity-70')}>
             {busy ? <LoaderCircle aria-hidden className="size-5 animate-spin" /> : <Lock aria-hidden className="size-4" />} Pay {total}
           </button>
+        </div>
+      )}
+
+      {/* Post-Payment Guarantee & Next Steps Clarity (Shown ONLY for LMS Cohorts) */}
+      {isCohort && (
+        <div className="rounded-xl border border-prime/20 bg-prime/5 p-4 sm:p-5 text-left">
+          <h3 className="flex items-center gap-2 text-sm font-bold text-prime-dark">
+            <Sparkles className="size-4 text-prime shrink-0" />
+            What happens right after you enroll?
+          </h3>
+          <ul className="mt-3 space-y-2.5 text-xs sm:text-sm text-text-muted">
+            <li className="flex items-start gap-2.5">
+              <KeyRound className="size-4 text-prime shrink-0 mt-0.5" />
+              <span>
+                <strong className="text-prime-dark font-semibold">Instant LMS Credentials:</strong> Your student portal login ID and temporary password will be sent automatically to your email & WhatsApp immediately after payment.
+              </span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <Video className="size-4 text-prime shrink-0 mt-0.5" />
+              <span>
+                <strong className="text-prime-dark font-semibold">Live Class Meeting Links:</strong> Google Meet / Zoom links, cohort calendar, and private student community invite are dispatched before your batch launch.
+              </span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <Headphones className="size-4 text-prime shrink-0 mt-0.5" />
+              <span>
+                <strong className="text-prime-dark font-semibold">Dedicated Coordinator:</strong> A personal learning coordinator is assigned to ensure smooth onboarding, answer doubts, and support your setup.
+              </span>
+            </li>
+          </ul>
         </div>
       )}
 

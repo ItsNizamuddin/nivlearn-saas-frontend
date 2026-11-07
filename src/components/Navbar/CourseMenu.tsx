@@ -102,7 +102,9 @@ export default function CourseMenu({
     }
 
     let isMounted = true;
-    setLoadingCategory(catSlug);
+    queueMicrotask(() => {
+      if (isMounted) setLoadingCategory(catSlug);
+    });
 
     fetch(`/api/courses?category=${catSlug}`)
       .then((res) => res.json())
@@ -131,9 +133,7 @@ export default function CourseMenu({
 
   const isFetchingCourses =
     isLoading ||
-    categories.length === 0 ||
-    !currentCategory ||
-    loadingCategory === currentCategory?.slug;
+    (currentCategory !== null && loadingCategory === currentCategory.slug);
 
   const handleSelectCategory = (category: Category) => {
     if (category.slug === currentCategory?.slug) return;
@@ -214,8 +214,12 @@ export default function CourseMenu({
 
             {/* Category List or Skeleton */}
             <div className="flex-1 overflow-y-auto overscroll-contain custom-scrollbar p-2 space-y-1.5">
-              {categories.length === 0 ? (
+              {isLoading ? (
                 <CategoryListSkeleton />
+              ) : categories.length === 0 ? (
+                <div className="flex flex-col items-center justify-center p-6 text-center text-zinc-400">
+                  <p className="text-xs font-medium">No categories available</p>
+                </div>
               ) : (
                 categories.map((category) => {
                   const isActive = currentCategory?.slug === category.slug;

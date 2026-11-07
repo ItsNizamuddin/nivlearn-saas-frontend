@@ -17,10 +17,9 @@ export default function FooterClient({ data }: FooterClientProps) {
     const numbers = data.numbers || [];
     const social = data.social || [];
     const primaryPhone = numbers.length > 0 ? numbers[0] : undefined;
-
     // Extract dynamic about content / emails from CMS
-    const aboutCol = columns.find((c) => c.title.toLowerCase().includes('about'));
-    const dynamicBio = aboutCol?.content?.trim();
+    const brandCol = columns.find((c) => c.title.toLowerCase().includes('brand') || c.title.toLowerCase().includes('about') || Boolean(c.content?.trim()));
+    const dynamicBio = brandCol?.content?.trim();
 
     // Contact Email: use dynamic email from CMS if provided, otherwise static NivLearn fallback
     const emailMatch = dynamicBio?.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
@@ -63,3 +62,4 @@ export default function FooterClient({ data }: FooterClientProps) {
         </footer>
     );
 }
+
