@@ -8,6 +8,7 @@ import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { buttonClass } from '@/components/ui/button';
 import { isValidTimeZone } from '@/lib/scheduleTime';
 import { checkoutTax, getAvailableGateways, resolveCheckoutItem } from '@/services/payment.service';
+import { isLmsCohortSchedule } from '@/services/catalog.service';
 
 export const metadata: Metadata = {
   title: 'Checkout',
@@ -28,8 +29,18 @@ export default async function CheckoutPage({ searchParams }: PageProps<'/checkou
     timezone,
   };
 
-  // Batch and price come from the CMS here, never from the URL.
-  const [item, gateways] = await Promise.all([resolveCheckoutItem(ref), getAvailableGateways()]);
+  const isCohortParam = Boolean(
+    one(params.cohort) === 'true' ||
+    one(params.type) === 'cohort' ||
+    one(params.lms) === 'true'
+  );
+
+  // Batch, gateways and LMS cohort status are verified on the server.
+  const [item, gateways, isLms] = await Promise.all([
+    resolveCheckoutItem(ref),
+    getAvailableGateways(),
+    isCohortParam || (ref.scheduleCode ? isLmsCohortSchedule(ref.scheduleCode) : Promise.resolve(false)),
+  ]);
   const tax = item ? await checkoutTax(item) : null;
 
   return (
@@ -51,6 +62,7 @@ export default async function CheckoutPage({ searchParams }: PageProps<'/checkou
                 price: item.price,
                 tax,
                 gateways,
+                isCohort: isLms,
               } satisfies CheckoutData
             }
           />

@@ -404,3 +404,21 @@ export const getCourseSchedules = cache(
   }
 );
 
+/**
+ * Check if a schedule code corresponds to an LMS Cohort class.
+ */
+export const isLmsCohortSchedule = cache(
+  async (scheduleCode: string): Promise<boolean> => {
+    if (!scheduleCode) return false;
+    try {
+      const res = await fetchFromBackend(`/lms-classes/${encodeURIComponent(scheduleCode)}`, {
+        next: { revalidate: 1800, tags: ['lms-classes', `lms-class-${scheduleCode}`] },
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  }
+);
+
+

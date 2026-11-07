@@ -13,7 +13,6 @@ export default function Ribbons({
   if (!response?.data || !Array.isArray(response.data)) {
     return null;
   }
-
   // Find active ribbon matching requested type
   const ribbon = response.data.find(
     (r) => r.Type?.toLowerCase() === type.toLowerCase() && r.isActive

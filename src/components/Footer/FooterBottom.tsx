@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 
 interface FooterBottomProps {
@@ -8,11 +8,7 @@ interface FooterBottomProps {
 }
 
 export default function FooterBottom({ bottomRibbon }: FooterBottomProps) {
-    const [year, setYear] = useState(2026);
-
-    useEffect(() => {
-        setYear(new Date().getFullYear());
-    }, []);
+    const year = new Date().getFullYear();
 
     // Dynamic Copyright from backend; static fallback is NivLearn only
     const copyright = bottomRibbon?.trim() || `© ${year} NivLearn. All rights reserved.`;

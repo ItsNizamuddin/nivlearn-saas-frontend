@@ -6,28 +6,40 @@ interface FooterDisclaimerProps {
     disclaimer?: string;
 }
 
+const TRUNCATE_LIMIT = 200;
+
 export default function FooterDisclaimer({ disclaimer }: FooterDisclaimerProps) {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const baseText = disclaimer ||
-        "All product names, logos, brands, and registered trademarks displayed on this site are property of their respective owners. NivLearn is an independent digital learning institute and training provider.";
+    // Use CMS disclaimer text if available; otherwise minimal fallback
+    const text = disclaimer?.trim();
 
-    const expandedText =
-        " The curriculum, course outlines, and educational materials provided on this platform are designed strictly for professional upskilling and career development. Course durations, mentor allocation, and hands-on laboratory modules may be updated periodically to adhere to current industry standards. Enrollees are encouraged to review terms of service, prerequisite qualifications, and schedule formats prior to registration. For comprehensive policy guidelines, review our Cancellation & Refund Policy.";
+    if (!text) {
+        return null;
+    }
+
+    const isLong = text.length > TRUNCATE_LIMIT;
+    const previewText = isLong ? text.slice(0, TRUNCATE_LIMIT).trimEnd() : text;
+    const remainingText = isLong ? text.slice(TRUNCATE_LIMIT) : '';
 
     return (
         <section aria-label="Legal Disclaimer" className="border-t border-on-dark/10 pt-6 text-[11px] sm:text-xs text-on-dark/60 leading-relaxed">
             <p>
-                <span>{baseText}</span>
-                {isExpanded && <span className="inline animate-in fade-in duration-200">{expandedText}</span>}
-                <button
-                    type="button"
-                    onClick={() => setIsExpanded(!isExpanded)}
-                    className="text-prime-yellow hover:text-prime-yellow/80 hover:underline font-semibold ml-2 inline-block cursor-pointer focus:outline-hidden"
-                >
-                    {isExpanded ? 'Read less' : 'Read more...'}
-                </button>
+                <span>{previewText}</span>
+                {isLong && isExpanded && (
+                    <span className="inline animate-in fade-in duration-200">{remainingText}</span>
+                )}
+                {isLong && (
+                    <button
+                        type="button"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        className="text-prime-yellow hover:text-prime-yellow/80 hover:underline font-semibold ml-2 inline-block cursor-pointer focus:outline-hidden"
+                    >
+                        {isExpanded ? 'Read less' : 'Read more...'}
+                    </button>
+                )}
             </p>
         </section>
     );
 }
+
