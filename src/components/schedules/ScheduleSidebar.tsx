@@ -28,7 +28,7 @@ export default function ScheduleSidebar({ coupons }: { coupons: Coupon[] }) {
             {coupons.slice(0, 3).map((coupon) => (
               <li key={coupon.code} className="py-3.5 first:pt-0 last:pb-0 space-y-1.5">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-base font-bold whitespace-nowrap text-prime-dark sm:text-lg">
+                  <span className="text-4xl font-extrabold whitespace-nowrap text-prime-dark sm:text-2xl">
                     {couponValue(coupon)}
                   </span>
                   <CouponCode code={coupon.code} />
