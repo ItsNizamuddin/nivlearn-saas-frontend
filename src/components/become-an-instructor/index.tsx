@@ -20,7 +20,7 @@ export default function BecomeAnInstructor() {
         image={HERO.image}
         imageAlt="NivLearn instructor"
         actions={
-          <LeadCta form="instructor" className={buttonClass('accent', 'lg')}>
+          <LeadCta form="instructor" className={buttonClass('accent', 'lg', 'w-full sm:w-auto justify-center text-center')}>
             {HERO.actionLabel}
           </LeadCta>
         }

@@ -15,6 +15,8 @@ interface PageHeroProps {
   image?: StaticImageData;
   imageAlt?: string;
   imageDesktopOnly?: boolean;
+  imageClassName?: string;
+  imageContainerClassName?: string;
   /** Photo behind the text, darkened for contrast. */
   backgroundImage?: StaticImageData;
   align?: 'left' | 'center';
@@ -30,6 +32,8 @@ export default function PageHero({
   image,
   imageAlt = '',
   imageDesktopOnly,
+  imageClassName,
+  imageContainerClassName,
   backgroundImage,
   align = 'left',
   children,
@@ -53,8 +57,8 @@ export default function PageHero({
 
       <Container
         className={cn(
-          'relative grid items-center gap-10 py-16 md:py-20',
-          image && 'lg:grid-cols-2 lg:gap-16 lg:py-0',
+          'relative grid items-center gap-8 sm:gap-10',
+          image ? 'pt-12 pb-0 sm:pt-16 sm:pb-0 lg:grid-cols-2 lg:gap-16 lg:py-0' : 'py-16 md:py-20',
         )}
       >
         <div className={cn(image && 'lg:py-20', centered && 'mx-auto max-w-3xl text-center')}>
@@ -77,8 +81,14 @@ export default function PageHero({
         </div>
 
         {image && (
-          <div className={cn('flex justify-center lg:self-end', imageDesktopOnly && 'hidden lg:flex')}>
-            <Image src={image} alt={imageAlt} preload sizes="(min-width: 1024px) 45vw, 90vw" className="h-auto max-h-80 w-auto sm:max-h-96 lg:max-h-120" />
+          <div className={cn('flex justify-center self-end', imageDesktopOnly && 'hidden lg:flex', imageContainerClassName)}>
+            <Image
+              src={image}
+              alt={imageAlt}
+              preload
+              sizes="(min-width: 1024px) 45vw, 90vw"
+              className={cn('block h-auto max-h-72 w-auto sm:max-h-96 lg:max-h-120', imageClassName)}
+            />
           </div>
         )}
       </Container>
