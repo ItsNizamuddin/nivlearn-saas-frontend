@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calendar, Laptop, GraduationCap, Download, ChevronDown, ChevronUp } from 'lucide-react';
+import { Calendar, Laptop, GraduationCap, Download, ChevronDown, ChevronUp, Sparkles, Star } from 'lucide-react';
 import { useLeadModal } from '@/context/LeadModalContext';
 import TruncatedContent from '@/components/ui/TruncatedContent';
 import BrandBackdrop from '@/components/ui/BrandBackdrop';
@@ -29,16 +29,22 @@ export default function CourseHero({
   const mode = card?.courseMode;
   const type = card?.courseType;
   const accredationLogo = card?.accredation?.[0];
+  const tagline = card?.tagline;
 
   const bannerDescription = banner?.description || banner?.banner_description || '';
   const bannerKeypoints = banner?.keypoints || banner?.banner_key_points || '';
   const keypointsList = React.useMemo(() => parseToListItems(bannerKeypoints), [bannerKeypoints]);
   const [isKeypointsExpanded, setIsKeypointsExpanded] = React.useState(false);
 
+  const brochureUrl =
+    course.leadmagnet?.[0]?.broucher?.url ||
+    (course.leadmagnet?.[0] as unknown as { brochure?: { url?: string } })?.brochure?.url;
+
   const handleCurriculumDownload = () => {
     openModal({
       formTitle: 'Download Comprehensive Curriculum',
       formDescription: `Get the detailed module-by-module syllabus and project blueprints for ${course.course_title}.`,
+      downloadUrl: brochureUrl,
       defaultValues: {
         leadSource: `course-hero-curriculum-${course.slug}`,
         courseSlug: course.slug,
@@ -74,6 +80,14 @@ export default function CourseHero({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
           {/* Main Content Column (Left 7-8 cols) */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-3.5 sm:space-y-5">
+            {/* Tagline Badge from API courseCard */}
+            {tagline && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-prime/10 border border-prime/20 text-prime text-[11px] sm:text-xs font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-prime" />
+                <span>{tagline}</span>
+              </div>
+            )}
+
             {/* Course Heading */}
             <h1 className="font-heading text-xl sm:text-2xl 2xl:text-4xl font-black text-prime-dark tracking-tight leading-snug sm:leading-tight">
               {course.course_title}
@@ -150,12 +164,29 @@ export default function CourseHero({
               </div>
             )}
 
+            {/* Hero Quick Stats from banner_content.stats */}
+            {banner?.stats && banner.stats.length > 0 && (
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2 border-t border-slate-100">
+                {banner.stats.map((st, sIdx) => (
+                  <div key={sIdx} className="flex items-center gap-1.5 text-xs">
+                    <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                    <span className="font-extrabold text-prime-dark text-xs sm:text-sm">
+                      {st.value}
+                    </span>
+                    <span className="text-text-muted text-[11px] sm:text-xs">
+                      {st.title}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Action Buttons: balanced on mobile with prominent Download pill + side-by-side secondary actions */}
             <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 pt-2 sm:pt-3">
               <a
                 href="#schedules"
                 onClick={(e) => smoothScrollTo('#schedules', e)}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-secondary text-white bg-secondary hover:text-white font-bold text-xs sm:text-sm px-6 py-2.5 rounded-lg transition-all cursor-pointer shadow-xs active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-prime text-white bg-prime hover:bg-prime-dark hover:border-prime-dark font-bold text-xs sm:text-sm px-6 py-2.5 rounded-lg transition-colors cursor-pointer shadow-xs active:scale-95"
               >
                 View Schedules
               </a>

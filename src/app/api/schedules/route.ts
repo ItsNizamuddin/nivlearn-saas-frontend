@@ -42,9 +42,12 @@ export async function POST(request: NextRequest) {
       : {};
   const query = cleanQuery(input);
   applyEdgeCurrency(query, request);
+  const params = scheduleParams(query);
+  // Optional field list (comma-separated field names only).
+  if (/^[A-Za-z_][\w.]*(,[A-Za-z_][\w.]*){0,60}$/.test(input.select ?? '')) params.set('select', input.select!);
 
   try {
-    const response = await fetchFromBackend('/schedules', { request, queryParams: scheduleParams(query), cache: 'no-store' });
+    const response = await fetchFromBackend('/schedules', { request, queryParams: params, cache: 'no-store' });
     if (!response.ok) {
       return NextResponse.json({ error: `Backend responded with ${response.status}` }, { status: response.status });
     }

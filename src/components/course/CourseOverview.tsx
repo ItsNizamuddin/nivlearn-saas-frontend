@@ -3,11 +3,9 @@
 import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import {
-  Play,
   CheckCircle2,
   Sparkles,
   BookOpen,
-  X,
   Building2,
   TrendingUp,
   Award,
@@ -15,60 +13,19 @@ import {
   Users,
   ChevronDown,
   ChevronUp,
-  ShieldCheck,
   ArrowRight,
-  PhoneCall,
-  Laptop,
 } from 'lucide-react';
 import { useLeadModal } from '@/context/LeadModalContext';
 import type { CourseDetail } from '@/services/catalog.service';
 import { parseToListItems } from '@/lib/utils';
+import CourseLMSOfferCard from './CourseLMSOfferCard';
 
 export default function CourseOverview({ course }: { course: CourseDetail }) {
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isDescExpanded, setIsDescExpanded] = useState(false);
   const { openModal } = useLeadModal();
 
   const overview = course.overview_content;
   if (!overview) return null;
-
-  // Video resolution
-  const videoThumb =
-    (typeof overview.overview_video_thumbnail === 'string'
-      ? overview.overview_video_thumbnail
-      : typeof overview.overview_video_thumbnail === 'object'
-        ? overview.overview_video_thumbnail?.url || overview.overview_video_thumbnail?.thumbnail
-        : undefined) ||
-    overview.videoThumbnail ||
-    course.courseCard?.courseThumbnail?.url ||
-    '/default.webp';
-
-  const rawVideo =
-    (typeof overview.overview_video_link === 'string'
-      ? overview.overview_video_link
-      : typeof overview.overview_video_link === 'object'
-        ? overview.overview_video_link?.url
-        : undefined) ||
-    (typeof course.banner_content?.video_link === 'string'
-      ? course.banner_content.video_link
-      : typeof course.banner_content?.video_link === 'object'
-        ? course.banner_content.video_link.url
-        : undefined) ||
-    overview.videoUrl;
-
-  const hasValidVideo = Boolean(
-    rawVideo &&
-    rawVideo !== '#' &&
-    (rawVideo.startsWith('http://') || rawVideo.startsWith('https://'))
-  );
-
-  const videoUrl = hasValidVideo
-    ? rawVideo!.includes('youtube.com/watch?v=')
-      ? rawVideo!.replace('watch?v=', 'embed/')
-      : rawVideo!.includes('youtu.be/')
-        ? `https://www.youtube.com/embed/${rawVideo!.split('youtu.be/')[1].split('?')[0]}`
-        : rawVideo!
-    : undefined;
 
   // Who can attend parsing (supports string and { description, roles })
   const whoCanAttend = overview.overview_who_can_attend;
@@ -143,102 +100,7 @@ export default function CourseOverview({ course }: { course: CourseDetail }) {
     });
   };
 
-  /**
-   * Reusable Video Card rendered in sticky desktop sidebar and inline on mobile
-   */
-  const renderVideoCard = (isMobile = false) => (
-    <div
-      className={`rounded-2xl overflow-hidden bg-surface border border-border-muted/80 shadow-sm transition-all duration-300 hover:border-prime/40 hover:shadow-md ${isMobile ? 'block lg:hidden my-6' : 'hidden lg:block'
-        }`}
-    >
-      <div
-        className={`relative aspect-video w-full bg-slate-900 overflow-hidden ${hasValidVideo ? 'group cursor-pointer' : ''
-          }`}
-        onClick={() => {
-          if (hasValidVideo) setIsVideoModalOpen(true);
-        }}
-      >
-        <Image
-          src={videoThumb}
-          alt={`${course.course_title} Walkthrough`}
-          fill
-          sizes={isMobile ? '100vw' : '(max-width: 1280px) 380px, 420px'}
-          className="object-cover transition-transform duration-500 group-hover:scale-105 opacity-90"
-        />
 
-        {/* Video overlay pill */}
-        <div className="absolute top-3 left-3 bg-slate-950/70 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-white flex items-center gap-1.5 border border-white/10 z-10 shadow-sm">
-          <Play className="w-3 h-3 text-prime-yellow fill-prime-yellow" />
-          <span>Program Walkthrough</span>
-        </div>
-
-        {hasValidVideo && (
-          <div className="absolute inset-0 bg-slate-950/35 group-hover:bg-slate-950/45 transition-colors flex items-center justify-center">
-            <div className="relative">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-prime-yellow text-white flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                <Play className="w-6 h-6 ml-0.5 fill-white" />
-              </div>
-              <div className="absolute inset-0 rounded-full bg-prime-yellow animate-ping opacity-25 pointer-events-none" />
-            </div>
-            <div className="absolute bottom-3 left-0 right-0 text-center px-4">
-              <span className="text-xs font-bold text-white uppercase tracking-wider drop-shadow-md bg-black/40 px-3 py-1 rounded-full backdrop-blur-xs">
-                Watch 2-Min Course Preview
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Advisory & Trust Highlights Box */}
-      <div className="p-5 sm:p-6 space-y-4">
-        <div className="flex items-center gap-2 text-xs font-bold text-prime-yellow uppercase tracking-wider">
-          <Laptop className="w-4 h-4 text-prime" />
-          <span>{course.courseCard?.courseMode || 'Live Mentor-Led Interactive Program'}</span>
-        </div>
-
-        {/* Value Assurances */}
-        <ul className="space-y-2 text-xs text-slate-700 font-medium">
-          <li className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>100% Practical curriculum with live projects</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Accredited certificate & hiring partner access</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>1-on-1 career mentorship & mock interviews</span>
-          </li>
-        </ul>
-
-        {/* Action Buttons */}
-        <div className="space-y-2.5 pt-1">
-          <button
-            type="button"
-            onClick={() => handleEnquire('overview-sidebar')}
-            className="w-full bg-prime hover:bg-prime-dark text-white font-bold text-xs sm:text-sm py-3 px-4 rounded-xl transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md flex items-center justify-center gap-2 group"
-          >
-            <span>Check Eligibility & Syllabus</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-
-          <button
-            type="button"
-            onClick={handleAdvisor}
-            className="w-full bg-light hover:bg-prime/10 text-prime hover:text-prime-dark font-bold text-xs py-2.5 px-4 rounded-xl transition-colors cursor-pointer border border-prime/20 flex items-center justify-center gap-1.5"
-          >
-            <PhoneCall className="w-3.5 h-3.5" />
-            <span>Speak with an Advisor</span>
-          </button>
-        </div>
-
-        <p className="text-[11px] text-center text-slate-400 font-medium">
-          Instant eligibility check • No commitment required
-        </p>
-      </div>
-    </div>
-  );
 
   return (
     <section id="overview" className="section-container py-10 lg:py-16">
@@ -286,8 +148,8 @@ export default function CourseOverview({ course }: { course: CourseDetail }) {
             )}
           </div>
 
-          {/* Mobile Video Walkthrough Preview (renders only on mobile < lg right after intro) */}
-          {renderVideoCard(true)}
+          {/* Mobile LMS Offer Card (renders only on mobile < lg right after intro) */}
+          <CourseLMSOfferCard course={course} isMobile={true} />
 
           {/* Stats Metrics Grid */}
           {stats && (
@@ -475,9 +337,9 @@ export default function CourseOverview({ course }: { course: CourseDetail }) {
           {(course.skills?.length || course.tools?.length) ? (
             <div className="bg-surface border border-border-muted/80 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
               <div>
-                <h4 className="font-heading text-sm font-bold text-prime-dark uppercase tracking-wider">
+                <h3 className="font-heading text-sm font-bold text-prime-dark uppercase tracking-wider">
                   Industry Software & Practical Frameworks
-                </h4>
+                </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
                   Master enterprise-grade tools used daily by top industry teams
                 </p>
@@ -540,46 +402,11 @@ export default function CourseOverview({ course }: { course: CourseDetail }) {
           )}
         </div>
 
-        {/* Right Column: Sticky Video / Preview Card (4 cols) */}
+        {/* Right Column: Sticky LMS Offer Card (4 cols) */}
         <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
-          {renderVideoCard(false)}
+          <CourseLMSOfferCard course={course} isMobile={false} />
         </div>
       </div>
-
-      {/* Video Modal */}
-      {isVideoModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-in fade-in duration-200"
-          onClick={() => setIsVideoModalOpen(false)}
-        >
-          <div
-            className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setIsVideoModalOpen(false)}
-              className="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/70 text-white hover:bg-black hover:text-prime-yellow transition-all cursor-pointer"
-              aria-label="Close video"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <iframe
-              src={
-                videoUrl
-                  ? videoUrl.includes('?')
-                    ? `${videoUrl}&autoplay=1`
-                    : `${videoUrl}?autoplay=1`
-                  : ''
-              }
-              title="Course Program Video"
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      )}
     </section>
   );
 }

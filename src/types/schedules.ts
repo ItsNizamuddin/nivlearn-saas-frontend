@@ -33,7 +33,12 @@ export interface ScheduleData {
   pricingTemplateId?: string | null;
   startsAt: string;
   endsAt?: string;
+  isFlexibleSchedule?: boolean;
+  commenceDate?: string;
+  commencedAt?: string;
+  commencedDate?: string;
   commencementDate?: string;
+  commence_date?: string;
   duration?: string;
   deliveryType?: 'online' | 'virtual' | 'classroom' | 'blended' | string;
   batchType?: 'weekend' | 'weekday' | string;

@@ -55,6 +55,8 @@ export function useSchedules(courseSlug: string, options: UseSchedulesOptions = 
           slug: courseSlug,
           currency: effectiveCurrency,
           timezone: effectiveTimezone,
+          select:
+            '_id,code,status,batchType,deliveryType,isFlexibleSchedule,startsAt,endsAt,commenceDate,commencedAt,commencedDate,commencementDate,commence_date,duration,totalSessions,country,filteredPricing,enableRecommend,pricingTemplateId',
         };
 
         if (options.deliveryType) payload.deliveryType = options.deliveryType;

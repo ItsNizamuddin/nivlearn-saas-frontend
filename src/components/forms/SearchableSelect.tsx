@@ -61,21 +61,17 @@ export default function SearchableSelect({
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+            if (onOpen) onOpen();
+            if (isSearchable) {
+                setTimeout(() => searchInputRef.current?.focus(), 50);
+            }
+        }
+
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []);
-
-    useEffect(() => {
-        if (!isOpen || !isSearchable) return;
-
-        onOpen?.();
-        const timeoutId = window.setTimeout(() => {
-            searchInputRef.current?.focus();
-        }, 100);
-
-        return () => window.clearTimeout(timeoutId);
     }, [isOpen, onOpen, isSearchable]);
 
     const handleSelect = (val: string) => {
@@ -97,7 +93,7 @@ export default function SearchableSelect({
                     setIsOpen(true);
                 }}
                 className={`
-                    relative w-full h-10 flex items-center cursor-pointer rounded-md bg-surface text-xs sm:text-sm ${icon ? 'pl-9' : 'pl-3'} pr-8 text-left border
+                    relative w-full h-10 flex items-center cursor-pointer rounded-lg bg-surface text-xs sm:text-sm ${icon ? 'pl-9' : 'pl-3'} pr-8 text-left border
                     focus:outline-none focus:ring-2 focus:ring-prime/10 focus:border-prime
                     transition-all duration-200
                     ${isOpen ? 'ring-2 ring-prime/10 border-prime' : (value ? 'border-border-muted text-foreground' : 'border-border-muted text-text-muted hover:border-prime/50')}
@@ -119,7 +115,7 @@ export default function SearchableSelect({
             </button>
 
             {isOpen && (
-                <div className="absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-md bg-surface border border-border-muted shadow-xl animate-in fade-in zoom-in-95 duration-100 flex flex-col">
+                <div className="absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-lg bg-surface border border-border-muted shadow-xl animate-in fade-in zoom-in-95 duration-100 flex flex-col">
                     {/* Search bar inside dropdown (when searchable) */}
                     {isSearchable && (
                         <div className="p-2 border-b border-border-muted/50 bg-surface-muted sticky top-0">

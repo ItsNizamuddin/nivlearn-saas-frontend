@@ -8,6 +8,7 @@ import CategorySalaries from '@/components/category/CategorySalaries';
 import CategoryCertificate from '@/components/category/CategoryCertificate';
 import CategoryFAQ from '@/components/category/CategoryFAQ';
 import CategorySEOContent from '@/components/category/CategorySEOContent';
+import CategorySchema from '@/components/category/CategorySchema';
 import CTA from '@/components/home/CTA';
 import { SITE_URL } from '@/lib/site';
 
@@ -77,6 +78,11 @@ export default async function CategoryPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <CategorySchema
+        category={category}
+        categorySlug={slug}
+        courses={coursesResult.data}
+      />
       <CategoryBanner category={category} />
       <CategoryBannerStats stats={category.stats} />
       <CategoryCourses
@@ -90,8 +96,8 @@ export default async function CategoryPage({ params }: PageProps) {
         subtitle="Claim our limited-time scholarship, cohort fee discount, and 1-on-1 career consultation today."
         buttonText="Get Exclusive Offer"
       />
-      <CategoryCertificate title={category.name} />
-      <CategoryFAQ categoryName={category.name} faqs={category.faqs} />
+      <CategoryCertificate title={category.name} categorySlug={slug} />
+      <CategoryFAQ categoryName={category.name} categorySlug={slug} faqs={category.faqs} />
       <CategorySEOContent
         internalSection={category.internalSection}
         bottomSection={category.bottomSection}

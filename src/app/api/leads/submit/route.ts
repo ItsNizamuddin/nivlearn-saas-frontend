@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { fetchFromBackend, getApiErrorMessage } from '@/lib/apiProxy';
 import { checkRateLimit } from '@/lib/rateLimit';
 import { verifyTurnstileToken } from '@/lib/turnstile';
+import { env } from '@/lib/env';
 
 export async function POST(request: NextRequest) {
     try {
@@ -26,7 +27,16 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // 2. Basic Validation
+        // 2. Anti-Bot Honeypot Trap: Real users never fill hidden honeypot fields
+        if (body.website_hp || body._hp_company) {
+            // Silently drop spam bot submissions with a fake 200 response to stop bot retry loops
+            return NextResponse.json(
+                { message: 'Inquiry received successfully.' },
+                { status: 200 }
+            );
+        }
+
+        // 3. Basic Field Validation
         const fullName = typeof body.fullName === 'string' ? body.fullName.trim() : '';
         const email = typeof body.email === 'string' ? body.email.trim() : '';
         const phone = typeof body.phone === 'string' ? body.phone.trim() : '';
@@ -45,8 +55,16 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // 3. Cloudflare Turnstile Verification (Server-Side)
-        if (body.turnstileToken) {
+        // 4. Cloudflare Turnstile Verification (Server-Side)
+        // If Turnstile is configured, token is STRICTLY REQUIRED and verified against Cloudflare
+        if (env.TURNSTILE_SECRET_KEY) {
+            if (!body.turnstileToken) {
+                return NextResponse.json(
+                    { message: 'Security verification failed. Please complete the verification challenge.' },
+                    { status: 403 }
+                );
+            }
+
             const verified = await verifyTurnstileToken(
                 body.turnstileToken,
                 request.headers.get('x-user-ip') || ip
@@ -59,7 +77,7 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        // 4. Extract and forward UTM attribution query parameters
+        // 5. Extract and forward UTM attribution query parameters
         const queryParams = new URLSearchParams();
         const utmSource = body.utm_source || body.utmSource || request.nextUrl.searchParams.get('utm_source');
         const utmMedium = body.utm_medium || body.utmMedium || request.nextUrl.searchParams.get('utm_medium');
@@ -79,11 +97,15 @@ export async function POST(request: NextRequest) {
         if (gclid) queryParams.set('gclid', gclid);
         if (landingPage) queryParams.set('landing_page', landingPage);
 
-        // 5. Proxy lead submission to backend CMS
+        // Remove honeypot and internal tokens before sending to backend
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { website_hp, _hp_company, ...cleanPayload } = body;
+
+        // 6. Proxy lead submission to backend CMS
         const response = await fetchFromBackend('/leads/submit', {
             method: 'POST',
             queryParams: queryParams.size > 0 ? queryParams : undefined,
-            body,
+            body: cleanPayload,
             request,
             headers: {
                 'x-user-ip': request.headers.get('x-user-ip') || (typeof body.clientIp === 'string' ? body.clientIp : ip),

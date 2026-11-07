@@ -38,13 +38,13 @@ export default function CourseCard({
         >
             {/* Top Media Thumbnail Container with padding and rounded preview */}
             <div className="w-full">
-                <div className="relative w-full aspect-[2/1] overflow-hidden bg-white shadow-2xs">
+                <div className="relative w-full aspect-[16/9] overflow-hidden bg-surface-muted shadow-2xs">
                     <Image
                         src={thumbnailSrc}
                         alt={course.name}
                         fill
                         sizes="(max-width: 640px) 384px, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 384px"
-                        className="object-contain group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     />
 
                     {/* Badge Tag (e.g. Recommended, Popular) */}

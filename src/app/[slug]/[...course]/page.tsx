@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getCourseBySlug } from '@/services/catalog.service';
+import { getCourseBySlug, getCourseSchedules } from '@/services/catalog.service';
 import CourseHero from '@/components/course/CourseHero';
 import CourseStickyNav from '@/components/course/CourseStickyNav';
 import CourseOverview from '@/components/course/CourseOverview';
@@ -87,7 +87,10 @@ export default async function CoursePage({ params }: PageProps) {
   const courseSlug = courseParts[0];
   const locationSlug = courseParts[1];
 
-  const course = await getCourseBySlug(courseSlug, locationSlug);
+  const [course, schedules] = await Promise.all([
+    getCourseBySlug(courseSlug, locationSlug),
+    getCourseSchedules(courseSlug),
+  ]);
 
   if (!course) {
     notFound();
@@ -110,16 +113,19 @@ export default async function CoursePage({ params }: PageProps) {
   );
   const hasSalaries = Boolean(course.salaries && course.salaries.length > 0);
   const hasSyllabus = Boolean(
-    (course.syllabus_content?.syllabus_accordian && course.syllabus_content.syllabus_accordian.length > 0) ||
+    (Array.isArray(course.syllabus_content) && course.syllabus_content.length > 0) ||
+    (course.syllabus_content && 'syllabus_accordian' in course.syllabus_content && course.syllabus_content.syllabus_accordian && course.syllabus_content.syllabus_accordian.length > 0) ||
     course.skills?.length ||
-    course.tools?.length
+    course.tools?.length ||
+    course.overview_content?.skillfocused
   );
   const hasTrainers = Boolean(course.trainers && course.trainers.length > 0);
   const hasCareer = Boolean(
     course.career &&
     ((course.career.path && course.career.path.length > 0) ||
       (course.career.career_path && course.career.career_path.length > 0) ||
-      (course.career.certification_process && course.career.certification_process.length > 0))
+      (course.career.certification_process && course.career.certification_process.length > 0) ||
+      (course.career.certificates && course.career.certificates.length > 0))
   );
   const hasFaqs = Boolean(course.faqs && course.faqs.length > 0);
 
@@ -133,10 +139,10 @@ export default async function CoursePage({ params }: PageProps) {
     ...(hasCareer ? [{ label: 'Career', href: '#career' }] : []),
     ...(hasFaqs ? [{ label: 'FAQs', href: '#faqs' }] : []),
   ];
-  // console.log("Course data:", course)
+
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <CourseSchema course={course} courseUrl={courseUrl} />
+      <CourseSchema course={course} courseUrl={courseUrl} schedules={schedules} />
       <CourseHero course={course} location={locationSlug} />
       <CourseStickyNav items={navItems} course={course} />
       <CourseOverview course={course} />
@@ -149,13 +155,13 @@ export default async function CoursePage({ params }: PageProps) {
       <CourseWhyUs />
       <CourseSyllabus course={course} />
       <CourseTrainers course={course} />
-      {/* <CourseCareer course={course} />
-      <CourseCorporate />
+      <CourseCareer course={course} />
+      <CourseCorporate courseTitle={course.course_title} courseSlug={course.slug} />
       <CourseFAQ course={course} />
       <CourseSEOContent
         internalSection={course.internalSection}
         bottomSection={course.bottomSection}
-      /> */}
+      />
     </main>
   );
 }

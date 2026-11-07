@@ -8,6 +8,9 @@ import { LeadModalProvider } from "@/context/LeadModalContext";
 import GeoLocationInitializer from "@/context/GeoLocationInitializer";
 import { LeadModal } from "@/components/forms";
 import { getCategories, getCourseOptions } from "@/services/catalog.service";
+import { getRibbons } from "@/services/content.service";
+import DynamicScripts from "@/components/logics/DynamicScripts";
+import Ribbons from "@/components/ui/others/Ribbons";
 import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
@@ -53,9 +56,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [categories, courseOptions] = await Promise.all([
+  const [categories, courseOptions, ribbonsResponse] = await Promise.all([
     getCategories(),
     getCourseOptions(),
+    getRibbons(),
   ]);
 
   return (
@@ -67,14 +71,27 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-title" content="NivLearn" />
         <link rel="preconnect" href={RICH_TEXT_CDN_ORIGIN} crossOrigin="" />
         <link rel="dns-prefetch" href={RICH_TEXT_CDN_ORIGIN} />
-        <link rel="stylesheet" href={RICH_TEXT_CSS} />
+        {/* Asynchronously loads the rich-text CDN stylesheet without blocking initial render */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href=${JSON.stringify(RICH_TEXT_CSS)};document.head.appendChild(l);})()`,
+          }}
+        />
+        <noscript>
+          <link rel="stylesheet" href={RICH_TEXT_CSS} />
+        </noscript>
+        <DynamicScripts position="head" />
+
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+        <DynamicScripts position="body" />
         <LeadModalProvider courses={courseOptions}>
           <GeoLocationInitializer />
+          <Ribbons type="header" response={ribbonsResponse} />
           <NavBar initialCategories={categories} />
           <main className="flex-1">{children}</main>
           <Footer />
+          <Ribbons type="footer" response={ribbonsResponse} />
           <LeadModal courses={courseOptions} />
         </LeadModalProvider>
       </body>

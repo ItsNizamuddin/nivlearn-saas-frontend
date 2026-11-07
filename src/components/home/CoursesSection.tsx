@@ -12,6 +12,33 @@ export interface CoursesSectionProps {
     subtitle?: string;
 }
 
+function CourseCardSkeleton() {
+    return (
+        <div className="flex flex-col justify-between bg-surface border border-border-muted rounded-md shadow-xs overflow-hidden animate-pulse">
+            <div className="w-full">
+                <div className="w-full aspect-[16/9] bg-slate-200/80" />
+            </div>
+            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                <div>
+                    <div className="w-24 h-4 bg-slate-200 rounded mb-3" />
+                    <div className="space-y-2 mb-4">
+                        <div className="w-4/5 h-5 bg-slate-200 rounded" />
+                        <div className="w-1/2 h-5 bg-slate-200 rounded" />
+                    </div>
+                    <div className="space-y-2 mb-4">
+                        <div className="w-32 h-3.5 bg-slate-100 rounded" />
+                        <div className="w-28 h-3.5 bg-slate-100 rounded" />
+                    </div>
+                </div>
+                <div className="pt-2 border-t border-border-muted/30 grid grid-cols-2 gap-2 mt-auto">
+                    <div className="h-8 bg-slate-100 rounded-md" />
+                    <div className="h-8 bg-slate-200 rounded-md" />
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function CoursesSection({
     categories = [],
     title = 'Explore In-Demand Courses',
@@ -104,6 +131,10 @@ export default function CoursesSection({
     }
 
     const activeCategorySlug = activeCategory?.slug || '';
+    const currentSlug = selectedSlug || activeCategorySlug;
+    const hasLoadedCategory = coursesByCat[currentSlug] !== undefined;
+    const hasCourses = (coursesByCat[currentSlug]?.length ?? 0) > 0 || (activeCategory?.courses?.length ?? 0) > 0;
+    const isLoading = loadingSlug === currentSlug || (!hasLoadedCategory && !hasCourses);
 
     return (
         <section
@@ -136,8 +167,27 @@ export default function CoursesSection({
                     onSelectCategory={handleCategoryChange}
                 />
 
-                {/* Empty State */}
-                {courses.length === 0 ? (
+                {/* Content: 1) Loading Skeleton, 2) Empty State, 3) Courses View */}
+                {isLoading ? (
+                    <>
+                        {/* Mobile Skeleton: Single Card + Controls */}
+                        <div className="block md:hidden w-full max-w-sm mx-auto">
+                            <CourseCardSkeleton />
+                            <div className="flex items-center justify-between mt-5 px-1 animate-pulse">
+                                <div className="w-24 h-8 bg-slate-100 rounded-md" />
+                                <div className="w-16 h-4 bg-slate-100 rounded" />
+                                <div className="w-20 h-8 bg-slate-100 rounded-md" />
+                            </div>
+                        </div>
+
+                        {/* Desktop & Tablet Skeleton Grid: 6 Cards */}
+                        <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+                            {[...Array(6)].map((_, i) => (
+                                <CourseCardSkeleton key={i} />
+                            ))}
+                        </div>
+                    </>
+                ) : courses.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-16 px-4 text-center rounded-xl bg-surface-muted border border-border-muted/50 my-6">
                         <BookOpen className="w-10 h-10 text-text-muted/60 mb-3" />
                         <h3 className="text-base sm:text-lg font-bold text-prime-dark mb-1">

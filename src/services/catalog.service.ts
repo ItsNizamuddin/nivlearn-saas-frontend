@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { fetchFromBackend } from '@/lib/apiProxy';
-import { Category, Course, CourseCardData } from '@/components/Navbar/types';
+import { Category, Course } from '@/components/Navbar/types';
+import type { ScheduleData } from '@/types/schedules';
 
 interface RawCategory {
   _id?: string;
@@ -172,10 +173,11 @@ export interface CategoryDetail {
   salaryImages?: string[];
   accreditionImages?: Array<{ url: string; alt?: string; thumbnail?: string }>;
   accredation?: Array<{ url: string; alt?: string; thumbnail?: string }>;
-  faqs?: Array<{ question: string; answer: string; _id?: string }>;
+  faqs?: Array<{ question?: string; answer?: string; title?: string; value?: string; _id?: string }>;
   internalSection?: { title?: string; value?: string };
   bottomSection?: { title?: string; value?: string };
   courses?: RawCourse[];
+  image?: { url: string; alt?: string; thumbnail?: string };
 }
 
 export interface CourseDetail {
@@ -234,9 +236,11 @@ export interface CourseDetail {
       organization?: string;
     };
   };
-  syllabus_content?: {
-    syllabus_accordian?: Array<{ title: string; des: string; duration?: string; _id?: string }>;
-  };
+  syllabus_content?:
+    | {
+        syllabus_accordian?: Array<{ title: string; des?: string; value?: string; duration?: string; _id?: string }>;
+      }
+    | Array<{ title: string; value?: string; des?: string; duration?: string; _id?: string }>;
   career?: {
     career_title?: string;
     career_description?: string;
@@ -278,7 +282,10 @@ export interface CourseDetail {
     [key: string]: unknown;
   }>;
   leadmagnet?: Array<{
-    broucher?: { url?: string; alt?: string };
+    name?: string;
+    uid?: string;
+    broucher?: { url?: string; alt?: string; thumbnail?: string };
+    certificate?: { url?: string; alt?: string; thumbnail?: string };
   }>;
   internalSection?: { title?: string; value?: string };
   bottomSection?: { title?: string; value?: string };
@@ -366,6 +373,33 @@ export const getCourseBySlug = cache(
     } catch (error) {
       console.error(`[catalog.service] Error fetching course "${slug}":`, error);
       return null;
+    }
+  }
+);
+
+/**
+ * Fetch upcoming schedules for a course (for UI and Event/CourseInstance schema).
+ */
+export const getCourseSchedules = cache(
+  async (courseSlug: string): Promise<ScheduleData[]> => {
+    try {
+      const queryParams = new URLSearchParams({
+        slug: courseSlug,
+        sort: 'startsAt',
+        limit: '10',
+        select:
+          '_id,code,status,batchType,deliveryType,isFlexibleSchedule,startsAt,endsAt,commenceDate,duration,totalSessions,country,filteredPricing,pricingTemplateId',
+      });
+      const res = await fetchFromBackend('/schedules', {
+        queryParams,
+        next: { revalidate: 1800, tags: ['schedules', `schedules-${courseSlug}`] },
+      });
+      if (!res.ok) return [];
+      const json = await res.json();
+      return Array.isArray(json?.schedules) ? json.schedules : [];
+    } catch (error) {
+      console.error(`[catalog.service] Error fetching schedules for "${courseSlug}":`, error);
+      return [];
     }
   }
 );
