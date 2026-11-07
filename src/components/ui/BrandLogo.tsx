@@ -9,7 +9,7 @@ import full from '../../../public/nivlearn-logo-full.webp';
  * class (e.g. `h-8`) and the width follows the aspect ratio.
  */
 const VARIANTS = {
-  wordmark: { src: wordmark, alt: 'NivLearn', width: 209, height: 40, sizes: '(max-width: 640px) 146px, (max-width: 1024px) 180px, 209px' },
+  wordmark: { src: wordmark, alt: 'NivLearn', width: 172, height: 36, sizes: '(max-width: 768px) 134px, 172px' },
   full: { src: full, alt: 'NivLearn - A New Way to Learn', width: 148, height: 120, sizes: '(max-width: 640px) 120px, 148px' },
 } as const;
 
