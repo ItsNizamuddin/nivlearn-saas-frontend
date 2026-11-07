@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { ChevronDown, Check, Search, X } from 'lucide-react';
 
@@ -36,8 +36,27 @@ export default function SearchableSelect({
 }: SearchableSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [openUpward, setOpenUpward] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
+
+    const checkPlacement = useCallback(() => {
+        if (containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            let spaceInContainer = spaceBelow;
+            const scrollParent = containerRef.current.closest<HTMLElement>(
+                '.overflow-y-auto, .overflow-hidden, section, aside, form, dialog, [role="dialog"]'
+            );
+            if (scrollParent) {
+                const parentRect = scrollParent.getBoundingClientRect();
+                spaceInContainer = parentRect.bottom - rect.bottom;
+            }
+            const dropdownHeight = Math.min(options.length * 40 + 60, 240);
+            const shouldFlip = (spaceBelow < dropdownHeight || spaceInContainer < dropdownHeight) && rect.top > dropdownHeight;
+            setOpenUpward(shouldFlip);
+        }
+    }, [options.length]);
 
     const isSearchable = searchable ?? (options.length > 5);
 
@@ -62,7 +81,9 @@ export default function SearchableSelect({
         };
 
         if (isOpen) {
+            checkPlacement();
             document.addEventListener('mousedown', handleClickOutside);
+            window.addEventListener('resize', checkPlacement);
             if (onOpen) onOpen();
             if (isSearchable) {
                 setTimeout(() => searchInputRef.current?.focus(), 50);
@@ -71,8 +92,9 @@ export default function SearchableSelect({
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            window.removeEventListener('resize', checkPlacement);
         };
-    }, [isOpen, onOpen, isSearchable]);
+    }, [isOpen, onOpen, isSearchable, checkPlacement]);
 
     const handleSelect = (val: string) => {
         onChange(val);
@@ -90,10 +112,11 @@ export default function SearchableSelect({
                         setSearchTerm("");
                         return;
                     }
+                    checkPlacement();
                     setIsOpen(true);
                 }}
                 className={`
-                    relative w-full h-10 flex items-center cursor-pointer rounded-lg bg-surface text-xs sm:text-sm ${icon ? 'pl-9' : 'pl-3'} pr-8 text-left border
+                    relative w-full h-10 flex items-center cursor-pointer rounded-lg bg-surface text-xs ${icon ? 'pl-9' : 'pl-3'} pr-8 text-left border
                     focus:outline-none focus:ring-2 focus:ring-prime/10 focus:border-prime
                     transition-all duration-200
                     ${isOpen ? 'ring-2 ring-prime/10 border-prime' : (value ? 'border-border-muted text-foreground' : 'border-border-muted text-text-muted hover:border-prime/50')}
@@ -115,7 +138,7 @@ export default function SearchableSelect({
             </button>
 
             {isOpen && (
-                <div className="absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-lg bg-surface border border-border-muted shadow-xl animate-in fade-in zoom-in-95 duration-100 flex flex-col">
+                <div className={`absolute z-50 max-h-60 w-full overflow-hidden rounded-lg bg-surface border border-border-muted shadow-xl animate-in fade-in zoom-in-95 duration-100 flex flex-col ${openUpward ? 'bottom-full mb-1' : 'top-full mt-1'}`}>
                     {/* Search bar inside dropdown (when searchable) */}
                     {isSearchable && (
                         <div className="p-2 border-b border-border-muted/50 bg-surface-muted sticky top-0">

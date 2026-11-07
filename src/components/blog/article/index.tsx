@@ -75,15 +75,14 @@ export default function BlogArticle({ post, recent, categories, related }: BlogA
         </header>
 
         {/* Featured image */}
-        <PostImage
+        {/* <PostImage
           image={post.image}
           describe
           preload
           coverSize="md"
           sizes="(min-width: 768px) 768px, 100vw"
-          // CMS images are small (~500px wide): keep them at a modest width so they stay sharp.
           className="mx-auto mt-6 aspect-[495/199] max-w-3xl rounded-2xl"
-        />
+        /> */}
 
         {/* Meta strip */}
         <dl className="mt-6 grid grid-cols-2 gap-5 rounded-2xl border border-border-muted p-5 sm:grid-cols-4">

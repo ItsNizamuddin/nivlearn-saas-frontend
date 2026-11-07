@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import {
   Award,
@@ -9,6 +9,8 @@ import {
   ArrowRight,
   Briefcase,
   Sparkles,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { useLeadModal } from '@/context/LeadModalContext';
 import type { CourseDetail } from '@/services/catalog.service';
@@ -16,6 +18,7 @@ import type { CourseDetail } from '@/services/catalog.service';
 export default function CourseCareer({ course }: { course: CourseDetail }) {
   const { openModal } = useLeadModal();
   const [mobileTab, setMobileTab] = useState<'path' | 'cert'>('path');
+  const certScrollRef = useRef<HTMLDivElement>(null);
 
   const career = course.career;
   const pathItems = career?.path || career?.career_path || [];
@@ -42,6 +45,16 @@ export default function CourseCareer({ course }: { course: CourseDetail }) {
     });
   };
 
+  const scrollCertificates = (direction: 'left' | 'right') => {
+    if (certScrollRef.current) {
+      const amount = 300;
+      certScrollRef.current.scrollBy({
+        left: direction === 'left' ? -amount : amount,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   const careerTitle = career.career_title || `Career Trajectory & Certification in ${course.course_title}`;
   const careerDesc =
     career.career_description ||
@@ -56,7 +69,7 @@ export default function CourseCareer({ course }: { course: CourseDetail }) {
   };
 
   return (
-    <section id="career" className="relative bg-white py-12 sm:py-14 border-b border-border-muted/50 overflow-hidden">
+    <section id="career" className="relative bg-white py-12 sm:py-16 border-b border-border-muted/50 overflow-hidden">
       <div className="section-container relative z-10">
         {/* SECTION HEADER */}
         <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-12">
@@ -152,64 +165,26 @@ export default function CourseCareer({ course }: { course: CourseDetail }) {
             </div>
           )}
 
-          {/* Mobile Tab 2: Certification Process & Certificate Showcase */}
+          {/* Mobile Tab 2: Certification Process */}
           {(mobileTab === 'cert' || pathItems.length === 0) && (
-            <div className="space-y-4">
-              <div className="space-y-3">
-                {certSteps.map((step, idx) => {
-                  const desc = step.title || step.value || step.desc || step.description || '';
-                  if (!desc) return null;
-                  return (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-3 p-3.5 rounded-lg border border-border-muted/80 bg-surface shadow-xs"
-                    >
-                      <div className="w-7 h-7 rounded-lg bg-prime-yellow/15 text-prime-yellow font-black text-xs flex items-center justify-center shrink-0 mt-0.5 border border-prime-yellow/30">
-                        0{idx + 1}
-                      </div>
-                      <p className="text-xs text-slate-700 leading-relaxed font-medium">
-                        {desc}
-                      </p>
+            <div className="space-y-3">
+              {certSteps.map((step, idx) => {
+                const desc = step.title || step.value || step.desc || step.description || '';
+                if (!desc) return null;
+                return (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 p-3.5 rounded-lg border border-border-muted/80 bg-surface shadow-xs"
+                  >
+                    <div className="w-7 h-7 rounded-lg bg-prime-yellow/15 text-prime-yellow font-black text-xs flex items-center justify-center shrink-0 mt-0.5 border border-prime-yellow/30">
+                      0{idx + 1}
                     </div>
-                  );
-                })}
-              </div>
-
-              {/* Mobile Certificates Showcase */}
-              {certificates.length > 0 && (
-                <div className="pt-3 border-t border-border-muted/50 space-y-3">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                    <span className="text-xs font-bold text-prime-dark uppercase tracking-wider">
-                      Accredited Certificates
-                    </span>
+                    <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                      {desc}
+                    </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {certificates.map((cert, cIdx) => {
-                      const imgUrl = cert.certimg?.url || cert.certimg?.thumbnail || cert.image || cert.url;
-                      if (!imgUrl) return null;
-                      return (
-                        <div key={cIdx} className="rounded-xl border border-border-muted overflow-hidden bg-surface p-2 shadow-xs">
-                          <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-slate-50 border border-slate-100">
-                            <Image
-                              src={imgUrl}
-                              alt={cert.name || 'Course Certificate'}
-                              fill
-                              sizes="(max-width: 768px) 50vw, 200px"
-                              className="object-contain p-1"
-                            />
-                          </div>
-                          {cert.name && (
-                            <p className="text-center font-bold text-[11px] text-prime-dark mt-1 truncate">
-                              {cert.name}
-                            </p>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+                );
+              })}
             </div>
           )}
         </div>
@@ -285,7 +260,7 @@ export default function CourseCareer({ course }: { course: CourseDetail }) {
             </div>
           </div>
 
-          {/* Track 2: Step-by-Step Certification Roadmap & Credential Showcase (6 cols) */}
+          {/* Track 2: Step-by-Step Certification Roadmap (6 cols) */}
           <div className="lg:col-span-6 space-y-6">
             <div className="flex items-center justify-between pb-1 border-b border-border-muted/50">
               <div className="flex items-center gap-2">
@@ -332,34 +307,76 @@ export default function CourseCareer({ course }: { course: CourseDetail }) {
                 );
               })}
             </div>
+          </div>
+        </div>
 
-            {/* Desktop Certificates Showcase */}
-            {certificates.length > 0 && (
-              <div className="pt-4 border-t border-border-muted/50 space-y-3">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  <span className="text-xs font-bold text-prime-dark uppercase tracking-wider">
-                    Accredited Certificates &amp; Credentials
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
+        {/* CENTERED ACCREDITED CERTIFICATES SHOWCASE (Scrollable if multiple) */}
+        {certificates.length > 0 && (
+          <div className="mt-8 pt-6 border-t border-border-muted/50 space-y-4">
+            <div className="flex items-center justify-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span className="text-xs font-bold text-prime-dark uppercase tracking-wider">
+                Accredited Certificates &amp; Credentials
+              </span>
+            </div>
+
+            <div className="relative max-w-5xl mx-auto">
+              {/* Desktop Scroll Arrow Controls (when more than 2 certificates) */}
+              {certificates.length > 2 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => scrollCertificates('left')}
+                    aria-label="Previous certificate"
+                    className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white border border-border-muted shadow-md items-center justify-center text-slate-700 hover:text-prime hover:border-prime transition-all cursor-pointer"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollCertificates('right')}
+                    aria-label="Next certificate"
+                    className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white border border-border-muted shadow-md items-center justify-center text-slate-700 hover:text-prime hover:border-prime transition-all cursor-pointer"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </>
+              )}
+
+              {/* Scroll Container: centers when few, smoothly scrolls horizontally when many */}
+              <div
+                ref={certScrollRef}
+                className="overflow-x-auto no-scrollbar scroll-smooth py-1 px-1"
+              >
+                <div className="flex items-start justify-center gap-4 w-max min-w-full mx-auto">
                   {certificates.map((cert, cIdx) => {
                     const imgUrl = cert.certimg?.url || cert.certimg?.thumbnail || cert.image || cert.url;
                     if (!imgUrl) return null;
+                    const name = cert.name || cert.title;
+                    const desc = cert.description || cert.desc;
+
                     return (
-                      <div key={cIdx} className="rounded-xl border border-border-muted overflow-hidden bg-surface p-3 shadow-xs hover:border-prime/40 hover:shadow-sm transition-all">
+                      <div
+                        key={cIdx}
+                        className="w-64 sm:w-72 shrink-0 rounded-xl border border-border-muted overflow-hidden bg-surface p-3 shadow-xs hover:border-prime/40 hover:shadow-sm transition-all text-center"
+                      >
                         <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-slate-50 border border-slate-100">
                           <Image
                             src={imgUrl}
-                            alt={cert.name || 'Accredited Course Certificate'}
+                            alt={name || 'Accredited Course Certificate'}
                             fill
-                            sizes="(max-width: 768px) 50vw, 220px"
+                            sizes="(max-width: 768px) 260px, 290px"
                             className="object-contain p-2"
                           />
                         </div>
-                        {cert.name && (
+                        {name && (
                           <p className="text-center font-bold text-xs text-prime-dark mt-2 truncate">
-                            {cert.name}
+                            {name}
+                          </p>
+                        )}
+                        {desc && (
+                          <p className="text-center text-[11px] text-slate-500 leading-relaxed mt-1 line-clamp-3">
+                            {desc}
                           </p>
                         )}
                       </div>
@@ -367,9 +384,9 @@ export default function CourseCareer({ course }: { course: CourseDetail }) {
                   })}
                 </div>
               </div>
-            )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

@@ -82,7 +82,7 @@ export default function CourseHero({
           <div className="lg:col-span-7 xl:col-span-8 space-y-3.5 sm:space-y-5">
             {/* Tagline Badge from API courseCard */}
             {tagline && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-prime/10 border border-prime/20 text-prime text-[11px] sm:text-xs font-bold uppercase tracking-wider">
+              <div className="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-prime/10 border border-prime/20 text-prime text-[10px] font-bold uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5 text-prime" />
                 <span>{tagline}</span>
               </div>

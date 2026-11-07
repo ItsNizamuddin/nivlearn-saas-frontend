@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Star, GraduationCap, Award, Users } from 'lucide-react';
+import { Star, GraduationCap, Award } from 'lucide-react';
 import { useLeadModal } from '@/context/LeadModalContext';
 import type { CourseDetail } from '@/services/catalog.service';
 
@@ -30,6 +30,23 @@ function extractBio(bio: unknown): string {
   return '';
 }
 
+/** Strips all HTML tags and collapses whitespace to clean readable text */
+function stripHtmlToText(html: string): string {
+  if (!html) return '';
+  return html
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export default function CourseTrainers({ course }: { course: CourseDetail }) {
   const { openModal } = useLeadModal();
 
@@ -49,9 +66,10 @@ export default function CourseTrainers({ course }: { course: CourseDetail }) {
               ? t.image
               : (t.image as { url?: string } | undefined)?.url) || undefined;
 
-      const bioHtml =
+      const rawBio =
         t.description ||
         extractBio(t.bio);
+      const cleanBio = stripHtmlToText(rawBio);
 
       return {
         name: t.name || '',
@@ -59,7 +77,7 @@ export default function CourseTrainers({ course }: { course: CourseDetail }) {
         experience: t.experience ? `${t.experience} Years Experience` : undefined,
         totalTrained: t.totalTrained ? `${t.totalTrained} Trained` : undefined,
         rating: t.rating || 5.0,
-        bio: bioHtml,
+        bio: cleanBio,
         image: photoUrl,
       };
     });
@@ -159,11 +177,10 @@ export default function CourseTrainers({ course }: { course: CourseDetail }) {
                 )}
               </div>
 
-
-              <div
-                className="text-xs text-slate-600 leading-relaxed mt-3 line-clamp-4 overflow-hidden space-y-1.5 [&_p]:mb-1.5 [&_p:last-child]:mb-0 [&_span]:!text-inherit [&_ul]:list-disc [&_ul]:pl-4"
-                dangerouslySetInnerHTML={{ __html: mentor.bio }}
-              />
+              {/* Clean 5 to 6 lines clamped bio */}
+              <p className="text-xs text-slate-600 leading-relaxed mt-3 line-clamp-5 sm:line-clamp-6">
+                {mentor.bio}
+              </p>
             </div>
 
             <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">

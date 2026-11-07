@@ -3,14 +3,15 @@
 import React, { useState } from 'react';
 import {
   Calendar,
-  Clock,
   Laptop,
   MapPin,
   ChevronRight,
   Video,
   PhoneCall,
+  Sparkles,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import LeadForm from '@/components/forms/LeadForm';
 import { useLeadModal } from '@/context/LeadModalContext';
 import { useIpLocation } from '@/hooks/useIpLocation';
 import { useLmsOffers } from '@/hooks/useLmsOffers';
@@ -118,7 +119,7 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
   const handleEnrollProgram = (program: LMSProgram) => {
     // Self-paced programs are sold and delivered on the LMS.
     if (program.id) {
-      window.location.assign(lmsProgramUrl(program.id));
+      window.open(lmsProgramUrl(program.id), '_blank', 'noopener,noreferrer');
       return;
     }
 
@@ -232,15 +233,15 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
     );
   }
 
-  // Fallback Live Cohort / Admissions Card when no classes are scheduled yet
-  const renderCohortFallbackCard = () => {
+  // Generic Form Card for Live Mentorship when no classes are scheduled in LMS
+  const renderCohortGenericFormCard = () => {
     return (
-      <div className="rounded-lg overflow-hidden bg-surface border border-border-muted/80 shadow-xs hover:border-prime/40 transition-all p-3 sm:p-3.5 space-y-2.5">
+      <div className="relative rounded-xl bg-surface border border-border-muted/80 shadow-xs hover:border-prime/40 transition-all p-3 sm:p-3.5 space-y-2.5">
         {/* Header Badge */}
         <div className="flex items-center justify-between gap-1.5">
           <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Live Interactive Mentorship</span>
+            <span>Upcoming Batches</span>
           </span>
           <span className="text-[10px] font-bold text-prime bg-prime/10 px-2 py-0.5 rounded">
             Admissions Open
@@ -250,52 +251,135 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
         {/* Title & Description */}
         <div>
           <h3 className="font-heading text-xs sm:text-sm font-bold text-prime-dark leading-snug line-clamp-1">
-            {course.course_title}
+            Enquire for Upcoming Cohorts
           </h3>
           <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
-            New mentor-led cohorts launch every 2 weeks with 1-on-1 guidance, live projects, and placement support.
+            Get upcoming batch schedules, weekend/weekday slots, and early-bird scholarship details.
           </p>
         </div>
 
-        {/* Batch Options / Highlights Box */}
-        <div className="p-2.5 rounded-lg border border-dashed border-prime/30 bg-light/50 space-y-1.5">
-          <div className="flex items-center gap-2 text-[11px] text-slate-700 font-medium">
-            <Calendar className="w-3.5 h-3.5 text-prime shrink-0" />
-            <span>Weekday & Weekend Batches Available</span>
-          </div>
-          <div className="flex items-center gap-2 text-[11px] text-slate-700 font-medium">
-            <Clock className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-            <span>Flexible Timing (Morning & Evening Slots)</span>
-          </div>
-        </div>
-
-        {/* Action Button */}
+        {/* Generic Inquiry Form */}
         <div className="pt-1">
-          <button
-            type="button"
-            onClick={handleAdvisor}
-            className="w-full bg-prime hover:bg-prime-dark active:scale-95 text-white font-extrabold text-xs py-2.5 px-3.5 rounded-lg transition-all cursor-pointer shadow-xs flex items-center justify-center gap-2 group"
-          >
-            <PhoneCall className="w-3.5 h-3.5" />
-            <span>Contact Advisor for Batch Details</span>
-            <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-          </button>
-          <p className="text-[10px] text-center text-slate-400 mt-1">
-            Get custom dates, syllabus breakdown & scholarship fee details
-          </p>
+          <LeadForm
+            layout="compact"
+            formTitle={null}
+            formDescription={null}
+            config={{
+              showCourse: false,
+              showMessage: false,
+              purpose: false,
+            }}
+            defaultValues={{
+              leadSource: `lms-cohort-enquiry-${course.slug}`,
+              courseSlug: course.slug,
+              selectedCourse: course.course_title,
+              purpose: 'Upcoming Batch & Schedule Enquiry',
+            }}
+            submitButtonText="Enquire for Upcoming Batch"
+          />
         </div>
       </div>
     );
   };
 
-  // If neither classes nor programs exist for this course in LMS
-  if (!hasClasses && !hasPrograms) {
+  // Generic Advisor Enquiry Card (replaces self-paced when no LMS self-paced program exists)
+  const renderAdvisorGenericFormCard = () => {
     return (
-      <div className={isMobile ? 'block lg:hidden my-4' : 'hidden lg:block'}>
-        {renderCohortFallbackCard()}
+      <div className="relative rounded-xl bg-surface border border-border-muted/80 shadow-xs hover:border-prime/40 transition-all p-3 sm:p-3.5 space-y-2.5">
+        {/* Header Badge */}
+        <div className="flex items-center justify-between gap-1.5">
+          <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-prime bg-prime/10 border border-prime/20 px-2 py-0.5 rounded-full">
+            <PhoneCall className="w-3 h-3 text-prime" />
+            <span>Admissions Advisory</span>
+          </span>
+
+          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-500/10 px-1.5 py-0.5 rounded">
+            15m Callback
+          </span>
+        </div>
+
+        {/* Title & Description */}
+        <div>
+          <h3 className="font-heading text-xs sm:text-sm font-bold text-prime-dark leading-snug line-clamp-1">
+            Connect with a Course Advisor
+          </h3>
+          <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+            Have questions about syllabus, batch schedules, fees, or custom learning options? Speak directly with our advisory team.
+          </p>
+        </div>
+
+        {/* Generic Inquiry Form */}
+        <div className="pt-1">
+          <LeadForm
+            layout="compact"
+            formTitle={null}
+            formDescription={null}
+            config={{
+              showCourse: false,
+              showMessage: false,
+              purpose: false,
+            }}
+            defaultValues={{
+              leadSource: `course-advisor-${course.slug}`,
+              courseSlug: course.slug,
+              selectedCourse: course.course_title,
+              purpose: 'Course Advisory & Admissions Inquiry',
+            }}
+            submitButtonText="Connect with an Advisor"
+          />
+        </div>
       </div>
     );
-  }
+  };
+
+  // Generic Form Card when NEITHER live classes nor self-paced programs exist in LMS
+  const renderBothMissingGenericFormCard = () => {
+    return (
+      <div className="relative rounded-xl bg-surface border border-border-muted/80 shadow-xs hover:border-prime/40 transition-all p-3.5 sm:p-4 space-y-3">
+        {/* Header Badge */}
+        <div className="flex items-center justify-between gap-1.5">
+          <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-prime bg-prime/10 border border-prime/20 px-2.5 py-0.5 rounded-full">
+            <Sparkles className="w-3 h-3 text-prime" />
+            <span>Admissions &amp; Enquiries</span>
+          </span>
+          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-500/10 px-2 py-0.5 rounded">
+            Enrolling Now
+          </span>
+        </div>
+
+        {/* Title & Description */}
+        <div>
+          <h3 className="font-heading text-sm sm:text-base font-bold text-prime-dark leading-snug">
+            Enquire About {course.course_title}
+          </h3>
+          <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+            Connect with our academic advisors to receive custom batch schedules, self-learning options, and fee details.
+          </p>
+        </div>
+
+        {/* Generic Inquiry Form */}
+        <div className="pt-1">
+          <LeadForm
+            layout="compact"
+            formTitle={null}
+            formDescription={null}
+            config={{
+              showCourse: false,
+              showMessage: false,
+              purpose: true,
+            }}
+            defaultValues={{
+              leadSource: `lms-general-enquiry-${course.slug}`,
+              courseSlug: course.slug,
+              selectedCourse: course.course_title,
+              purpose: 'Course Admission & Fee Enquiry',
+            }}
+            submitButtonText="Enquire Now"
+          />
+        </div>
+      </div>
+    );
+  };
 
   // COMPACT LIVE COHORT CARD
   const renderCohortCard = () => {
@@ -481,14 +565,26 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => handleEnrollProgram(selectedProgram)}
-            className="bg-prime-yellow hover:bg-amber-400 active:scale-95 text-white font-extrabold text-xs py-2 px-3.5 rounded-lg transition-all cursor-pointer shadow-xs flex items-center gap-1 shrink-0"
-          >
-            <span>Get Full Access</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </button>
+          {selectedProgram.id ? (
+            <a
+              href={lmsProgramUrl(selectedProgram.id)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-prime-yellow hover:bg-amber-400 active:scale-95 text-white font-extrabold text-xs py-2 px-3.5 rounded-lg transition-all cursor-pointer shadow-xs flex items-center gap-1 shrink-0"
+            >
+              <span>Get Full Access</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => handleEnrollProgram(selectedProgram)}
+              className="bg-prime-yellow hover:bg-amber-400 active:scale-95 text-white font-extrabold text-xs py-2 px-3.5 rounded-lg transition-all cursor-pointer shadow-xs flex items-center gap-1 shrink-0"
+            >
+              <span>Get Full Access</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
       </div>
     );
@@ -496,62 +592,115 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
 
   /* =========================================================================
    * MOBILE VIEW (Rendered only on < lg screens)
-   * Uses a sleek segmented toggle bar with prices so it takes almost NO vertical
-   * screen height and lets learners switch effortlessly between Live & Self-Paced.
+   * Lets learners switch effortlessly between Live Mentorship & Self-Paced.
+   * If either is missing, a compact generic enquiry form is rendered.
+   * If both are missing, a unified generic admissions enquiry form is shown.
    * ========================================================================= */
   if (isMobile) {
+    if (!hasClasses && !hasPrograms) {
+      return (
+        <div className="block lg:hidden my-4">
+          {renderBothMissingGenericFormCard()}
+        </div>
+      );
+    }
+
     return (
       <div className="block lg:hidden my-4 space-y-2">
-        {/* Mobile Segmented Toggle (Shown when programs exist alongside cohorts/fallback) */}
-        {hasPrograms && (
-          <div className="bg-light p-1 rounded-xl flex border border-border-muted gap-1">
-            <button
-              type="button"
-              onClick={() => setMobileTab('cohort')}
-              className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${mobileTab === 'cohort'
-                ? 'bg-surface text-prime-dark shadow-xs border border-border-muted/80'
-                : 'text-slate-500 hover:text-slate-800'
-                }`}
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-              <span className="truncate">Live Batch</span>
-              {selectedClass?.pricing?.payAmount ? (
-                <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded shrink-0">
-                  {selectedClass.pricing.currency?.symbol || '₹'}
-                  {selectedClass.pricing.payAmount.toLocaleString()}
-                </span>
-              ) : (
-                <span className="text-[10px] font-bold text-prime bg-prime/10 px-1.5 py-0.2 rounded shrink-0">
-                  Advising
-                </span>
-              )}
-            </button>
+        {/* Mobile Segmented Toggle */}
+        <div className="bg-light p-1 rounded-xl flex border border-border-muted gap-1">
+          <button
+            type="button"
+            onClick={() => setMobileTab('cohort')}
+            className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${mobileTab === 'cohort'
+              ? 'bg-surface text-prime-dark shadow-xs border border-border-muted/80'
+              : 'text-slate-500 hover:text-slate-800'
+              }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+            <span className="truncate">Live Batch</span>
+            {hasClasses && selectedClass?.pricing?.payAmount ? (
+              <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded shrink-0">
+                {selectedClass.pricing.currency?.symbol || '₹'}
+                {selectedClass.pricing.payAmount.toLocaleString()}
+              </span>
+            ) : (
+              <span className="text-[10px] font-bold text-prime bg-prime/10 px-1.5 py-0.2 rounded shrink-0">
+                Enquire
+              </span>
+            )}
+          </button>
 
-            <button
-              type="button"
-              onClick={() => setMobileTab('program')}
-              className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${mobileTab === 'program'
-                ? 'bg-surface text-prime-dark shadow-xs border border-border-muted/80'
-                : 'text-slate-500 hover:text-slate-800'
-                }`}
-            >
-              <Video className="w-3 h-3 text-amber-500 shrink-0" />
-              <span className="truncate">Self-Paced</span>
-              {selectedProgram?.pricing?.actualPrice && (
-                <span className="text-[10px] font-black text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded shrink-0">
-                  {selectedProgram.pricing.symbol || '₹'}
-                  {selectedProgram.pricing.actualPrice.toLocaleString()}
-                </span>
-              )}
-            </button>
-          </div>
-        )}
+          <button
+            type="button"
+            onClick={() => setMobileTab('program')}
+            className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${mobileTab === 'program'
+              ? 'bg-surface text-prime-dark shadow-xs border border-border-muted/80'
+              : 'text-slate-500 hover:text-slate-800'
+              }`}
+          >
+            {hasPrograms ? (
+              <>
+                <Video className="w-3 h-3 text-amber-500 shrink-0" />
+                <span className="truncate">Self-Paced</span>
+                {selectedProgram?.pricing?.actualPrice && (
+                  <span className="text-[10px] font-black text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded shrink-0">
+                    {selectedProgram.pricing.symbol || '₹'}
+                    {selectedProgram.pricing.actualPrice.toLocaleString()}
+                  </span>
+                )}
+              </>
+            ) : (
+              <>
+                <PhoneCall className="w-3 h-3 text-prime shrink-0" />
+                <span className="truncate">Ask Advisor</span>
+              </>
+            )}
+          </button>
+        </div>
 
         {/* Display selected card on mobile */}
-        {mobileTab === 'cohort' && (hasClasses ? renderCohortCard() : renderCohortFallbackCard())}
-        {mobileTab === 'program' && renderProgramCard()}
+        {mobileTab === 'cohort' && (hasClasses ? renderCohortCard() : renderCohortGenericFormCard())}
+        {mobileTab === 'program' && (hasPrograms ? renderProgramCard() : renderAdvisorGenericFormCard())}
 
-        {/* Subtle Advisor link */}
+        {/* Subtle Advisor link only when self-paced LMS program is shown */}
+        {hasPrograms && (
+          <button
+            type="button"
+            onClick={handleAdvisor}
+            className="w-full text-center text-[11px] font-semibold text-slate-500 hover:text-prime py-1 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <PhoneCall className="w-3 h-3 text-prime" />
+            <span>Need guidance? Speak with a Learning Advisor</span>
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  /* =========================================================================
+   * DESKTOP VIEW (Rendered in the sticky right column)
+   * Displays Live Cohort card at top, and below it either the active LMS self-paced
+   * program (if published) or the generic Course Advisor enquiry form.
+   * ========================================================================= */
+  if (!hasClasses && !hasPrograms) {
+    return (
+      <div className="hidden lg:block space-y-3">
+        {renderBothMissingGenericFormCard()}
+      </div>
+    );
+  }
+
+  return (
+    <div className="hidden lg:block space-y-3">
+      {/* 1. Live Cohort Card (keeps live batch/cohort card as is) */}
+      {hasClasses ? renderCohortCard() : renderCohortGenericFormCard()}
+
+      {/* 2. Self-Paced Track Card (if published in LMS) OR Generic Advisor Card */}
+      {hasPrograms ? renderProgramCard() : renderAdvisorGenericFormCard()}
+
+      {/* Subtle Learning Advisor Link underneath only when LMS self-paced program is shown */}
+      {hasPrograms && (
         <button
           type="button"
           onClick={handleAdvisor}
@@ -560,32 +709,7 @@ export default function CourseLMSOfferCard({ course, isMobile = false }: CourseL
           <PhoneCall className="w-3 h-3 text-prime" />
           <span>Need guidance? Speak with a Learning Advisor</span>
         </button>
-      </div>
-    );
-  }
-
-  /* =========================================================================
-   * DESKTOP VIEW (Rendered in the sticky right column)
-   * Displays BOTH Live Cohort (or Advisor Fallback) and Self-Paced stacked vertically,
-   * in a compact layout without oversized elements.
-   * ========================================================================= */
-  return (
-    <div className="hidden lg:block space-y-3">
-      {/* 1. Live Cohort Card (or Rich Cohort Advisor Card if no classes scheduled yet) */}
-      {hasClasses ? renderCohortCard() : renderCohortFallbackCard()}
-
-      {/* 2. Self-Paced Track Card (Stacked below) */}
-      {hasPrograms && renderProgramCard()}
-
-      {/* Subtle Learning Advisor Link underneath both */}
-      <button
-        type="button"
-        onClick={handleAdvisor}
-        className="w-full text-center text-[11px] font-semibold text-slate-500 hover:text-prime py-1 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-      >
-        <PhoneCall className="w-3 h-3 text-prime" />
-        <span>Need guidance? Speak with a Learning Advisor</span>
-      </button>
+      )}
     </div>
   );
 }
