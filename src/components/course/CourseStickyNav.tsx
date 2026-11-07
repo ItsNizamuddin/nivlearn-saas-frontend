@@ -164,14 +164,15 @@ export default function CourseStickyNav({
 
         {/* Right Side: Desktop Only CTA Action Bar */}
         <div className="hidden lg:flex items-center gap-2.5 shrink-0 pl-4 border-l border-border-muted/70">
-          <a
-            href="#schedules"
-            onClick={(e) => smoothScrollTo('#schedules', e)}
+          {/* All batches for this course (falls back to the banner cards without a course) */}
+          <Link
+            href={course?.slug ? `/schedules/${course.slug}` : '#schedules'}
+            onClick={course?.slug ? undefined : (e) => smoothScrollTo('#schedules', e)}
             className="inline-flex items-center gap-1.5 text-xs font-bold text-prime-dark hover:text-prime px-3.5 py-2 rounded-lg border border-border-muted hover:border-prime/40 hover:bg-light/60 transition-all cursor-pointer shadow-2xs active:scale-95"
           >
             <Calendar className="w-3.5 h-3.5 text-prime" />
             <span>View Schedules</span>
-          </a>
+          </Link>
 
           <button
             type="button"

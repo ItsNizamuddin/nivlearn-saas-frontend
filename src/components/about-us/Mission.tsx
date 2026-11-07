@@ -22,7 +22,7 @@ export default function Mission() {
 
   return (
     <section
-      className="relative overflow-hidden bg-prime-dark py-16 md:py-24"
+      className="relative overflow-hidden bg-prime-dark py-10 md:py-16"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -101,12 +101,12 @@ export default function Mission() {
                   i === index ? 'opacity-100' : 'invisible opacity-0',
                 )}
               >
-                <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+                <h2 className="text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">
                   <GradientText tone="orange">NivLearn</GradientText>{' '}
                   {/* sky blue: --prime is too dark to read on navy */}
                   <span className="text-prime1">{slide.title}</span>
                 </h2>
-                <p className="mt-5 text-base leading-relaxed text-on-dark/85">{slide.description}</p>
+                <p className="mt-5 text-sm leading-relaxed text-on-dark/85">{slide.description}</p>
               </div>
             ))}
           </div>

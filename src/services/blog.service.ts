@@ -73,38 +73,13 @@ interface RawBlog {
   seo?: { metaTitle?: string; metaDescription?: string; title?: string; description?: string };
 }
 
-/* ---------- sanitizing ---------- */
+/* ---------- html ---------- */
 
-const RICH_TEXT: sanitizeHtml.IOptions = {
-  allowedTags: [
-    ...sanitizeHtml.defaults.allowedTags.filter((tag) => tag !== 'h1'),
-    'img',
-    'iframe',
-  ],
-  // No `style`/`class`: CMS inline styles (fonts, colours) would fight the theme.
-  allowedAttributes: {
-    a: ['href', 'target', 'rel', 'title'],
-    img: ['src', 'alt', 'width', 'height', 'loading'],
-    iframe: ['src', 'title', 'width', 'height', 'allow', 'allowfullscreen'],
-    th: ['colspan', 'rowspan', 'scope'],
-    td: ['colspan', 'rowspan'],
-  },
-  allowedSchemes: ['https', 'http', 'mailto', 'tel'],
-  allowedIframeHostnames: ['www.youtube.com', 'www.youtube-nocookie.com', 'player.vimeo.com'],
-  transformTags: {
-    // The page title is the only <h1>.
-    h1: 'h2',
-    a: (tagName, attribs) => ({
-      tagName,
-      attribs: attribs.target === '_blank' ? { ...attribs, rel: 'noopener noreferrer' } : attribs,
-    }),
-    img: (tagName, attribs) => ({ tagName, attribs: { ...attribs, loading: 'lazy' } }),
-  },
-  // Empty wrappers left behind once inline styles are stripped.
-  exclusiveFilter: (frame) => ['p', 'span', 'strong', 'em'].includes(frame.tag) && !frame.text.trim() && !frame.mediaChildren.length,
-};
-
-const sanitizeRichText = (html?: string) => (html ? sanitizeHtml(html, RICH_TEXT).trim() : '');
+/**
+ * Article HTML is passed through as written in the CMS (trusted, editor-only
+ * source) so its layout, classes and embeds work. Rendered by <BlogContent>.
+ */
+const richText = (html?: string) => html?.trim() ?? '';
 
 const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", nbsp: ' ' };
 
@@ -174,7 +149,7 @@ function mapSummary(raw: RawBlog): BlogSummary | null {
 }
 
 function mapSection(raw?: { title?: string; value?: string }): BlogSection | null {
-  const html = sanitizeRichText(raw?.value);
+  const html = richText(raw?.value);
   return html ? { title: raw?.title?.trim() ?? '', html } : null;
 }
 
@@ -183,7 +158,7 @@ function mapPost(raw: RawBlog): BlogPost | null {
   if (!summary) return null;
   return {
     ...summary,
-    body: sanitizeRichText(raw.body ?? raw.content),
+    body: richText(raw.body ?? raw.content),
     sections: [mapSection(raw.internalSection), mapSection(raw.bottomSection)].filter((s): s is BlogSection => s !== null),
     faqs: (raw.faqs ?? [])
       .map((faq, i) => ({ id: faq._id ?? i, title: toPlainText(faq.title), content: toPlainText(faq.value ?? faq.answer) }))

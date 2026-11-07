@@ -6,17 +6,19 @@ import { CORE_VALUES, CORE_VALUES_INTRO, type CoreValue } from './data';
 
 function ValueCard({ title, description, icon: Icon }: CoreValue) {
   return (
-    <li className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-prime/15 bg-surface p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-prime/25 hover:shadow-card md:p-8">
+    <li className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-prime/15 bg-surface p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-prime/25 hover:shadow-card md:p-6">
       {/* Brand accent line, grows in on hover */}
       <span
         aria-hidden
         className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-brand-orange transition-transform duration-300 group-hover:scale-x-100"
       />
-      <span aria-hidden className="flex size-16 items-center justify-center rounded-2xl bg-prime-yellow/10 text-prime-yellow">
-        <Icon className="size-8" />
-      </span>
-      <h3 className="mt-6 text-xl font-bold text-prime-dark">{title}</h3>
-      <p className="mt-3 text-base leading-relaxed text-text-muted">{description}</p>
+      <div className="flex items-center gap-4">
+        <span aria-hidden className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-prime-yellow/10 text-prime-yellow sm:size-16">
+          <Icon className="size-7 sm:size-8" />
+        </span>
+        <h3 className="text-xl font-bold text-prime-dark">{title}</h3>
+      </div>
+      <p className="mt-4 text-base leading-relaxed text-text-muted">{description}</p>
     </li>
   );
 }

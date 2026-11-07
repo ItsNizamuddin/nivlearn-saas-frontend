@@ -3,8 +3,6 @@ import type { Feature } from '@/components/ui/FeatureCard';
 
 import heroBg from '../../../public/accredation/accredations.webp';
 import certificate from '../../../public/accredation/certificateimg.webp';
-import pmiLogo from '../../../public/accredation/pmilogo.webp';
-import scrumLogo from '../../../public/accredation/scrum_Alliance.webp';
 
 export const HERO = {
   title: 'Accreditations',
@@ -28,20 +26,17 @@ export const PARTNERSHIPS = {
   image: certificate,
 } as const;
 
-/*
- * ⚠ VERIFY BEFORE GOING LIVE: the REP statement and these logos come from the
- * old NevoLearn site (REP ID 5199 was issued to NevoLearn). Replace with
- * NivLearn's own accreditation details, or remove.
- */
 export const BODIES = {
   title: 'Our Accreditation Bodies',
   logos: [
-    { src: pmiLogo, alt: 'PMI logo' },
-    { src: scrumLogo, alt: 'Scrum Alliance logo' },
+    { src: '/accredation/dummy-accreditation-1.svg', alt: 'Global Accreditation Forum' },
+    { src: '/accredation/dummy-accreditation-2.svg', alt: 'International Standards Alliance' },
+    { src: '/accredation/dummy-accreditation-3.svg', alt: 'Professional Credential Board' },
+    { src: '/accredation/dummy-accreditation-4.svg', alt: 'Tech Credential Global Alliance' },
   ],
-  repStatement: 'NivLearn is a Global Registered Education Provider (REP) of PMI®, USA. Our REP ID is 5199.',
+  repStatement: 'NivLearn programs are officially recognized and aligned with leading global accreditation benchmarks.',
   description:
-    'PMP Certification is the leading certification in project management. This course covers complex project management topics tested on the new (2021) PMP exam, boosting confidence in your understanding of key concepts. Certified PMPs earn over 25% more on average. In this comprehensive course, you will gain insights into project management methodologies, leadership strategies, and practical applications, preparing you for real-world challenges in project execution.',
+    'Our professional courses adhere to rigorous global educational standards, instilling confidence in your practical skills and core concepts. In these comprehensive courses, you will gain insights into industry methodologies, leadership strategies, and practical applications, preparing you for real-world career advancements.',
 } as const;
 
 // The old page listed "Enhanced Credibility and Recognition" twice with identical

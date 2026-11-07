@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="240" height="70" fill="none">
+  <!-- Circular Seal / Globe Crest -->
+  <g transform="translate(10, 8)">
+    <!-- Outer Gear/Ribbon Ring -->
+    <circle cx="27" cy="27" r="25" fill="#F4F7FB" stroke="#005CCF" stroke-width="2" stroke-dasharray="3 2"/>
+    <circle cx="27" cy="27" r="20" fill="#005CCF"/>
+    <!-- Globe Lines -->
+    <ellipse cx="27" cy="27" rx="14" ry="14" stroke="#D6F2FF" stroke-width="1.5" fill="none"/>
+    <ellipse cx="27" cy="27" rx="6" ry="14" stroke="#D6F2FF" stroke-width="1.2" fill="none"/>
+    <line x1="13" y1="27" x2="41" y2="27" stroke="#D6F2FF" stroke-width="1.2"/>
+    <line x1="16" y1="20" x2="38" y2="20" stroke="#D6F2FF" stroke-width="1" stroke-dasharray="1 1"/>
+    <line x1="16" y1="34" x2="38" y2="34" stroke="#D6F2FF" stroke-width="1" stroke-dasharray="1 1"/>
+    <!-- Verified Badge -->
+    <circle cx="40" cy="38" r="7" fill="#FE8702" stroke="#ffffff" stroke-width="1.5"/>
+    <path d="M37 38 L39.5 40.5 L43.5 36" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Text Lockup -->
+  <g transform="translate(74, 18)">
+    <text x="0" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#002972" letter-spacing="0.4">INTERNATIONAL</text>
+    <text x="0" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#005CCF" letter-spacing="0.4">STANDARDS ALLIANCE</text>
+    <rect x="0" y="34" width="28" height="2" fill="#FE8702"/>
+    <text x="34" y="37" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#475569" letter-spacing="1">QUALITY CERTIFIED</text>
+  </g>
+</svg>
+

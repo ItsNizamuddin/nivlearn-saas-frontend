@@ -52,12 +52,12 @@ export default function CategoryBannerStats({
 
       {/* ===== DESKTOP LAYOUT: Horizontal strip ===== */}
       <div className="hidden lg:block py-6">
-        {/* Scroll container for many stats (e.g. 7 items) */}
-        <div className="flex items-stretch gap-0 divide-x divide-border-muted/50">
+        {/* Equal columns that wrap onto a second row instead of overflowing (CMS can send 7+ stats) */}
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(8.5rem,1fr))] gap-x-4 gap-y-5">
           {stats.map((stat, index) => (
             <div
               key={stat.id || index}
-              className="flex-1 flex items-center gap-3 px-5 xl:px-6 first:pl-0 last:pr-0 group"
+              className="flex items-start gap-2.5 min-w-0 group"
             >
               {/* Sprite Icon with subtle hover ring */}
               <div
@@ -70,7 +70,7 @@ export default function CategoryBannerStats({
                 <p className="font-heading text-lg xl:text-xl font-black text-prime-dark leading-tight">
                   {stat.value}
                 </p>
-                <p className="text-xs xl:text-sm font-medium text-slate-500 leading-snug mt-0.5 whitespace-nowrap">
+                <p className="text-xs xl:text-sm font-medium text-slate-500 leading-snug mt-0.5 text-balance">
                   {stat.title}
                 </p>
               </div>

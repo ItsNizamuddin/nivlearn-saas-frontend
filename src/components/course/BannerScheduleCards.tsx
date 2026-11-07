@@ -2,7 +2,11 @@
 
 import React from 'react';
 import { Calendar, Clock, Wifi, Laptop, MapPin, CheckCircle2, ChevronRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useIpLocation } from '@/hooks/useIpLocation';
 import { useSchedules } from '@/hooks/useSchedules';
+import { viewerTimeZone } from '@/lib/scheduleTime';
 import { useLeadModal } from '@/context/LeadModalContext';
 import type { ScheduleData } from '@/types/schedules';
 
@@ -58,8 +62,24 @@ function formatScheduleTime(startsAt: string, endsAt?: string, timezone?: string
 export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerScheduleCardsProps) {
   const { schedules, pagination, loadingSchedules } = useSchedules(courseSlug, { limit: 50 });
   const { openModal } = useLeadModal();
+  const router = useRouter();
+  const { data: geo } = useIpLocation();
 
   const handleEnrollClick = (schedule?: ScheduleData) => {
+    // Priced batch → checkout (multi-plan batches → plan picker on the schedules page).
+    const pricing = schedule?.filteredPricing?.[0];
+    if (schedule?.code && pricing) {
+      if (schedule.pricingTemplateId) {
+        router.push(`/schedules/${courseSlug}`);
+        return;
+      }
+      const params = new URLSearchParams({ schedule: schedule.code });
+      if (pricing.currency?.code) params.set('currency', pricing.currency.code);
+      params.set('tz', viewerTimeZone(geo?.timezone));
+      router.push(`/checkout?${params}`);
+      return;
+    }
+
     const rawCommence =
       schedule?.commenceDate ||
       schedule?.commencedDate ||
@@ -134,6 +154,7 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
   }
 
   const activeSchedules = (schedules || []).filter((s) => s.status !== 'draft');
+  const moreBatches = (pagination?.total || activeSchedules.length) - 2;
 
   if (activeSchedules.length === 0) {
     return (
@@ -185,11 +206,13 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
       <div className="space-y-3">
         {activeSchedules.slice(0, 2).map((schedule, idx) => {
           const pricing = schedule.filteredPricing?.[0];
-          const actualPrice = pricing?.actualPrice;
-          const comparedPrice = pricing?.comparedPrice;
+          // The CMS has no fixed meaning for the two prices: checkout charges the lower one,
+          // so show that and strike through the higher (same as the schedules page).
+          const prices = [pricing?.comparedPrice, pricing?.actualPrice].filter((p): p is number => typeof p === 'number' && p > 0);
+          const finalPrice = prices.length ? Math.min(...prices) : undefined;
+          const actualPrice = prices.length ? Math.max(...prices) : undefined;
           const currencySymbol = pricing?.currency?.symbol || '₹';
-          const isDiscounted = actualPrice && comparedPrice && comparedPrice < actualPrice;
-          const finalPrice = comparedPrice || actualPrice;
+          const isDiscounted = !!finalPrice && !!actualPrice && finalPrice < actualPrice;
 
           const tz = schedule.country?.timeZone || 'Asia/Kolkata';
           const dateRange = formatScheduleDate(schedule.startsAt, schedule.endsAt);
@@ -297,7 +320,8 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
                   onClick={() => handleEnrollClick(schedule)}
                   className="inline-flex items-center gap-1 bg-prime-yellow hover:bg-amber-400 active:scale-95 text-prime-dark font-extrabold text-xs px-3.5 py-1.5 rounded-lg transition-colors cursor-pointer shadow-xs"
                 >
-                  <span>Enroll Now</span>
+                  {/* Multi-plan batches pick a plan on the schedules page first */}
+                  <span>{finalPrice && schedule.pricingTemplateId ? 'Choose Plan' : 'Enroll Now'}</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -307,19 +331,18 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
       </div>
 
       <div className="pt-1 space-y-1">
-        {(pagination?.total || activeSchedules.length) > 2 && (
-          <button
-            type="button"
-            onClick={handleEnquireCustom}
-            className="w-full text-center text-xs font-bold text-prime hover:text-prime-dark transition-colors flex items-center justify-center gap-1 cursor-pointer py-0.5"
-          >
-            <span>
-              +{(pagination?.total || activeSchedules.length) - 2} more upcoming{' '}
-              {(pagination?.total || activeSchedules.length) - 2 === 1 ? 'batch' : 'batches'} available
-            </span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        )}
+        {/* Every batch (with filters and plans) is on the schedules page. */}
+        <Link
+          href={`/schedules/${courseSlug}`}
+          className="w-full text-center text-xs font-bold text-prime hover:text-prime-dark transition-colors flex items-center justify-center gap-1 py-0.5"
+        >
+          <span>
+            {moreBatches > 0
+              ? `+${moreBatches} more upcoming ${moreBatches === 1 ? 'batch' : 'batches'} available`
+              : 'View all batches'}
+          </span>
+          <ChevronRight aria-hidden className="w-3.5 h-3.5" />
+        </Link>
         <button
           type="button"
           onClick={handleEnquireCustom}

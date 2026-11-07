@@ -40,7 +40,7 @@ export default function Marquee({
       className={cn('group relative overflow-hidden', vertical ? 'h-full' : 'w-full', className)}
       style={{ '--marquee-duration': `${duration}s` } as CSSProperties}
     >
-      <div className={cn('flex w-max group-hover:[&>*]:[animation-play-state:paused]', vertical ? 'flex-col' : 'flex-row')}>
+      <div className={cn('flex w-max group-hover:*:[animation-play-state:paused]', vertical ? 'flex-col' : 'flex-row')}>
         <div className={cn(track, vertical ? 'pb-6' : 'pr-6')}>{children}</div>
         {/* Duplicate for a seamless loop; hidden from assistive tech. */}
         <div className={cn(track, vertical ? 'pb-6' : 'pr-6')} aria-hidden>

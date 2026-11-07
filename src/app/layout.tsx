@@ -25,6 +25,19 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+/** Shared stylesheet for HTML written in the SkillDeck CMS editor (wrap it in `.skilldeck-rich-text`). */
+const RICH_TEXT_CSS =
+  process.env.NEXT_PUBLIC_RICH_TEXT_CSS ||
+  "https://cloud-storage.skilldeck.net/static/editor/skilldeck-rich-text.min.css";
+
+const RICH_TEXT_CDN_ORIGIN = (() => {
+  try {
+    return new URL(RICH_TEXT_CSS).origin;
+  } catch {
+    return "https://cloud-storage.skilldeck.net";
+  }
+})();
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -56,21 +69,19 @@ export default async function RootLayout({
     >
       <head>
         <meta name="apple-mobile-web-app-title" content="NivLearn" />
-        <link rel="preconnect" href="https://cloud-storage.skilldeck.net" crossOrigin="" />
-        <link rel="dns-prefetch" href="https://cloud-storage.skilldeck.net" />
-        {/* Asynchronously loads the live CDN stylesheet without blocking initial render */}
+        <link rel="preconnect" href={RICH_TEXT_CDN_ORIGIN} crossOrigin="" />
+        <link rel="dns-prefetch" href={RICH_TEXT_CDN_ORIGIN} />
+        {/* Asynchronously loads the rich-text CDN stylesheet without blocking initial render */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href='https://cloud-storage.skilldeck.net/static/editor/skilldeck-rich-text.min.css';document.head.appendChild(l);})()`,
+            __html: `(function(){var l=document.createElement('link');l.rel='stylesheet';l.href=${JSON.stringify(RICH_TEXT_CSS)};document.head.appendChild(l);})()`,
           }}
         />
         <noscript>
-          <link
-            rel="stylesheet"
-            href="https://cloud-storage.skilldeck.net/static/editor/skilldeck-rich-text.min.css"
-          />
+          <link rel="stylesheet" href={RICH_TEXT_CSS} />
         </noscript>
         <DynamicScripts position="head" />
+
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <DynamicScripts position="body" />

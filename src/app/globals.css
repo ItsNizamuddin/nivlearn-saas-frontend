@@ -279,6 +279,14 @@
   & > :first-child { margin-top: 0; }
 }
 
+/* ============================================================
+ * Bottom-sheet slide-up animation (used by ScheduleDetailsDialog)
+ * ============================================================ */
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
 /* CMS-driven ribbon banner container: prevents wide table/text from overflowing mobile screen width */
 .ribbon-scroll-content {
   overflow-x: auto;
