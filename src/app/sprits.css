@@ -566,7 +566,7 @@
   background: url(/sprites/home.webp) -332px -64px;
 }
 
-/* Added from NevoLearn for Category and Course Pages */
+/* Added from NivLearn for Category and Course Pages */
 .star-rating-sprite {
   width: 80px;
   height: 20px;
@@ -912,60 +912,6 @@
   width: 173px;
   height: 12px;
   background: url("/sprites/course.webp") -10px -374px;
-}
-
-.bg-whynevolearn1 {
-  width: 80px;
-  height: 80px;
-  background: url("/sprites/course.webp") -10px -174px;
-}
-
-.bg-whynevolearn2 {
-  width: 80px;
-  height: 80px;
-  background: url("/sprites/course.webp") -110px -174px;
-}
-
-.bg-whynevolearn3 {
-  width: 80px;
-  height: 80px;
-  background: url("/sprites/course.webp") -210px -174px;
-}
-
-.bg-whynevolearn4 {
-  width: 80px;
-  height: 80px;
-  background: url("/sprites/course.webp") -10px -274px;
-}
-
-.bg-whynevolearn5 {
-  width: 80px;
-  height: 80px;
-  background: url("/sprites/course.webp") -110px -274px;
-}
-
-.bg-whynevolearn6 {
-  width: 80px;
-  height: 80px;
-  background: url("/sprites/course.webp") -210px -274px;
-}
-
-.bg-whynevolearn7 {
-  width: 80px;
-  height: 80px;
-  background: url("/sprites/course.webp") -394px -10px;
-}
-
-.bg-whynevolearn8 {
-  width: 80px;
-  height: 80px;
-  background: url("/sprites/course.webp") -394px -110px;
-}
-
-.bg-whynevolearn9 {
-  width: 80px;
-  height: 80px;
-  background: url("/sprites/course.webp") -394px -210px;
 }
 
 .bg-catstats1 {

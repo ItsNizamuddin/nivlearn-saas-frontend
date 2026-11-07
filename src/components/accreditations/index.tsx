@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import CheckList from '@/components/ui/CheckList';
 import FeatureCard from '@/components/ui/FeatureCard';
 import PageHero from '@/components/ui/PageHero';
@@ -31,7 +31,7 @@ export default function Accreditations() {
               key={logo.alt}
               className="flex h-32 w-64 items-center justify-center rounded-2xl border border-prime/10 bg-surface p-8 shadow-sm transition-all duration-200 hover:border-prime/30 hover:shadow-card"
             >
-              <Image src={logo.src} alt={logo.alt} sizes="200px" className="h-auto max-h-20 w-auto" />
+              <Image src={logo.src} alt={logo.alt} width={200} height={60} sizes="200px" className="h-auto max-h-20 w-auto" />
             </li>
           ))}
         </ul>

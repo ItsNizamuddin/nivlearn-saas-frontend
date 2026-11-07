@@ -31,11 +31,13 @@ export default function WhyChooseUs() {
                 key={point.title}
                 className="rounded-2xl border border-prime/15 bg-surface p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-prime/25 hover:shadow-card"
               >
-                <span aria-hidden className="flex size-14 items-center justify-center rounded-xl bg-prime/10 text-prime">
-                  <point.icon className="size-7" />
-                </span>
-                <h3 className="mt-4 text-lg font-bold text-prime-dark">{point.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-text-muted">{point.description}</p>
+                <div className="flex items-center gap-3.5">
+                  <span aria-hidden className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-prime/10 text-prime sm:size-14">
+                    <point.icon className="size-6 sm:size-7" />
+                  </span>
+                  <h3 className="text-lg font-bold text-prime-dark">{point.title}</h3>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-text-muted">{point.description}</p>
               </li>
             ))}
           </ul>

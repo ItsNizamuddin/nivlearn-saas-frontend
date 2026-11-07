@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="240" height="70" fill="none">
+  <!-- Modern Geometric Crest -->
+  <g transform="translate(10, 8)">
+    <!-- Hexagon -->
+    <polygon points="27,3 49,15 49,39 27,51 5,39 5,15" fill="#002972" stroke="#01B1FC" stroke-width="2"/>
+    <!-- Overlapping diamond / check -->
+    <polygon points="27,10 42,27 27,44 12,27" fill="#005CCF" opacity="0.7"/>
+    <!-- Centered Emblem -->
+    <circle cx="27" cy="27" r="7" fill="#FE8702"/>
+    <path d="M23 27 L26 30 L31 24" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Text Lockup -->
+  <g transform="translate(74, 18)">
+    <text x="0" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="800" fill="#002972" letter-spacing="0.5">TECH CREDENTIAL</text>
+    <text x="0" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#005CCF" letter-spacing="0.5">GLOBAL ALLIANCE</text>
+    <rect x="0" y="34" width="20" height="2" fill="#01B1FC"/>
+    <text x="26" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#475569" letter-spacing="0.8">INDUSTRY 4.0 ACCREDITED</text>
+  </g>
+</svg>
+

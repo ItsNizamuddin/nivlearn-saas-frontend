@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="240" height="70" fill="none">
+  <!-- Shield Badge -->
+  <g transform="translate(10, 8)">
+    <!-- Outer Shield -->
+    <path d="M27 2 L50 10 V30 C50 43 27 52 27 52 C27 52 4 43 4 30 V10 Z" fill="#EEF5FF" stroke="#005CCF" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- Inner Shield -->
+    <path d="M27 8 L44 14 V28 C44 38 27 45 27 45 C27 45 10 38 10 28 V14 Z" fill="#002972"/>
+    <!-- Star Emblem -->
+    <path d="M27 16 L29.5 22.5 H36.5 L31 26.5 L33 33 L27 29 L21 33 L23 26.5 L17.5 22.5 H24.5 Z" fill="#FE8702"/>
+    <!-- Laurel Accents -->
+    <circle cx="16" cy="38" r="2" fill="#01B1FC"/>
+    <circle cx="38" cy="38" r="2" fill="#01B1FC"/>
+    <circle cx="27" cy="40" r="2.5" fill="#FE8702"/>
+  </g>
+  <!-- Text Lockup -->
+  <g transform="translate(74, 18)">
+    <text x="0" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="800" fill="#002972" letter-spacing="0.5">GLOBAL</text>
+    <text x="56" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="800" fill="#005CCF" letter-spacing="0.5">ACCREDITATION</text>
+    <text x="0" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" fill="#475569" letter-spacing="1.2">FORUM</text>
+    <rect x="52" y="22" width="5" height="5" rx="1" fill="#FE8702"/>
+    <text x="64" y="29" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="600" fill="#005CCF" letter-spacing="0.8">CERTIFIED PROVIDER</text>
+  </g>
+</svg>
+

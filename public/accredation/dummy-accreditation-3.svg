@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="240" height="70" fill="none">
+  <!-- Ribbon Seal / Crest -->
+  <g transform="translate(10, 6)">
+    <!-- Hanging Ribbons -->
+    <path d="M18 42 L14 56 L24 51 L34 56 L30 42 Z" fill="#002972" opacity="0.9"/>
+    <path d="M28 42 L24 56 L34 51 L44 56 L40 42 Z" fill="#005CCF" opacity="0.9"/>
+    <!-- Rosette / Scalloped Ring -->
+    <circle cx="27" cy="24" r="22" fill="#EEF5FF" stroke="#005CCF" stroke-width="2"/>
+    <circle cx="27" cy="24" r="17" fill="#002972"/>
+    <!-- Laurel Wreath -->
+    <path d="M19 28 C17 23 18 17 21 15 M35 28 C37 23 36 17 33 15" stroke="#FE8702" stroke-width="1.8" stroke-linecap="round"/>
+    <polygon points="27,15 29,20 34,20 30,23 31,28 27,25 23,28 24,23 20,20 25,20" fill="#FE8702"/>
+  </g>
+  <!-- Text Lockup -->
+  <g transform="translate(74, 18)">
+    <text x="0" y="14" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" font-weight="800" fill="#002972" letter-spacing="0.5">PROFESSIONAL</text>
+    <text x="0" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#005CCF" letter-spacing="0.5">CREDENTIAL BOARD</text>
+    <text x="0" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#475569" letter-spacing="1.2">GLOBAL EDUCATION BENCHMARK</text>
+  </g>
+</svg>
+
