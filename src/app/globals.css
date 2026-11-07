@@ -278,3 +278,15 @@
   & h4 { font-size: 1.125rem; }
   & > :first-child { margin-top: 0; }
 }
+
+/* CMS-driven ribbon banner container: prevents wide table/text from overflowing mobile screen width */
+.ribbon-scroll-content {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100vw;
+  -webkit-overflow-scrolling: touch;
+}
+.ribbon-scroll-content::-webkit-scrollbar {
+  display: none;
+}
+

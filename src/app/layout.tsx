@@ -8,6 +8,9 @@ import { LeadModalProvider } from "@/context/LeadModalContext";
 import GeoLocationInitializer from "@/context/GeoLocationInitializer";
 import { LeadModal } from "@/components/forms";
 import { getCategories, getCourseOptions } from "@/services/catalog.service";
+import { getRibbons } from "@/services/content.service";
+import DynamicScripts from "@/components/logics/DynamicScripts";
+import Ribbons from "@/components/ui/others/Ribbons";
 import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
@@ -40,9 +43,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [categories, courseOptions] = await Promise.all([
+  const [categories, courseOptions, ribbonsResponse] = await Promise.all([
     getCategories(),
     getCourseOptions(),
+    getRibbons(),
   ]);
 
   return (
@@ -66,13 +70,17 @@ export default async function RootLayout({
             href="https://cloud-storage.skilldeck.net/static/editor/skilldeck-rich-text.min.css"
           />
         </noscript>
+        <DynamicScripts position="head" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+        <DynamicScripts position="body" />
         <LeadModalProvider courses={courseOptions}>
           <GeoLocationInitializer />
+          <Ribbons type="header" response={ribbonsResponse} />
           <NavBar initialCategories={categories} />
           <main className="flex-1">{children}</main>
           <Footer />
+          <Ribbons type="footer" response={ribbonsResponse} />
           <LeadModal courses={courseOptions} />
         </LeadModalProvider>
       </body>
