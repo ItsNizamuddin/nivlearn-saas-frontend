@@ -38,7 +38,9 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
     }
 
     let isMounted = true;
-    setLoadingCategory(expandedCategory);
+    queueMicrotask(() => {
+      if (isMounted) setLoadingCategory(expandedCategory);
+    });
 
     fetch(`/api/courses?category=${expandedCategory}`)
       .then((res) => res.json())
@@ -57,7 +59,7 @@ export default function MobileMenu({ isOpen, onClose, categories }: MobileMenuPr
     return () => {
       isMounted = false;
     };
-  }, [isOpen, expandedCategory, categories]);
+  }, [isOpen, expandedCategory, categories, coursesByCat]);
 
   useEffect(() => {
     if (!isOpen) return;

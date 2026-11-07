@@ -15,6 +15,7 @@ interface CourseMenuProps {
   isLoading?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  topOffset?: number;
 }
 
 /** Left Column Category List Skeleton Loader */
@@ -86,6 +87,7 @@ export default function CourseMenu({
   isLoading = false,
   onMouseEnter,
   onMouseLeave,
+  topOffset = 64,
 }: CourseMenuProps) {
   const currentCategory = selectedCategory || categories[0] || null;
   const [coursesByCat, setCoursesByCat] = useState<Record<string, Course[]>>({});
@@ -125,7 +127,7 @@ export default function CourseMenu({
     return () => {
       isMounted = false;
     };
-  }, [currentCategory?.slug]);
+  }, [currentCategory?.slug, coursesByCat, currentCategory?.courses]);
 
   const activeCourses = currentCategory
     ? coursesByCat[currentCategory.slug] || currentCategory.courses || []
@@ -189,7 +191,8 @@ export default function CourseMenu({
 
   return (
     <div
-      className="fixed inset-0 top-16 z-40 bg-black/25 backdrop-blur-[1px] flex justify-center pt-1 px-4 cursor-default overscroll-contain"
+      className="fixed inset-x-0 bottom-0 z-40 bg-black/25 backdrop-blur-[1px] flex justify-center pt-2 px-4 cursor-default overscroll-contain"
+      style={{ top: `${topOffset}px` }}
       onClick={onClose}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -197,7 +200,10 @@ export default function CourseMenu({
       {/* Mega Menu Modal Container with Consistent Responsive Height */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-md border border-zinc-200 lg:max-w-6xl 2xl:max-w-7xl w-full mx-auto overflow-hidden flex flex-col h-[620px] lg:h-[680px] xl:h-[720px] max-h-[calc(100vh-80px)] min-h-[520px] shadow-2xl cursor-auto overscroll-contain"
+        style={{
+          maxHeight: `calc(100vh - ${topOffset + 24}px)`,
+        }}
+        className="bg-white rounded-md border border-zinc-200 lg:max-w-6xl 2xl:max-w-7xl w-full mx-auto overflow-hidden flex flex-col h-[620px] lg:h-[680px] xl:h-[720px] min-h-[420px] shadow-2xl cursor-auto overscroll-contain"
       >
         {/* Main 2-Column Layout */}
         <div className="flex flex-1 min-h-0">
