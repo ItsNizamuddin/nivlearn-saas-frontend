@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Calendar, Clock, Wifi, Laptop, MapPin, CheckCircle2, ChevronRight, Sparkles } from 'lucide-react';
+import { Calendar, Clock, Wifi, Laptop, MapPin, CheckCircle2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useIpLocation } from '@/hooks/useIpLocation';
@@ -9,6 +9,7 @@ import { useSchedules } from '@/hooks/useSchedules';
 import { viewerTimeZone } from '@/lib/scheduleTime';
 import { useLeadModal } from '@/context/LeadModalContext';
 import type { ScheduleData } from '@/types/schedules';
+import LeadForm from '@/components/forms/LeadForm';
 
 interface BannerScheduleCardsProps {
   courseSlug: string;
@@ -158,29 +159,44 @@ export default function BannerScheduleCards({ courseSlug, courseTitle }: BannerS
 
   if (activeSchedules.length === 0) {
     return (
-      <div className="w-full bg-white/90 backdrop-blur-sm border-2 border-prime/20 rounded-lg p-5 sm:p-6 shadow-sm">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-prime/10 flex items-center justify-center text-prime">
-            <Sparkles className="w-4 h-4" />
+      <div className="w-full bg-white/95 backdrop-blur-sm border-2 border-prime/20 rounded-xl p-4 sm:p-5 shadow-sm space-y-3">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-prime/10 flex items-center justify-center text-prime shrink-0">
+              <Calendar className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-prime-dark font-bold text-sm sm:text-base leading-tight">Upcoming Batches</h3>
+              <p className="text-[11px] text-slate-500">New cohorts starting every week</p>
+            </div>
           </div>
-          <div>
-            <h3 className="text-prime-dark font-bold text-sm sm:text-base leading-snug">Upcoming Batches</h3>
-            <p className="text-xs text-slate-500">New cohorts starting every week</p>
-          </div>
+          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+            Admissions Open
+          </span>
         </div>
 
-        <div className="p-4 rounded-xl border border-dashed border-prime/30 bg-sec-prime/30 text-center space-y-3">
-          <p className="text-xs sm:text-sm text-prime-dark font-medium leading-relaxed">
-            Flexible weekday & weekend cohorts are enrolling now. Enquire to choose your preferred timing.
-          </p>
-          <button
-            type="button"
-            onClick={handleEnquireCustom}
-            className="w-full py-2.5 px-4 bg-prime-yellow hover:bg-amber-400 active:scale-98 text-prime-dark font-extrabold text-xs sm:text-sm rounded-lg transition-colors cursor-pointer shadow-xs flex items-center justify-center gap-1.5"
-          >
-            <span>Enquire Next Batch</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
+        <p className="text-xs text-slate-600 leading-relaxed">
+          Flexible weekday &amp; weekend cohorts are enrolling now. Share your details below to request custom timings or scholarship options.
+        </p>
+
+        <div className="pt-1">
+          <LeadForm
+            layout="compact"
+            formTitle={null}
+            formDescription={null}
+            config={{
+              showCourse: false,
+              showMessage: false,
+              purpose: false,
+            }}
+            defaultValues={{
+              leadSource: `hero-schedules-enquiry-${courseSlug}`,
+              courseSlug: courseSlug,
+              selectedCourse: courseTitle,
+              purpose: 'Upcoming Batch & Schedule Request',
+            }}
+            submitButtonText="Enquire Next Batch"
+          />
         </div>
       </div>
     );

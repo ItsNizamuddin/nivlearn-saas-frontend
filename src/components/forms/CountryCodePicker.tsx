@@ -25,8 +25,27 @@ export default function CountryCodePicker({
 }: CountryCodePickerProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState('');
+    const [openUpward, setOpenUpward] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
+
+    const checkPlacement = () => {
+        if (containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            let spaceInContainer = spaceBelow;
+            const scrollParent = containerRef.current.closest<HTMLElement>(
+                '.overflow-y-auto, .overflow-hidden, section, aside, form, dialog, [role="dialog"]'
+            );
+            if (scrollParent) {
+                const parentRect = scrollParent.getBoundingClientRect();
+                spaceInContainer = parentRect.bottom - rect.bottom;
+            }
+            const dropdownHeight = 220;
+            const shouldFlip = (spaceBelow < dropdownHeight || spaceInContainer < dropdownHeight) && rect.top > dropdownHeight;
+            setOpenUpward(shouldFlip);
+        }
+    };
 
     // Enrich DIAL_CODES with localized readable names
     const countries: EnrichedCountry[] = useMemo(() => {
@@ -111,7 +130,10 @@ export default function CountryCodePicker({
             {/* Trigger Button with Flag Image + Code + Arrow (Slimline Compact) */}
             <button
                 type="button"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => {
+                    if (!isOpen) checkPlacement();
+                    setIsOpen(!isOpen);
+                }}
                 className="flex items-center gap-1 px-1.5 sm:px-2 h-full bg-surface-muted/60 hover:bg-sec-prime border-r border-border-muted/70 text-xs text-foreground font-medium transition-colors cursor-pointer select-none shrink-0"
                 aria-label="Select country dial code"
                 aria-expanded={isOpen}
@@ -140,7 +162,7 @@ export default function CountryCodePicker({
 
             {/* Floating Dropdown Menu */}
             {isOpen && (
-                <div className="absolute top-full left-0 mt-1.5 w-64 sm:w-72 max-h-52 bg-surface rounded-lg shadow-2xl border border-border-muted/80 z-[70] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+                <div className={`absolute left-0 w-64 sm:w-72 max-h-52 bg-surface rounded-lg shadow-2xl border border-border-muted/80 z-[70] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150 ${openUpward ? 'bottom-full mb-1.5' : 'top-full mt-1.5'}`}>
                     {/* Search Bar */}
                     <div className="p-2 border-b border-border-muted/60 bg-surface-muted/40">
                         <div className="relative flex items-center">
